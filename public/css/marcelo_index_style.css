@@ -1,0 +1,74 @@
+    body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e0e0e0;
+            flex-direction: column;
+            margin: 50px;
+
+    }
+    
+    .padre {
+                justify-content: center;
+                width: 600px;
+                height: auto;
+                min-height: 300px;
+                background-color: #f0f0f0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+                border-radius: 8px;
+                font-family:sans-serif;
+            }
+
+    .hijo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+    .form {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                width: 90%;
+            }
+    .options {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+    label {
+                font-weight: bold;
+                font-size: 14px;
+            }
+
+        input, select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        } 
+    .destinos{
+                justify-content: center;
+                width: 600px;
+                height: auto;
+                min-height: 300px;
+                background-color: #f0f0f0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+                border-radius: 8px;
+                font-family:sans-serif;
+    }
+    .destiones_img{
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
+    }
+    img{
+        width: 100px;
+        height: 100px;
+    }
