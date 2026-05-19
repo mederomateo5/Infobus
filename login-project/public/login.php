@@ -1,39 +1,72 @@
 <?php
-// Incluir el archivo de configuración de la base de datos y la clase User
-require '../config/database.php';
-require '../src/User.php';
-// Verificar si se recibió una solicitud POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Crear una instancia de la clase User, pasando la conexión PDO como argumento
-    $user = new User($pdo);
-    // Sanitizar la entrada del usuario e intenta iniciar sesión
-    $loggedInUser = $user->login(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
-    // Verificar si se pudo iniciar sesión correctamente
-    if ($loggedInUser) {
-        // Iniciar sesión de PHP para mantener al usuario autenticado
-        session_start();
-        // Almacenar el ID de usuario en la sesión para identificar al usuario
-        $_SESSION['user_id'] = $loggedInUser['id'];
-        // Redirigir al usuario a la página de bienvenida después de iniciar sesión
-        header('Location: welcome.php');
-    } else {
-        // Mostrar un mensaje de error si las credenciales de inicio de sesión son incorrectas
-        echo 'Invalid login credentials';
+    require '../config/database.php';
+    require '../src/User.php';
+    // Verificar si el formulario fue enviado
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Crear objeto User
+        $user = new User($pdo);
+        // Obtener datos del formulario
+        $username = htmlspecialchars($_POST['username']);
+        $password = htmlspecialchars($_POST['password']);
+        $email = htmlspecialchars($_POST['email']);
+        // Intentar login
+        $loggedInUser = $user->login($username, $password, $email);
+        // Verificar si existe el usuario
+        if ($loggedInUser) {
+            // Iniciar sesión
+            session_start();
+            // Guardar ID del usuario
+            $_SESSION['user_id'] = $loggedInUser['id'];
+            // Redirigir
+            header('Location: welcome.php');
+            exit();
+        } else {
+            $error = "Credenciales incorrectas";
+        }
     }
-}
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
-    <h2>Login</h2>
+    <h2>Iniciar Sesión</h2>
+    <?php if (isset($error)): ?>
+        <p style="color:red;">
+            <?php echo $error; ?>
+        </p>
+    <?php endif; ?>
     <form method="POST" action="login.php">
-        <input type="text" name="username" required placeholder="Username">
-        <input type="password" name="password" required placeholder="Password">
-        <button type="submit">Login</button>
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+        >
+        <br><br>
+        <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+        >
+        <br><br>
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+        <br><br>
+        <button type="submit">
+            Login
+        </button>
     </form>
+    <br>
+    <a href="signup.php">
+        Crear cuenta
+    </a>
 </body>
 </html>

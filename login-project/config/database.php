@@ -1,21 +1,20 @@
 <?php
-// Datos de conexión a la base de datos
-$host = 'localhost';      // Servidor donde corre MySQL (localhost = misma máquina)
-$dbname = 'login_project'; // Nombre de la base de datos
-$username = 'root';        // Usuario de la base de datos
-$password = '';            // Contraseña del usuario (aquí está vacía)
-
-// Intentamos establecer la conexión con la base de datos
-try {
-    // Creamos un objeto PDO con la información de conexión
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    
-    // Configuramos PDO para que lance excepciones si hay errores
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Si llegamos aquí, significa que la conexión fue exitosa
-} catch (PDOException $e) {
-    // Si ocurre un error, mostramos el mensaje y detenemos el script
-    die("Error connecting to the database: " . $e->getMessage());
-}
+    // Datos de conexión
+    $host = 'localhost';
+    $dbname = 'login_project';
+    $username = 'root';
+    $password = '';
+    // Intentar conexión
+    try {
+        // Crear conexión PDO
+        $pdo = new PDO(
+            "mysql:host=$host;dbname=$dbname;charset=utf8",
+            $username,
+            $password
+        );
+        // Mostrar errores reales si algo falla
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die("Error de conexión: " . $e->getMessage());
+    }
 ?>

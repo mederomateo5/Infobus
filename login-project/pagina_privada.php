@@ -1,15 +1,15 @@
 <?php
-// Inicia la sesión
-session_start();
+    // Inicia la sesión
+    session_start();
 
-// Verifica si el usuario está autenticado comprobando si está definida la variable de sesión 'user_id'
-if (!isset($_SESSION['user_id'])) {
-    // Si el usuario no está autenticado, redirige a la página de inicio de sesión
-    header('Location: public/login.php');
-    exit(); // Finaliza el script para evitar que se ejecute más código
-}
+    // Verifica si el usuario está autenticado comprobando si está definida la variable de sesión 'user_id'
+    if (!isset($_SESSION['user_id'])) {
+        // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+        header('Location: public/login.php');
+        exit(); // Finaliza el script para evitar que se ejecute más código
+    }
 
-// Si el usuario está autenticado, muestra el contenido de la página privada
+    // Si el usuario está autenticado, muestra el contenido de la página privada
 ?>
 
 <!DOCTYPE html>
