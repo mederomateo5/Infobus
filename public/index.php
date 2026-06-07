@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="css/marcelo_index_style.css">
 </head>
 <body>
-
+<?php include '../includes/header.php'; ?>
     <div class=padre>
         <h1 >Encuentra tu próximo viaje</h1>
         <div class=hijo>
