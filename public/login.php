@@ -7,7 +7,6 @@ require_once '../src/User.php';
 
 session_start();
 
-// Si ya está logueado, lo mandamos a welcome
 if (isset($_SESSION['user_id'])) {
     header('Location: welcome.php');
     exit();
@@ -279,11 +278,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             color: #e02020;
         }
 
-        /* ── Responsive ── */
-        @media (max-width: 480px) {
-            .card { padding: 16px; }
-            .field-row { grid-template-columns: 1fr; gap: 0; }
-        }
     </style>
 </head>
 <body>
@@ -294,7 +288,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         <div class="card">
 
             <!-- Logo -->
-            <div class="brand-logo">🚌 Ómnibus UY</div>
+            <div class="brand-logo"><img src="img/logotipo.png" style="height: 100px;"></div>
 
             <!-- Tabs -->
             <div class="tabs" role="tablist">
@@ -438,10 +432,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </form>
             </section>
 
-        </div><!-- /.card -->
+        </div>
     </main>
 
-</div><!-- /.page -->
+</div>
 
 <script>
     // ── Tabs ─────────────────────────────────────────────────
