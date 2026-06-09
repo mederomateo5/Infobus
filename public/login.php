@@ -66,332 +66,223 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ómnibus — Acceso</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* ── Reset & Variables ─────────────────────────────────── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --bg:        #0d0f14;
-            --surface:   #161920;
-            --surface2:  #1e2230;
-            --border:    #2a2f42;
-            --accent:    #f5a623;
-            --accent2:   #e8884a;
-            --text:      #f0f2f8;
-            --muted:     #7a8099;
-            --error:     #ff6b6b;
-            --success:   #5dd89c;
-            --radius:    14px;
-            --radius-sm: 8px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        html, body {
-            height: 100%;
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        /* ── Layout ────────────────────────────────────────────── */
-        .page {
+        body {
+            background-color: #e9f0fb;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #1c1e21;
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-
-        /* Panel izquierdo – ilustración / branding */
-        .brand-panel {
-            background: linear-gradient(145deg, #1a1e2e 0%, #0d0f14 60%, #1c1408 100%);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 60px 56px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .brand-panel::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 60% 50% at 30% 40%, rgba(245,166,35,.13) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 35% at 70% 80%, rgba(232,136,74,.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        /* Big decorative bus outline */
-        .brand-panel::after {
-            content: '🚌';
-            position: absolute;
-            bottom: -20px;
-            right: -30px;
-            font-size: 220px;
-            opacity: .05;
-            pointer-events: none;
-            filter: grayscale(1);
-        }
-
-        .brand-logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 2.4rem;
-            letter-spacing: -.03em;
-            color: var(--accent);
-            margin-bottom: 8px;
-            position: relative;
-        }
-
-        .brand-tagline {
-            font-size: .95rem;
-            color: var(--muted);
-            max-width: 320px;
-            margin-bottom: 48px;
-            position: relative;
-        }
-
-        .brand-features {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            position: relative;
-        }
-
-        .brand-features li {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-size: .9rem;
-            color: #9ba3c0;
-        }
-
-        .feature-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(245,166,35,.12);
-            border: 1px solid rgba(245,166,35,.25);
-            display: grid;
-            place-items: center;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        /* Panel derecho – formularios */
-        .form-panel {
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 48px 40px;
-            overflow-y: auto;
+        }
+
+        /* ── Layout centrado ── */
+        .page {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 16px;
         }
 
         .card {
+            background-color: #ffffff;
+            border: 1px solid #dddfe2;
+            border-radius: 8px;
+            padding: 20px;
             width: 100%;
-            max-width: 440px;
+            max-width: 400px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* ── Tabs ──────────────────────────────────────────────── */
+        /* ── Logo / título ── */
+        .brand-logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1877f2;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        /* ── Tabs ── */
         .tabs {
             display: flex;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 4px;
-            margin-bottom: 32px;
-            gap: 4px;
+            border-bottom: 1px solid #dddfe2;
+            margin-bottom: 20px;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 10px;
+            padding: 12px 10px;
             border: none;
-            border-radius: calc(var(--radius) - 3px);
             background: transparent;
-            color: var(--muted);
-            font-family: 'DM Sans', sans-serif;
-            font-size: .9rem;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: bold;
+            color: #606770;
             cursor: pointer;
-            transition: all .2s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
         }
 
         .tab-btn.active {
-            background: var(--accent);
-            color: #0d0f14;
-            font-weight: 700;
+            color: #1877f2;
+            border-bottom: 3px solid #1877f2;
         }
 
-        /* ── Form sections ─────────────────────────────────────── */
+        /* ── Secciones de formulario ── */
         .form-section { display: none; }
         .form-section.active { display: block; }
 
         .form-title {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 1.6rem;
-            margin-bottom: 6px;
-            letter-spacing: -.02em;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1c1e21;
+            margin-bottom: 4px;
         }
 
         .form-subtitle {
-            color: var(--muted);
-            font-size: .875rem;
-            margin-bottom: 28px;
+            font-size: 13px;
+            color: #606770;
+            margin-bottom: 16px;
         }
 
-        /* ── Field groups ──────────────────────────────────────── */
+        /* ── Campos ── */
         .field-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         .field {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-bottom: 16px;
-            position: relative;
+            gap: 4px;
+            margin-bottom: 12px;
         }
 
         .field label {
-            font-size: .82rem;
-            font-weight: 500;
-            color: #a0a8c0;
-            letter-spacing: .03em;
+            font-size: 13px;
+            font-weight: bold;
+            color: #1c1e21;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
-        /* Ícono info placeholder */
         .info-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            border: 1px solid var(--muted);
-            font-size: .65rem;
-            color: var(--muted);
+            border: 1px solid #606770;
+            font-size: 10px;
+            color: #606770;
             cursor: pointer;
             font-style: italic;
-            font-weight: 700;
-            /* Reemplazá con tu ícono real */
+            font-weight: bold;
         }
 
         .field input {
             width: 100%;
-            padding: 11px 14px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
-            font-size: .9rem;
+            padding: 10px 12px;
+            background-color: #ffffff;
+            border: 1px solid #ccd0d5;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #1c1e21;
             outline: none;
-            transition: border-color .2s, box-shadow .2s;
         }
 
         .field input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(245,166,35,.12);
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #b3caf5;
         }
 
         .field input.invalid {
-            border-color: var(--error);
+            border-color: #e02020;
         }
 
         .field-error {
-            font-size: .78rem;
-            color: var(--error);
-            min-height: 16px;
+            font-size: 12px;
+            color: #e02020;
+            min-height: 15px;
         }
 
-        /* Fuerza de contraseña */
+        /* ── Fuerza de contraseña ── */
         .pass-strength {
             display: flex;
             gap: 4px;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         .strength-bar {
             flex: 1;
-            height: 3px;
-            border-radius: 99px;
-            background: var(--border);
-            transition: background .3s;
+            height: 4px;
+            border-radius: 4px;
+            background-color: #dddfe2;
+            transition: background-color 0.3s;
         }
 
-        .strength-bar.weak   { background: var(--error); }
-        .strength-bar.medium { background: var(--accent); }
-        .strength-bar.strong { background: var(--success); }
+        .strength-bar.weak   { background-color: #e02020; }
+        .strength-bar.medium { background-color: #f5a623; }
+        .strength-bar.strong { background-color: #42b72a; }
 
         .strength-label {
-            font-size: .75rem;
-            color: var(--muted);
-            margin-top: 4px;
+            font-size: 12px;
+            color: #606770;
+            margin-top: 3px;
         }
 
-        /* ── Botón principal ───────────────────────────────────── */
+        /* ── Botón principal ── */
         .btn-primary {
             width: 100%;
-            padding: 13px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            padding: 12px;
+            background-color: #1877f2;
             border: none;
-            border-radius: var(--radius-sm);
-            color: #0d0f14;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform .15s, box-shadow .15s, opacity .15s;
             margin-top: 8px;
-            letter-spacing: .01em;
         }
 
         .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(245,166,35,.28);
+            background-color: #166fe5;
         }
 
-        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:active {
+            background-color: #1464d2;
+        }
 
-        /* ── Alert ─────────────────────────────────────────────── */
+        /* ── Alerta de error ── */
         .alert {
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            font-size: .875rem;
-            margin-bottom: 18px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 14px;
         }
 
         .alert-error {
-            background: rgba(255,107,107,.1);
-            border: 1px solid rgba(255,107,107,.3);
-            color: var(--error);
+            background-color: #fff0f0;
+            border: 1px solid #f5c6c6;
+            color: #e02020;
         }
 
-        /* ── Responsive ────────────────────────────────────────── */
-        @media (max-width: 768px) {
-            .page { grid-template-columns: 1fr; }
-            .brand-panel { display: none; }
-            .form-panel { padding: 32px 20px; }
-            .card { max-width: 100%; }
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .card { padding: 16px; }
             .field-row { grid-template-columns: 1fr; gap: 0; }
-        }
-
-        @media (max-width: 380px) {
-            .form-panel { padding: 24px 16px; }
         }
     </style>
 </head>
@@ -399,29 +290,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 <div class="page">
 
-    <!-- ── Brand panel ─────────────────────────────────────── -->
-    <aside class="brand-panel">
-        <div class="brand-logo">Ómnibus UY</div>
-        <p class="brand-tagline">Gestioná rutas, choferes y pasajeros desde un solo lugar.</p>
-        <ul class="brand-features">
-            <li>
-                <span class="feature-icon">🗺️</span>
-                Seguimiento de rutas en tiempo real
-            </li>
-            <li>
-                <span class="feature-icon">👤</span>
-                Gestión de choferes y pasajeros
-            </li>
-            <li>
-                <span class="feature-icon">📊</span>
-                Reportes y estadísticas de viajes
-            </li>
-        </ul>
-    </aside>
-
-    <!-- ── Form panel ──────────────────────────────────────── -->
-    <main class="form-panel">
+    <main>
         <div class="card">
+
+            <!-- Logo -->
+            <div class="brand-logo">🚌 Ómnibus UY</div>
 
             <!-- Tabs -->
             <div class="tabs" role="tablist">
@@ -591,7 +464,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if (/[!@#$%^&*(),.?":{}|<>_\-\[\]\/\\]/.test(val)) score++;
 
         const texts = ['', 'Débil', 'Media', 'Fuerte'];
-        const colors = ['', '#ff6b6b', '#f5a623', '#5dd89c'];
+        const colors = ['', '#e02020', '#f5a623', '#42b72a'];
 
         bars.forEach((b, i) => {
             b.className = 'strength-bar';
