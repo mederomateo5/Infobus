@@ -13,15 +13,12 @@
     <h1>Mapa de Recorridos</h1>
 
     <div class="contenedor">
-
         <div class="mapa-container">
             <div id="map"></div>
         </div>
 
         <div class="panel-rutas">
-
             <h2>Rutas</h2>
-
             <input
                 type="text"
                 id="selectorRuta"
@@ -34,20 +31,16 @@
             <button onclick="mostrarRutaSeleccionada()">
                 Mostrar Ruta
             </button>
-
             <button onclick="ocultarRuta()">
                 Ocultar Ruta
             </button>
-
         </div>
-
     </div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="datos.js"></script>
 
     <script>
-
         const map = L.map('map').setView(
             [-34.425, -57.446],
             14
@@ -112,7 +105,6 @@
         const capasRutas = {};
 
         for (const id in rutas) {
-
             capasRutas[id] = L.polyline(
                 rutas[id].coordinates.map(
                     c => [c[1], c[0]]
@@ -127,18 +119,15 @@
         let rutaActual = null;
 
         function mostrarRutaSeleccionada() {
-
             const texto =
                 document
                 .getElementById("selectorRuta")
                 .value
                 .trim()
                 .toLowerCase();
-
             let rutaEncontrada = null;
 
             for (const id in rutas) {
-
                 if (
                     rutas[id]
                     .nombre
@@ -160,7 +149,6 @@
 
             rutaActual =
                 capasRutas[rutaEncontrada];
-
             rutaActual.addTo(map);
 
             map.fitBounds(
@@ -169,16 +157,11 @@
         }
 
         function ocultarRuta() {
-
             if (rutaActual) {
-
                 map.removeLayer(rutaActual);
-
                 rutaActual = null;
             }
         }
-
     </script>
-
 </body>
 </html>
