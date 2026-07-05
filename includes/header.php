@@ -123,6 +123,7 @@
             <a href="/ProyectoUTU2/public/login.php" title="Iniciar sesión">
                 <i class="fa-solid fa-user"></i>
             </a>
+
         </div>
 
     </nav>

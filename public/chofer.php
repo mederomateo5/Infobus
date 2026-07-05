@@ -136,6 +136,30 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
             color:#1877f2;
             margin-bottom:20px;
         }
+        .logout-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    padding-bottom: 30px;
+}
+
+.btn-logout {
+    background: transparent;
+    border: 2px solid red;
+    color: red;
+    font-weight: bold;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 16px;
+}
+
+.btn-logout:hover {
+    background: red;
+    color: white;
+}
     </style>
 </head>
 <body>
@@ -205,7 +229,7 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
     </div>
 
 </div>
-<button class="menu-btn salir" onclick="window.location.href='logout.php'">Cerrar sesión</button>
+
 <script>
 
 function mostrarFormulario(nombreEmpresa){
@@ -253,6 +277,10 @@ function confirmarEnvio(){
 }
 
 </script>
-
+<div class="logout-container">
+    <button class="btn-logout" onclick="window.location.href='logout.php'">
+        Cerrar sesión
+    </button>
+</div>
 </body>
 </html>

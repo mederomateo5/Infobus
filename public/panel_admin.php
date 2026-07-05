@@ -200,6 +200,7 @@ $mensaje = isset($_GET['msg']) ? $_GET['msg'] : null;
             margin-bottom:20px;
             font-weight:bold;
         }
+        
     </style>
 </head>
 <body>
