@@ -23,9 +23,12 @@ CREATE TABLE IF NOT EXISTS users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ------------------------------------------------------------
---  Ejemplo: crear un administrador inicial (cambiá el hash)
---  Generá el hash con: php -r "echo password_hash('TuPassword1!', PASSWORD_DEFAULT);"
+--  Usuarios iniciales
 -- ------------------------------------------------------------
--- INSERT INTO users (nombre, apellido, email, telefono, password, tipo)
--- VALUES ('Admin', 'Sistema', 'admin@omnibus.com', '099000000',
---         '$2y$12$HASH_AQUI', 'administrador');
+INSERT INTO users (nombre, apellido, email, telefono, password, tipo)
+VALUES
+('Administrador', 'Sistema', 'admin@omnibus.com', '099000001',
+'$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi', 'administrador'),
+
+('Juan', 'Jose', 'chofer@omnibus.com', '099000002',
+'$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi', 'chofer');

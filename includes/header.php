@@ -8,6 +8,12 @@
 </head>
 <style>
 
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 .navbar {
     position: fixed;
     top: 0;
@@ -107,10 +113,9 @@
 
         <!-- Links centrados -->
         <ul class="navbar-links">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Nosotros</a></li>
-            <li><a href="#">Servicios</a></li>
-            <li><a href="#">Contacto</a></li>
+            <li><a href="/PROYECTOUTU2/public/index.php">Inicio</a></li>
+            <li><a href="/PROYECTOUTU2/public/sobre_nosotros.php">Nosotros</a></li>
+            <li><a href="/PROYECTOUTU2/public/welcome.php">Panel</a></li>
         </ul>
 
         <!-- Ícono usuario a la derecha -->

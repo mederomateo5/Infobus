@@ -144,7 +144,7 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
 
 <div class="contenedor">
 
-    <h1>Selecciona una empresa</h1>
+    <h1>Selecciona una empresa</h1> <!--poner padding que no se ve -->
 
     <div class="empresas" id="listaEmpresas">
 
@@ -158,14 +158,6 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
 
         <button class="empresa-btn" onclick="mostrarFormulario('COME')">
             <img src="img/turil.svg" alt="COME">
-        </button>
-
-        <button class="empresa-btn" onclick="mostrarFormulario('UCOT')">
-            <img src="img/ucot.png" alt="UCOT">
-        </button>
-
-        <button class="empresa-btn" onclick="mostrarFormulario('COETC')">
-            <img src="img/coetc.png" alt="COETC">
         </button>
 
     </div>
@@ -209,11 +201,11 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
             </button>
 
         </form>
-
+    
     </div>
 
 </div>
-
+<button class="menu-btn salir" onclick="window.location.href='logout.php'">Cerrar sesión</button>
 <script>
 
 function mostrarFormulario(nombreEmpresa){

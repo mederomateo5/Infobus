@@ -1,7 +1,4 @@
 <?php
-// ================================================================
-//  login.php  –  Login + Registro en una sola página
-// ================================================================
 require_once '../config/database.php';
 require_once '../src/User.php';
 
@@ -66,217 +63,199 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ómnibus — Acceso</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        body {
-            background-color: #e9f0fb;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            color: #1c1e21;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+body{
+    background:#e9f0fb;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    color:#1c1e21;
+}
 
-        /* ── Layout centrado ── */
-        .page {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 30px 16px;
-        }
+.page{
+    width:100%;
+    text-align:center;
+    padding:30px;
+}
 
-        .card {
-            background-color: #ffffff;
-            border: 1px solid #dddfe2;
-            border-radius: 8px;
-            padding: 20px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+.card{
+    width:400px;
+    margin:auto;
+    background:#fff;
+    border:1px solid #dddfe2;
+    border-radius:8px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
 
-        /* ── Logo / título ── */
-        .brand-logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #1877f2;
-            text-align: center;
-            margin-bottom: 16px;
-        }
+.brand-logo{
+    text-align:center;
+    margin-bottom:15px;
+}
 
-        /* ── Tabs ── */
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #dddfe2;
-            margin-bottom: 20px;
-        }
+.tabs{
+    width:100%;
+    margin-bottom:20px;
+    border-bottom:1px solid #dddfe2;
+}
 
-        .tab-btn {
-            flex: 1;
-            padding: 12px 10px;
-            border: none;
-            background: transparent;
-            font-size: 15px;
-            font-weight: bold;
-            color: #606770;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -1px;
-        }
+.tab-btn{
+    width:49%;
+    padding:12px;
+    background:white;
+    border:none;
+    border-bottom:3px solid transparent;
+    font-size:15px;
+    font-weight:bold;
+    color:#606770;
+    cursor:pointer;
+}
 
-        .tab-btn.active {
-            color: #1877f2;
-            border-bottom: 3px solid #1877f2;
-        }
+.tab-btn.active{
+    color:#1877f2;
+    border-bottom:3px solid #1877f2;
+}
 
-        /* ── Secciones de formulario ── */
-        .form-section { display: none; }
-        .form-section.active { display: block; }
+.form-section{
+    display:none;
+}
 
-        .form-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1c1e21;
-            margin-bottom: 4px;
-        }
+.form-section.active{
+    display:block;
+}
 
-        .form-subtitle {
-            font-size: 13px;
-            color: #606770;
-            margin-bottom: 16px;
-        }
+.form-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
 
-        /* ── Campos ── */
-        .field-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+.form-subtitle{
+    font-size:13px;
+    color:#606770;
+    margin-bottom:15px;
+}
 
-        .field {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 12px;
-        }
+.field-row{
+    display:flex;
+    justify-content:space-between;
+}
 
-        .field label {
-            font-size: 13px;
-            font-weight: bold;
-            color: #1c1e21;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+.field-row .field{
+    width:48%;
+}
 
-        .info-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 1px solid #606770;
-            font-size: 10px;
-            color: #606770;
-            cursor: pointer;
-            font-style: italic;
-            font-weight: bold;
-        }
+.field{
+    text-align:left;
+    margin-bottom:12px;
+}
 
-        .field input {
-            width: 100%;
-            padding: 10px 12px;
-            background-color: #ffffff;
-            border: 1px solid #ccd0d5;
-            border-radius: 6px;
-            font-size: 14px;
-            color: #1c1e21;
-            outline: none;
-        }
+.field label{
+    font-size:13px;
+    font-weight:bold;
+}
 
-        .field input:focus {
-            border-color: #1877f2;
-            box-shadow: 0 0 0 2px #b3caf5;
-        }
+.info-icon{
+    display:inline-block;
+    width:14px;
+    height:14px;
+    line-height:14px;
+    text-align:center;
+    border:1px solid #606770;
+    border-radius:50%;
+    font-size:10px;
+    color:#606770;
+    cursor:pointer;
+    font-style:italic;
+}
 
-        .field input.invalid {
-            border-color: #e02020;
-        }
+.field input{
+    width:100%;
+    margin-top:4px;
+    padding:10px;
+    border:1px solid #ccd0d5;
+    border-radius:6px;
+    font-size:14px;
+}
 
-        .field-error {
-            font-size: 12px;
-            color: #e02020;
-            min-height: 15px;
-        }
+.field input:focus{
+    border:1px solid #1877f2;
+}
 
-        /* ── Fuerza de contraseña ── */
-        .pass-strength {
-            display: flex;
-            gap: 4px;
-            margin-top: 4px;
-        }
+.field input.invalid{
+    border:1px solid #e02020;
+}
 
-        .strength-bar {
-            flex: 1;
-            height: 4px;
-            border-radius: 4px;
-            background-color: #dddfe2;
-            transition: background-color 0.3s;
-        }
+.field-error{
+    color:#e02020;
+    font-size:12px;
+}
 
-        .strength-bar.weak   { background-color: #e02020; }
-        .strength-bar.medium { background-color: #f5a623; }
-        .strength-bar.strong { background-color: #42b72a; }
+.pass-strength{
+    margin-top:5px;
+}
 
-        .strength-label {
-            font-size: 12px;
-            color: #606770;
-            margin-top: 3px;
-        }
+.strength-bar{
+    display:inline-block;
+    width:31%;
+    height:4px;
+    background:#dddfe2;
+    border-radius:4px;
+}
 
-        /* ── Botón principal ── */
-        .btn-primary {
-            width: 100%;
-            padding: 12px;
-            background-color: #1877f2;
-            border: none;
-            border-radius: 6px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
-        }
+.strength-bar.weak{
+    background:#e02020;
+}
 
-        .btn-primary:hover {
-            background-color: #166fe5;
-        }
+.strength-bar.medium{
+    background:#f5a623;
+}
 
-        .btn-primary:active {
-            background-color: #1464d2;
-        }
+.strength-bar.strong{
+    background:#42b72a;
+}
 
-        /* ── Alerta de error ── */
-        .alert {
-            padding: 10px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            margin-bottom: 14px;
-        }
+.strength-label{
+    font-size:12px;
+    margin-top:5px;
+}
+.btn-primary{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    background:#1877f2;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-        .alert-error {
-            background-color: #fff0f0;
-            border: 1px solid #f5c6c6;
-            color: #e02020;
-        }
+.btn-primary:hover{
+    background:#166fe5;
+}
+
+.btn-primary:active{
+    background:#1464d2;
+}
+
+.alert{
+    margin-bottom:15px;
+    padding:10px;
+    border-radius:6px;
+    font-size:13px;
+}
+
+.alert-error{
+    background:#fff0f0;
+    border:1px solid #f5c6c6;
+    color:#e02020;
+}
 
     </style>
 </head>
@@ -468,6 +447,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         label.textContent = val.length ? texts[score] : '';
         label.style.color  = colors[score];
     }
+
+    // ── Bloquear pegar en confirmar contraseña ──────────────────
+const confirmar = document.getElementById("reg-confirm");
+
+["paste", "cut", "drop"].forEach(evento => {
+    confirmar.addEventListener(evento, function(e) {
+        e.preventDefault();
+    });
+});
 </script>
 
 </body>
