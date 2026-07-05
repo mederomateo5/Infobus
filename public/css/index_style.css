@@ -18,6 +18,7 @@ body{
     border-radius: 10px;
     font-family: sans-serif;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    position: relative;
 }
 
 .hijo{
@@ -93,24 +94,22 @@ img{
     height: 120px;
 }
 
-/* MENSAJE */
-
-#mensaje{
-    margin-top: -20px;
+/* MENSAJES DE ALERTA */
+#mensaje, #mensajeUrbano{
+    margin-top: 15px;
     font-size: 18px;
     font-weight: bold;
     color: #c0392b;
 }
 
-/* TABLA */
-
+/* TABLAS GENERALES */
 .horarios{
     width: 100%;
     margin-top: 25px;
     animation: aparecer .3s ease;
 }
 
-.horarios h2{
+.horarios h2, .horarios h3{
     margin-bottom: 15px;
     color: #3469b2;
 }
@@ -137,7 +136,7 @@ img{
     border-bottom: 1px solid #e5e5e5;
 }
 
-.horarios tbody tr:nth-child(even){
+.horarios tbody tr:nth-child(4n+1){
     background-color: #f8f9fc;
 }
 
@@ -147,13 +146,50 @@ img{
 }
 
 @keyframes aparecer{
-    from{
-        opacity: 0;
-        transform: translateY(10px);
-    }
+    from{ opacity: 0; transform: translateY(10px); }
+    to{ opacity: 1; transform: translateY(0); }
+}
 
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* BOTÓN DE CONTROL DE FLECHITA */
+.btn-mapa {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #3469b2;
+    transition: transform 0.3s ease;
+    padding: 5px;
+}
+.btn-mapa.abierto { transform: rotate(180deg); }
+
+/* CONTENEDOR DE FILA EXPANDIDA DEL MAPA */
+.fila-mapa { background-color: #ffffff !important; }
+.fila-mapa td { padding: 0; border-bottom: 2px solid #3469b2; }
+
+/* CONTENEDOR DEL MAPA INDIVIDUAL DE FILA */
+.map-container { 
+    height: 300px; 
+    width: 100%; 
+    display: none; 
+}
+
+/* ENLACES SUPERIORES DE NAVEGACIÓN ENTRE PÁGINAS */
+.navegacion-paginas {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+.btn-enlace {
+    background-color: #3469b2;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.btn-enlace:hover {
+    background-color: #28558f;
 }

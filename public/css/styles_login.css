@@ -1,0 +1,211 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #e9f0fb;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #1c1e21;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ── Layout centrado ── */
+.page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 16px;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Logo / título ── */
+.brand-logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1877f2;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* ── Tabs ── */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #dddfe2;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px 10px;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    font-weight: bold;
+    color: #606770;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+}
+
+.tab-btn.active {
+    color: #1877f2;
+    border-bottom: 3px solid #1877f2;
+}
+
+/* ── Secciones de formulario ── */
+.form-section { display: none; }
+.form-section.active { display: block; }
+
+.form-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1c1e21;
+    margin-bottom: 4px;
+}
+
+.form-subtitle {
+    font-size: 13px;
+    color: #606770;
+    margin-bottom: 16px;
+}
+
+/* ── Campos ── */
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.field label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #1c1e21;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #606770;
+    font-size: 10px;
+    color: #606770;
+    cursor: pointer;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.field input {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: #ffffff;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #1c1e21;
+    outline: none;
+}
+
+.field input:focus {
+    border-color: #1877f2;
+    box-shadow: 0 0 0 2px #b3caf5;
+}
+
+.field input.invalid {
+    border-color: #e02020;
+}
+
+.field-error {
+    font-size: 12px;
+    color: #e02020;
+    min-height: 15px;
+}
+
+/* ── Fuerza de contraseña ── */
+.pass-strength {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.strength-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #dddfe2;
+    transition: background-color 0.3s;
+}
+
+.strength-bar.weak   { background-color: #e02020; }
+.strength-bar.medium { background-color: #f5a623; }
+.strength-bar.strong { background-color: #42b72a; }
+
+.strength-label {
+    font-size: 12px;
+    color: #606770;
+    margin-top: 3px;
+}
+
+/* ── Botón principal ── */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: #1877f2;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #166fe5;
+}
+
+.btn-primary:active {
+    background-color: #1464d2;
+}
+
+/* ── Alerta de error ── */
+.alert {
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.alert-error {
+    background-color: #fff0f0;
+    border: 1px solid #f5c6c6;
+    color: #e02020;
+}
