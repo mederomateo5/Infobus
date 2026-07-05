@@ -1,0 +1,50 @@
+[
+    {
+        "origen": "Montevideo",
+        "destino": "Punta del Este",
+        "fecha": "2026-07-24",
+        "asientosLibres": 20,
+        "agencia": "COPSA",
+        "precio": 450
+    },
+    {
+        "origen": "Montevideo",
+        "destino": "Paysandú",
+        "fecha": "2026-07-16",
+        "asientosLibres": 15,
+        "agencia": "Turil",
+        "precio": 850
+    },
+    {
+        "origen": "Montevideo",
+        "destino": "Paysandú",
+        "fecha": "2026-07-16",
+        "asientosLibres": 15,
+        "agencia": "Turil",
+        "precio": 853
+    },
+    {
+        "origen": "Montevideo",
+        "destino": "Paysandú",
+        "fecha": "2026-07-16",
+        "asientosLibres": 15,
+        "agencia": "Turil",
+        "precio": 852
+    },
+    {
+        "origen": "Salto",
+        "destino": "Montevideo",
+        "fecha": "2026-07-17",
+        "asientosLibres": 10,
+        "agencia": "CUT",
+        "precio": 900
+    },
+    {
+        "origen": "Paysandú",
+        "destino": "Montevideo",
+        "fecha": "2026-07-20",
+        "asientosLibres": 25,
+        "agencia": "Turil",
+        "precio": 850
+    }
+]

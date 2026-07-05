@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ómnibus Urbanos</title>
+    
+    <!-- CSS de Leaflet (Mapas) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/index_style.css">
+</head>
+<body>
+    <?php include '../includes/header.php'; ?>
+
+    <div class="padre">
+        <!-- Botón para regresar al Index -->
+        <div class="navegacion-paginas">
+            <a href="index.php" class="btn-enlace">← Volver a Interurbanos</a>
+        </div>
+
+        <h1>Ómnibus Urbanos</h1>
+
+        <div class="hijo">
+            <form class="form" id="formUbicacion">
+                <div class="options" style="grid-column: 1 / 3;">
+                    <label for="ubicacion">Selecciona tu ubicación</label>
+                    <select id="ubicacion" required>
+                        <option value="" disabled selected hidden>Selecciona una ciudad o localidad</option>
+                        <option value="juan-lacaze">Juan Lacaze</option>
+                        <option value="colonia">Colonia del Sacramento</option>
+                        <option value="montevideo">Montevideo</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <p id="mensajeUrbano"></p>
+
+        <!-- Tabla de resultados (Oculta al principio, aparece al elegir ubicación) -->
+        <div class="horarios" id="resultadosUrbanos" style="display:none;">
+            <h2>Líneas y Horarios Disponibles</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Salida</th>
+                        <th>Llegada</th>
+                        <th>Frecuencia</th>
+                        <th>Empresa</th>
+                        <th>Ver Ruta</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaHorariosUrbanos"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- JS de Leaflet y Script específico de Urbanos -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/urbanos.js"></script>
+</body>
+</html>
