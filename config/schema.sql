@@ -16,14 +16,14 @@ CREATE TABLE IF NOT EXISTS users (
     telefono   VARCHAR(20)      NOT NULL,
     password   VARCHAR(255)     NOT NULL,
     -- tipo: 'usuario' lo crea el formulario de registro
-    --        'chofer' y 'administrador' los crea un admin desde la BD
+    --        'chofer' y 'administrador' los crea un administrador desde la pagina o base de datos
     tipo       ENUM('usuario','chofer','administrador') NOT NULL DEFAULT 'usuario',
     created_at TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ------------------------------------------------------------
---  Usuarios iniciales
+--  Usuarios de testeo, contraseña: Admin123!
 -- ------------------------------------------------------------
 INSERT INTO users (nombre, apellido, email, telefono, password, tipo)
 VALUES
