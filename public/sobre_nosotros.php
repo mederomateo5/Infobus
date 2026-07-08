@@ -4,58 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/marcelo_about_style.css">
+    <link rel="stylesheet" href="css/sobre_nosotros.css">
 </head>
 <body>
-    <style> 
-
-        body{ 
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-image:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url("img/fondo_aereo.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-main {
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(240, 237, 237);
-    width: 45%;
-    justify-self: center;
-    border-radius: 50px;
-    padding: 10px;
-
-}
-main div{  
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin: 12px;
-}
-p{
-    height: 80px;
-    width: 400px;
-    text-align: center;
-}
-h2 {
-    display: flex;
-    text-align: center;
-}
-.info img{
-    width:85px; 
-    height:85px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-    </style>
+    
 <?php include '../includes/header.php'; ?>
 <main>
     <div class="info">

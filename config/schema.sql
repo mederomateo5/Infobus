@@ -22,6 +22,23 @@ CREATE TABLE IF NOT EXISTS users (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS omnibus (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    n_omnibus INT UNSIGNED NOT NULL,
+    asientos INT UNSIGNED NOT NULL,
+    asientos_disponibles INT UNSIGNED NOT NULL,
+    origen VARCHAR(50) NOT NULL,
+    destino VARCHAR(50) NOT NULL,
+    precio DECIMAL(7,2) NOT NULL,
+    agencia ENUM('COT','TAB','TURIL','URBANO') NOT NULL,
+    ya_salio BOOLEAN NOT NULL,
+    fecha DATE NOT NULL, 
+    hora TIME NOT NULL,
+    hora_llegada TIME NOT NULL,
+    PRIMARY KEY (id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 -- ------------------------------------------------------------
 --  Usuarios de testeo, contraseña: Admin123!
 -- ------------------------------------------------------------
@@ -32,3 +49,6 @@ VALUES
 
 ('Juan', 'Jose', 'chofer@omnibus.com', '099000002',
 '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi', 'chofer');
+
+INSERT INTO omnibus (n_omnibus,asientos,asientos_disponibles,origen,destino,precio,agencia,ya_salio,fecha,hora,hora_llegada)
+VALUES (1,20,15,'Montevideo','Juan Lacaze',30.99,'COT',TRUE,'2022-02-02','10:30:00','10:30:01')

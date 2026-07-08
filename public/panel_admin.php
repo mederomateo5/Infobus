@@ -21,6 +21,9 @@ require_once '../config/database.php';
 $stmt = $pdo->query("SELECT id, nombre, apellido, email, telefono, tipo FROM users ORDER BY id DESC");
 $usuarios = $stmt->fetchAll();
 
+$stmt = $pdo->query("SELECT id,n_omnibus,asientos,asientos_disponibles,origen,destino,precio,agencia,ya_salio,fecha,hora,hora_llegada FROM omnibus ORDER BY id DESC");
+$viajes = $stmt->fetchAll();
+
 // Mensaje de alta/baja (viene por GET desde alta_usuario.php / baja_usuario.php)
 $mensaje = isset($_GET['msg']) ? $_GET['msg'] : null;
 ?>
@@ -31,177 +34,7 @@ $mensaje = isset($_GET['msg']) ? $_GET['msg'] : null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administrador</title>
-
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, sans-serif;
-        }
-
-        body{
-            margin: 0;
-
-            background-image:
-                linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-                url("img/fondo.jpg");
-
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        /* ---------- Estructura general con panel lateral ---------- */
-        .layout{
-            display:flex;
-            min-height:calc(100vh);
-            padding-top:78px; /* alto aproximado del navbar fijo del header */
-        }
-
-        .sidebar{
-            width:230px;
-            background:white;
-            box-shadow:2px 0 8px rgba(0,0,0,.15);
-            padding:20px 0;
-            display:flex;
-            flex-direction:column;
-        }
-
-        .sidebar h2{
-            text-align:center;
-            color:#1877f2;
-            font-size:20px;
-            margin-bottom:25px;
-            padding:0 10px;
-        }
-
-        .sidebar button{
-            border:none;
-            background:none;
-            text-align:left;
-            padding:14px 25px;
-            font-size:15px;
-            font-weight:bold;
-            color:#333;
-            cursor:pointer;
-            transition:.2s;
-            border-left:4px solid transparent;
-        }
-
-        .sidebar button:hover{
-            background:#f0f4ff;
-            color:#1877f2;
-        }
-
-        .sidebar button.activo{
-            background:#f0f4ff;
-            color:#1877f2;
-            border-left:4px solid #1877f2;
-        }
-
-        .sidebar .salir{
-            margin-top:auto;
-            color:#e0245e;
-        }
-
-        /* ---------- Contenido ---------- */
-        .contenido{
-            flex:1;
-            padding:30px;
-        }
-
-        .tarjeta{
-            background:white;
-            border-radius:12px;
-            padding:25px;
-            box-shadow:0 2px 8px rgba(0,0,0,.1);
-            margin-bottom:20px;
-            display:none;
-        }
-
-        .tarjeta.activa{
-            display:block;
-        }
-
-        h1{
-            color:#1877f2;
-            margin-bottom:20px;
-        }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-        }
-
-        th, td{
-            text-align:left;
-            padding:10px;
-            border-bottom:1px solid #eee;
-        }
-
-        th{
-            color:#1877f2;
-        }
-
-        .campo{
-            display:flex;
-            flex-direction:column;
-            margin-bottom:15px;
-            max-width:400px;
-        }
-
-        .campo label{
-            margin-bottom:5px;
-            font-weight:bold;
-        }
-
-        .campo input,
-        .campo select{
-            padding:10px;
-            border:1px solid #ccc;
-            border-radius:6px;
-        }
-
-        .btn{
-            background:#1877f2;
-            color:white;
-            border:none;
-            padding:12px 18px;
-            border-radius:6px;
-            cursor:pointer;
-            font-weight:bold;
-        }
-
-        .btn:hover{
-            background:#166fe5;
-        }
-
-        .btn-baja{
-            background:#e0245e;
-            color:white;
-            border:none;
-            padding:6px 12px;
-            border-radius:6px;
-            cursor:pointer;
-            font-weight:bold;
-        }
-
-        .btn-baja:hover{
-            background:#c01e4e;
-        }
-
-        .mensaje{
-            background:#e6f4ea;
-            color:#1e7e34;
-            padding:12px 18px;
-            border-radius:6px;
-            margin-bottom:20px;
-            font-weight:bold;
-        }
-        
-    </style>
+    <link rel="stylesheet" href="css/panel_admin.css">
 </head>
 <body>
 
@@ -216,7 +49,7 @@ $mensaje = isset($_GET['msg']) ? $_GET['msg'] : null;
         <button class="menu-btn activo" onclick="mostrarSeccion('inicio', this)">Inicio</button>
         <button class="menu-btn" onclick="mostrarSeccion('usuarios', this)">Usuarios</button>
         <button class="menu-btn" onclick="mostrarSeccion('alta', this)">Alta de usuario</button>
-        <button class="menu-btn" onclick="mostrarSeccion('empresas', this)">Empresas</button>
+        <button class="menu-btn" onclick="mostrarSeccion('Viajes', this)">Viajes</button>
 
         <button class="menu-btn salir" onclick="window.location.href='logout.php'">Cerrar sesión</button>
     </div>
@@ -317,10 +150,101 @@ $mensaje = isset($_GET['msg']) ? $_GET['msg'] : null;
             </form>
         </div>
 
-        <!-- EMPRESAS -->
-        <div class="tarjeta" id="empresas">
-            <h1>Empresas</h1>
-            <p>Acá podés agregar más adelante la gestión de las empresas de ómnibus (CUTCSA, COPSA, COME) que usan los choferes al enviar su ubicación.</p>
+        <!-- Viajes -->
+        
+           <!-- LISTADO DE VIAJES -->
+            
+        <div class="tarjeta" id="Viajes">
+            <h1>Usuarios registrados</h1>
+
+            <table>
+                    <tr>
+                    <th>ID</th>
+                    <th>Num. de Omnibus</th>
+                    <th>Asientos</th>
+                    <th>Asientos Disp.</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Precio</th>
+                    <th>Agencia</th>
+                    <th>Ya salio?</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Hora de llegada</th>
+                </tr>
+
+                <?php foreach ($viajes as $v): ?>
+                <tr>
+                    <td><?= htmlspecialchars($v['id']) ?></td>
+                    <td><?= htmlspecialchars($v['n_omnibus']) ?></td>
+                    <td><?= htmlspecialchars($v['asientos']) ?></td>
+                    <td><?= htmlspecialchars($v['asientos_disponibles']) ?></td>
+                    <td><?= htmlspecialchars($v['origen']) ?></td>
+                    <td><?= htmlspecialchars($v['destino']) ?></td>
+                    <td><?= htmlspecialchars($v['precio']) ?></td>
+                    <td><?= htmlspecialchars($v['agencia']) ?></td>
+                    <td><?= htmlspecialchars($v['ya_salio']) ?></td>
+                    <td><?= htmlspecialchars($v['fecha']) ?></td>
+                    <td><?= htmlspecialchars($v['hora']) ?></td>
+                    <td><?= htmlspecialchars($v['hora_llegada']) ?></td>
+                    <td>
+                        <?php if ($v['id'] != $_SESSION['user_id']): ?>
+                        <form action="baja_usuario.php" method="POST" onsubmit="return confirm('¿Seguro que querés dar de baja a este usuario?');" style="display:inline;">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($u['id']) ?>">
+                            <button type="submit" class="btn-baja">Dar de baja</button>
+                        </form>
+                        <?php else: ?> <!---aca falta cambiar que se de de baja un omniibus en vez de usuarios-->
+                            <em>(vos)</em>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+
+        <!-- ALTA DE VIAJE -->
+        <div class="tarjeta" id="altaV">
+            <h1>Dar de alta un usuario</h1>
+
+            <form action="alta_viaje.php" method="POST">
+
+                <div class="campo">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" required>
+                </div>
+
+                <div class="campo">
+                    <label>Apellido</label>
+                    <input type="text" name="apellido" required>
+                </div>
+
+                <div class="campo">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="campo">
+                    <label>Teléfono</label>
+                    <input type="text" name="telefono" required>
+                </div>
+
+                <div class="campo">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" required minlength="6">
+                </div>
+
+                <div class="campo">
+                    <label>Tipo de usuario</label>
+                    <select name="tipo" required>
+                        <option value="usuario">Usuario</option>
+                        <option value="chofer">Chofer</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Dar de alta</button>
+
+            </form>
         </div>
 
     </div>

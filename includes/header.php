@@ -113,9 +113,9 @@
 
         <!-- Links centrados -->
         <ul class="navbar-links">
-            <li><a href="/PROYECTOUTU2/public/index.php">Inicio</a></li>
-            <li><a href="/PROYECTOUTU2/public/sobre_nosotros.php">Nosotros</a></li>
-            <li><a href="/PROYECTOUTU2/public/welcome.php">Panel</a></li>
+            <li><a href="/ProyectoUTU2/public/index.php">Inicio</a></li>
+            <li><a href="/ProyectoUTU2/public/sobre_nosotros.php">Nosotros</a></li>
+            <li><a href="/ProyectoUTU2/public/welcome.php">Panel</a></li>
         </ul>
 
         <!-- Ícono usuario a la derecha -->

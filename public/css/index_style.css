@@ -2,12 +2,11 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e0e0e0;
     flex-direction: column;
     margin: 50px;
     background-image:
         linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url("/PROYECTOUTU2/public/img/fondo.jpg");
+        url("/img/cot.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
