@@ -31,8 +31,8 @@ const horariosPorLinea = {
 
 // Cargar archivos de configuración geográfica locales (rutas y paradas)
 Promise.all([
-    fetch('js/rutasomnibus.json').then(res => res.json()),
-    fetch('js/paradasomnibus.json').then(res => res.json())
+    fetch('../js/rutasomnibus.json').then(res => res.json()),
+    fetch('../js/paradasomnibus.json').then(res => res.json())
 ]).then(([dataRutas, dataParadas]) => {
     rutasData = dataRutas;
     paradasData = dataParadas;

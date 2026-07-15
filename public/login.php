@@ -5,7 +5,7 @@
     session_start();
 
     if (isset($_SESSION['user_id'])) {
-        header('Location: welcome.php');
+        header('Location: ../public/welcome.php');
         exit();
     }
 
@@ -28,7 +28,7 @@
             $_SESSION['user_id']   = $loggedUser['id'];
             $_SESSION['user_name'] = $loggedUser['nombre'];
             $_SESSION['user_tipo'] = $loggedUser['tipo'];
-            header('Location: welcome.php');
+            header('Location: ../public/welcome.php');
             exit();
         } else {
             $loginError = 'Email o contraseña incorrectos.';
@@ -63,7 +63,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -72,7 +72,7 @@
         <main>
             <div class="card">
                 <!-- Logo -->
-                <div class="brand-logo"><img src="img/logotipo.png" style="height: 100px;"></div>
+                <div class="brand-logo"><img src="../img/logotipo.png" style="height: 100px;"></div>
 
                 <!-- Tabs -->
                 <div class="tabs" role="tablist">
@@ -98,7 +98,7 @@
                     <?php } ?>
 
                     <!-- Formulario de login -->
-                    <form method="POST" action="login.php" novalidate>
+                    <form method="POST" action="../public/login.php" novalidate>
                         <input type="hidden" name="action" value="login">
 
                         <div class="field">
@@ -132,7 +132,7 @@
                     <p class="form-subtitle">Completá tus datos para registrarte.</p>
                     
                     <!-- Formulario de registro -->
-                    <form method="POST" action="login.php" novalidate>
+                    <form method="POST" action="../public/login.php" novalidate>
                         <input type="hidden" name="action" value="register">
 
                         <div class="field-row">

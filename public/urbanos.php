@@ -7,7 +7,7 @@
     
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="css/index_style.css">
+    <link rel="stylesheet" href="../css/index_style.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -15,7 +15,7 @@
     <div class="padre">
         <!-- Botón para regresar al Index -->
         <div class="navegacion-paginas">
-            <a href="index.php" class="btn-enlace">← Volver a Interurbanos</a>
+            <a href="../public/index.php" class="btn-enlace">← Volver a Interurbanos</a>
         </div>
 
         <h1>Ómnibus Urbanos</h1>
@@ -56,6 +56,6 @@
 
     <!-- JS de Leaflet y Script específico de Urbanos -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/urbanos.js"></script>
+    <script src="../js/urbanos.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 
     // Verificar sesión
     if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php');
+        header('Location: ../public/login.php');
         exit();
     }
 
@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Chofer</title>
-    <link rel="stylesheet" href="css/chofer.css">
+    <link rel="stylesheet" href="../css/chofer.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -31,15 +31,15 @@
         <!-- Contenedor de empresas y formulario -->
         <div class="empresas" id="listaEmpresas">
             <button class="empresa-btn" onclick="mostrarFormulario('TAB')">
-                <img src="img/tab.png" alt="TAB">
+                <img src="../img/tab.png" alt="TAB">
             </button>
 
             <button class="empresa-btn" onclick="mostrarFormulario('COT')">
-                <img src="img/cot.png" alt="COT">
+                <img src="../img/cot.png" alt="COT">
             </button>
 
             <button class="empresa-btn" onclick="mostrarFormulario('TURIL')">
-                <img src="img/turil.svg" alt="TURIL">
+                <img src="../img/turil.svg" alt="TURIL">
             </button>
         </div>
 
@@ -48,7 +48,7 @@
             <h2 class="empresa-seleccionada" id="empresaElegida"></h2>
 
             <!-- Formulario que envía la ubicación al servidor -->
-            <form action="procesar_ubicacion.php" method="POST" onsubmit="return confirmarEnvio()">
+            <form action="../public/procesar_ubicacion.php" method="POST" onsubmit="return confirmarEnvio()">
                 <input type="hidden" name="empresa" id="empresaInput">
 
                 <!-- Campo para mostrar el nombre del chofer -->
@@ -126,7 +126,7 @@
 
     <!-- Botón de cerrar sesión -->
     <div class="logout-container">
-        <button class="btn-logout" onclick="window.location.href='logout.php'">
+        <button class="btn-logout" onclick="window.location.href='../public/logout.php'">
             Cerrar sesión
         </button>
     </div>

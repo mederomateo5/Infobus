@@ -3,18 +3,18 @@
 
     // Verificar sesión
     if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php');
+        header('Location: ../public/login.php');
         exit();
     }
 
     // Redirigir según el tipo de usuario
     switch ($_SESSION['user_tipo']) {
         case 'chofer':
-            header('Location: chofer.php');
+            header('Location: ../public/chofer.php');
             exit();
 
         case 'administrador':
-            header('Location: panel_admin.php');
+            header('Location: ../public/panel_admin.php');
             exit();
 
         case 'usuario':
@@ -23,7 +23,7 @@
 
         default:
             // Tipo desconocido, por las dudas lo mandamos al login
-            header('Location: login.php');
+            header('Location: ../public/login.php');
             exit();
     }
 ?>
@@ -34,7 +34,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Usuario</title>
-    <link rel="stylesheet" href="css/welcome.css">
+    <link rel="stylesheet" href="../css/welcome.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -49,7 +49,7 @@
             <button class="menu-btn" onclick="mostrarSeccion('opcion2', this)">Opción 2</button>
             <button class="menu-btn" onclick="mostrarSeccion('opcion3', this)">Opción 3</button>
 
-            <button class="menu-btn salir" onclick="window.location.href='logout.php'">Cerrar sesión</button>
+            <button class="menu-btn salir" onclick="window.location.href='../public/logout.php'">Cerrar sesión</button>
         </div>
 
         <!-- ---------- Contenido ---------- -->

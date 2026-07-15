@@ -11,7 +11,7 @@
 
     // Solo aceptar POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: panel_admin.php');
+        header('Location: ../public/panel_admin.php');
         exit();
     }
 
@@ -19,7 +19,7 @@
 
     // Validar que el ID sea un número entero positivo
     if (!$id || !ctype_digit((string)$id)) {
-        header('Location: panel_admin.php?msg=' . urlencode('Viaje inválido.'));
+        header('Location: ../public/panel_admin.php?msg=' . urlencode('Viaje inválido.'));
         exit();
     }
 
@@ -28,12 +28,12 @@
         $eliminar = $pdo->prepare("DELETE FROM omnibus WHERE id = ?");
         $eliminar->execute([$id]);
 
-        header('Location: panel_admin.php?msg=' . urlencode('Viaje eliminado correctamente.'));
+        header('Location: ../public/panel_admin.php?msg=' . urlencode('Viaje eliminado correctamente.'));
         exit();
 
     } catch (PDOException $e) {
         // En caso de error, redirigimos con un mensaje de error
-        header('Location: panel_admin.php?msg=' . urlencode('Error al eliminar el viaje de la base de datos.'));
+        header('Location: ../public/panel_admin.php?msg=' . urlencode('Error al eliminar el viaje de la base de datos.'));
         exit();
     }
 ?>

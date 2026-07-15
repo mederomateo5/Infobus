@@ -2,6 +2,6 @@
     // Iniciar sesión y destruirla
     session_start();
     session_destroy();
-    header('Location: login.php');
+    header('Location: ../public/login.php');
     exit();
 ?>

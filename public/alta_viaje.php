@@ -10,7 +10,7 @@
 
     // Solo aceptar POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: panel_admin.php');
+        header('Location: ../public/panel_admin.php');
         exit();
     }
 
@@ -34,7 +34,7 @@
         $precio === false || !in_array($agencia, $agenciasValidas) || 
         $fecha === '' || $hora === '' || $hora_llegada === ''
     ) {
-        header('Location: panel_admin.php?msg=' . urlencode('Faltan datos o se ingresaron valores inválidos.'));
+        header('Location: ../public/panel_admin.php?msg=' . urlencode('Faltan datos o se ingresaron valores inválidos.'));
         exit();
     }
 
@@ -66,12 +66,12 @@
         ]);
 
         // Redirigir al panel de administrador con un mensaje de éxito
-        header('Location: panel_admin.php?msg=' . urlencode('Viaje registrado correctamente.'));
+        header('Location: ../public/panel_admin.php?msg=' . urlencode('Viaje registrado correctamente.'));
         exit();
 
     } catch (PDOException $e) {
         // En caso de error, redirigimos con un mensaje de error
-        header('Location: panel_admin.php?msg=' . urlencode('Error en la base de datos al dar de alta el viaje.'));
+        header('Location: ../public/panel_admin.php?msg=' . urlencode('Error en la base de datos al dar de alta el viaje.'));
         exit();
     }
 ?>

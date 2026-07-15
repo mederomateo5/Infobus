@@ -3,7 +3,7 @@
 
     // Verificar sesión
     if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php');
+        header('Location: ../public/login.php');
         exit();
     }
 
@@ -34,7 +34,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administrador</title>
-    <link rel="stylesheet" href="css/panel_admin.css">
+    <link rel="stylesheet" href="../css/panel_admin.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -104,7 +104,7 @@
                             <!-- Botón de baja solo si el usuario no es el mismo que está logueado -->
                             <td>
                                 <?php if ($u['id'] != $_SESSION['user_id']) { ?>
-                                    <form action="baja_usuario.php" method="POST" onsubmit="return confirm('¿Seguro que querés dar de baja a este usuario?');" style="display:inline;">
+                                    <form action="../public/baja_usuario.php" method="POST" onsubmit="return confirm('¿Seguro que querés dar de baja a este usuario?');" style="display:inline;">
                                         <input type="hidden" name="id" value="<?= htmlspecialchars($u['id']) ?>">
                                         <button type="submit" class="btn-baja">Dar de baja</button>
                                     </form>
@@ -121,7 +121,7 @@
             <div class="tarjeta" id="alta">
                 <h1>Dar de alta un usuario</h1>
 
-                <form action="alta_usuario.php" method="POST">
+                <form action="../public/alta_usuario.php" method="POST">
                     <div class="campo">
                         <label>Nombre</label>
                         <input type="text" name="nombre" required>
@@ -203,7 +203,7 @@
                             <td><?= htmlspecialchars($v['hora_llegada']) ?></td>
                             <td>
                                 <!-- Botón de baja de viaje -->
-                                <form action="baja_viaje.php" method="POST" onsubmit="return confirm('¿Seguro que querés eliminar este viaje?');" style="display:inline;">
+                                <form action="../public/baja_viaje.php" method="POST" onsubmit="return confirm('¿Seguro que querés eliminar este viaje?');" style="display:inline;">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($v['id']) ?>">
                                     <button type="submit" class="btn-baja">Eliminar</button>
                                 </form>
@@ -217,7 +217,7 @@
             <div class="tarjeta" id="altaV">
                 <h1>Dar de alta un viaje</h1>
 
-                <form action="alta_viaje.php" method="POST">
+                <form action="../public/alta_viaje.php" method="POST">
                     <div class="campo">
                         <label>Número de Ómnibus</label>
                         <input type="number" name="n_omnibus" required min="1">

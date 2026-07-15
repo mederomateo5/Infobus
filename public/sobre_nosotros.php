@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros</title>
-    <link rel="stylesheet" href="css/sobre_nosotros.css">
+    <link rel="stylesheet" href="../css/sobre_nosotros.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
     <main>
         <div class="info">
-            <img src="img/Placeholder_Person.jpg" alt="">
+            <img src="../img/Placeholder_Person.jpg" alt="">
             <h2>Sebastian De León<br> Tester</h2>
             <p>
                 Como tester (QA), se encarga de detectar y corregir errores, realizar pruebas de 
@@ -20,7 +20,7 @@
             </p>
         </div class="info">
         <div class="info">
-            <img src="img/Placeholder_Person.jpg" alt="">
+            <img src="../img/Placeholder_Person.jpg" alt="">
             <h2>Alejo Medina<br> Documentación</h2>
             <p>
                 Responsable de la documentación y las entrevistas, realiza informes técnicos, actas, 
@@ -29,7 +29,7 @@
             </p>
         </div>
         <div class="info">
-            <img src="img/Placeholder_Person.jpg" alt="">
+            <img src="../img/Placeholder_Person.jpg" alt="">
             <h2>Thiago Rodriguez<br> Desarrolador Front-end</h2>
             <p>
                 Como desarrollador Front-end, se encarga de desarrollar el diseño visual y la 
@@ -39,7 +39,7 @@
             </p>
         </div>
         <div class="info">
-            <img src="img/Placeholder_Person.jpg" alt="">
+            <img src="../img/Placeholder_Person.jpg" alt="">
             <h2>Mateo Medero<br> Project Manager</h2>
             <p>
                 Coordinador general o Project Manager, se encarga de planificar, organizar y supervisar 
@@ -48,7 +48,7 @@
             </p>
         </div>
         <div class="info">
-            <img src="img/Placeholder_Person.jpg" alt="">
+            <img src="../img/Placeholder_Person.jpg" alt="">
             <h2>Marcelo Méndez<br> Desarrolador Back-end</h2>
             <p>
                 Como desarrollador Back-end, se ocupa de desarrollar las funcionalidades del sistema, 
