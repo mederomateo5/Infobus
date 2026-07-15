@@ -1,42 +1,43 @@
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, sans-serif;
-        }
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
-       body{
+body {
     margin: 0;
 
+    /* Establecemos un fondo con una imagen y un degradado semitransparente */
     background-image:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url("../img/fondo.jpg");
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("../img/fondo.jpg");
 
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-        }
+}
 
-        .contenedor{
-            max-width:900px;
-            margin:30px auto;
-            padding:20px;
-        }
+.contenedor {
+    max-width:900px;
+    margin:30px auto;
+    padding:20px;
+}
 
-        h1{
-            text-align:center;
-            color:#1877f2;
-            margin-bottom:25px;
-        }
+h1 {
+    text-align:center;
+    color:white;
+    margin-bottom:25px;
+}
 
-        .empresas{
-            display:flex;
-            flex-direction:column;
-            gap:15px;
-        }
+.empresas {
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
 
-        .empresa-btn{
+.empresa-btn {
     width:100%;
     border:none;
     background:white;
@@ -52,68 +53,68 @@
     transition:.2s;
 }
 
-        .empresa-btn:hover{
-            transform:translateY(-2px);
-        }
+.empresa-btn:hover {
+    transform:translateY(-2px);
+}
 
-        .empresa-btn img{
+.empresa-btn img {
     width:180px;
     height:120px;
     object-fit:contain;
     display:block;
 }
 
-        .empresa-btn span{
-            font-size:20px;
-            font-weight:bold;
-            color:#333;
-        }
+.empresa-btn span {
+    font-size:20px;
+    font-weight:bold;
+    color:#333;
+}
 
-        .formulario{
-            display:none;
-            background:white;
-            padding:25px;
-            border-radius:12px;
-            box-shadow:0 2px 8px rgba(0,0,0,.1);
-        }
+.formulario {
+    display:none;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
 
-        .campo{
-            display:flex;
-            flex-direction:column;
-            margin-bottom:15px;
-        }
+.campo {
+    display:flex;
+    flex-direction:column;
+    margin-bottom:15px;
+}
 
-        .campo label{
-            margin-bottom:5px;
-            font-weight:bold;
-        }
+.campo label {
+    margin-bottom:5px;
+    font-weight:bold;
+}
 
-        .campo input{
-            padding:10px;
-            border:1px solid #ccc;
-            border-radius:6px;
-        }
+.campo input {
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
 
-        .btn{
-            background:#1877f2;
-            color:white;
-            border:none;
-            padding:12px;
-            border-radius:6px;
-            cursor:pointer;
-            font-weight:bold;
-        }
+.btn {
+    background:#1877f2;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
 
-        .btn:hover{
-            background:#166fe5;
-        }
+.btn:hover {
+    background:#166fe5;
+}
 
-        .empresa-seleccionada{
-            text-align:center;
-            color:#1877f2;
-            margin-bottom:20px;
-        }
-        .logout-container {
+.empresa-seleccionada {
+    text-align:center;
+    color:#1877f2;
+    margin-bottom:20px;
+}
+.logout-container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -123,8 +124,8 @@
 
 .btn-logout {
     background: transparent;
-    border: 2px solid red;
-    color: red;
+    border: 2px solid white;
+    color: white;
     font-weight: bold;
     padding: 12px 25px;
     border-radius: 8px;

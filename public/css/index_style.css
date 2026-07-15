@@ -1,20 +1,21 @@
-body{
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     margin: 50px;
+    /* Establecemos un fondo con una imagen y un degradado semitransparente */
     background-image:
         linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url("/img/cot.png");
+        url("../img/fondo.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-        
 }
 
-.padre{
+/* Contenedor principal */
+.padre {
     margin-top: 50px;
     width: 900px;
     background-color: #f0f0f0;
@@ -28,32 +29,33 @@ body{
     position: relative;
 }
 
-.hijo{
+/* Contenedor de formulario */
+.hijo {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.form{
+.form {
     display: grid;
     grid-template-columns: repeat(2,1fr);
     gap: 20px;
     width: 90%;
 }
 
-.options{
+.options {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-label{
+label {
     font-weight: bold;
     font-size: 14px;
 }
 
 input,
-select{
+select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -61,7 +63,8 @@ select{
     box-sizing: border-box;
 }
 
-input[type="submit"]{
+/* Botón de envío */
+input[type="submit"] {
     grid-column: 1 / 3;
     justify-self: center;
     width: 200px;
@@ -73,11 +76,12 @@ input[type="submit"]{
     transition: 0.3s;
 }
 
-input[type="submit"]:hover{
+input[type="submit"]:hover {
     background-color: #28558f;
 }
 
-.destinos{
+/* Contenedor de destinos */
+.destinos {
     margin-top: 30px;
     width: 900px;
     background-color: #f0f0f0;
@@ -90,38 +94,38 @@ input[type="submit"]:hover{
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.destinos_img{
+.destinos_img {
     display: flex;
     justify-content: space-around;
     width: 100%;
 }
 
-img{
+img {
     width: 120px;
     height: 120px;
 }
 
-/* MENSAJES DE ALERTA */
-#mensaje, #mensajeUrbano{
+/* Mensajes de error */
+#mensaje, #mensajeUrbano {
     margin-top: 15px;
     font-size: 18px;
     font-weight: bold;
     color: #c0392b;
 }
 
-/* TABLAS GENERALES */
-.horarios{
+/* Contenedor de horarios */
+.horarios {
     width: 100%;
     margin-top: 25px;
     animation: aparecer .3s ease;
 }
 
-.horarios h2, .horarios h3{
+.horarios h2, .horarios h3 {
     margin-bottom: 15px;
     color: #3469b2;
 }
 
-.horarios table{
+.horarios table {
     width: 100%;
     border-collapse: collapse;
     background: white;
@@ -130,34 +134,35 @@ img{
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
-.horarios th{
+.horarios th {
     background-color: #3469b2;
     color: white;
     padding: 14px;
     font-size: 15px;
 }
 
-.horarios td{
+.horarios td {
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid #e5e5e5;
 }
 
-.horarios tbody tr:nth-child(4n+1){
+.horarios tbody tr:nth-child(4n+1) {
     background-color: #f8f9fc;
 }
 
-.horarios tbody tr:hover{
+.horarios tbody tr:hover {
     background-color: #dfeaf8;
     transition: 0.2s;
 }
 
-@keyframes aparecer{
-    from{ opacity: 0; transform: translateY(10px); }
-    to{ opacity: 1; transform: translateY(0); }
+/* Animación de aparición */
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* BOTÓN DE CONTROL DE FLECHITA */
+/* Botón para mostrar/ocultar mapa */
 .btn-mapa {
     background: none;
     border: none;
@@ -167,26 +172,28 @@ img{
     transition: transform 0.3s ease;
     padding: 5px;
 }
+
 .btn-mapa.abierto { transform: rotate(180deg); }
 
-/* CONTENEDOR DE FILA EXPANDIDA DEL MAPA */
+/* Fila de mapa */
 .fila-mapa { background-color: #ffffff !important; }
 .fila-mapa td { padding: 0; border-bottom: 2px solid #3469b2; }
 
-/* CONTENEDOR DEL MAPA INDIVIDUAL DE FILA */
+/* Contenedor del mapa */
 .map-container { 
     height: 300px; 
     width: 100%; 
     display: none; 
 }
 
-/* ENLACES SUPERIORES DE NAVEGACIÓN ENTRE PÁGINAS */
+/* Navegación de páginas */
 .navegacion-paginas {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     margin-bottom: 15px;
 }
+
 .btn-enlace {
     background-color: #3469b2;
     color: white;
@@ -197,6 +204,7 @@ img{
     font-weight: bold;
     transition: 0.3s;
 }
+
 .btn-enlace:hover {
     background-color: #28558f;
 }

@@ -113,14 +113,14 @@
 
         <!-- Links centrados -->
         <ul class="navbar-links">
-            <li><a href="/ProyectoUTU2/public/index.php">Inicio</a></li>
-            <li><a href="/ProyectoUTU2/public/sobre_nosotros.php">Nosotros</a></li>
-            <li><a href="/ProyectoUTU2/public/welcome.php">Panel</a></li>
+            <li><a href="../public/index.php">Inicio</a></li>
+            <li><a href="../public/sobre_nosotros.php">Nosotros</a></li>
+            <li><a href="../public/welcome.php">Panel</a></li>
         </ul>
 
         <!-- Ícono usuario a la derecha -->
         <div class="navbar-user">
-            <a href="/ProyectoUTU2/public/login.php" title="Iniciar sesión">
+            <a href="../public/login.php" title="Iniciar sesión">
                 <i class="fa-solid fa-user"></i>
             </a>
 

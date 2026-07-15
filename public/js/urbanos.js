@@ -3,19 +3,19 @@ const resultadosUrbanos = document.getElementById("resultadosUrbanos");
 const tablaHorariosUrbanos = document.getElementById("tablaHorariosUrbanos");
 const mensajeUrbano = document.getElementById("mensajeUrbano");
 
-//variables para almacenar los datos de rutas y paradas
+// Variables para almacenar los datos de rutas y paradas, así como el estado de los mapas inicializados
 let rutasData = {};       
 let paradasData = [];     
 let mapasInicializados = {}; 
 
-//definimos que omnibus pasan por cada pueblo
+// Cargar archivos de configuración geográfica locales (rutas y paradas)
 const lineasPorUbicacion = {
     "juan-lacaze": ["urbano", "ruta1"],
     "colonia": ["ruta1"],
     "montevideo": ["urbano"]
 };
 
-//definimos los horarios para probar cada línea
+// Cargar archivos de configuración geográfica locales (rutas y paradas)
 const horariosPorLinea = {
     urbano: [
         { salida: "07:00", llegada: "07:25", frecuencia: "Lunes a Viernes", empresa: "Coche 14" },
@@ -29,7 +29,7 @@ const horariosPorLinea = {
     ]
 };
 
-//traemos los datos de rutas y paradas desde los archivos json
+// Cargar archivos de configuración geográfica locales (rutas y paradas)
 Promise.all([
     fetch('js/rutasomnibus.json').then(res => res.json()),
     fetch('js/paradasomnibus.json').then(res => res.json())
@@ -39,39 +39,39 @@ Promise.all([
 }).catch(error => console.error("Error al traer mapas urbanos:", error));
 
 
-//cuando el usuario cambia la ubicación en el select
+// Escucha del cambio en el select de ubicación
 selectUbicacion.addEventListener("change", function() {
-    const ubicacionSeleccionada = this.value; //guardamos la ubicación que eligió
+    const ubicacionSeleccionada = this.value; // Obtenemos la ubicación seleccionada
     
-    //borramos todo lo que se estaba mostrando antes
+    // Resetear la tabla y el mensaje antes de mostrar nuevos resultados
     tablaHorariosUrbanos.innerHTML = "";
     mensajeUrbano.textContent = "";
     resultadosUrbanos.style.display = "none";
     mapasInicializados = {};
 
-    //buscamos que líneas le corresponden a ese lugar
+    // Obtenemos las líneas disponibles para la ubicación seleccionada
     const lineasDisponibles = lineasPorUbicacion[ubicacionSeleccionada] || [];
 
-    //si no hay omnibus disponibles, se muestra un mensaje
+    // Si no hay líneas disponibles, mostramos un mensaje y salimos
     if (lineasDisponibles.length === 0) {
         mensajeUrbano.textContent = "No hay líneas urbanas registradas para esta zona";
         return;
     }
 
-    //si hay omnibus disponibles, se arma la tabla con los horarios
+    // Si hay líneas disponibles, mostramos la tabla de resultados
     resultadosUrbanos.style.display = "block";
     
-    //creamos la fila de encabezados de la tabla
+    // Armamos la tabla de horarios urbanos según los ómnibus disponibles
     let globalIndex = 0;
 
-    //armamos la tabla de horarios urbanos según los omnibus disponibles
+    // Por cada línea disponible, obtenemos sus horarios y creamos filas en la tabla
     lineasDisponibles.forEach(llaveRuta => {
-        const infoRuta = rutasData[llaveRuta]; //trae el nombre y color de la línea
-        const listaHorarios = horariosPorLinea[llaveRuta] || []; //y los horarios de esa línea
+        const infoRuta = rutasData[llaveRuta]; // Obtenemos la información de la ruta desde el JSON cargado
+        const listaHorarios = horariosPorLinea[llaveRuta] || []; // Obtenemos los horarios de la línea desde el objeto de horarios
 
-        //creamos una fila por cada horario disponible
+        // Si no hay horarios para la línea, mostramos un mensaje y continuamos con la siguiente línea
         listaHorarios.forEach(h => {
-            //fila con los datos del horario y el botón para abrir el mapa
+            // Creamos una fila para cada horario y la agregamos a la tabla
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${h.salida}</td>
@@ -85,7 +85,7 @@ selectUbicacion.addEventListener("change", function() {
             `;
             tablaHorariosUrbanos.appendChild(fila);
 
-            //fila que tendrá el mapa, oculta al principio
+            // Creamos una fila adicional para el contenedor del mapa, que estará inicialmente oculta
             const filaMapa = document.createElement("tr");
             filaMapa.className = "fila-mapa";
             filaMapa.innerHTML = `
@@ -95,38 +95,38 @@ selectUbicacion.addEventListener("change", function() {
             `;
             tablaHorariosUrbanos.appendChild(filaMapa);
             
-            globalIndex++; //sumamos uno para el siguiente mapa
+            globalIndex++; // Incrementamos el índice global para la siguiente fila de mapa
         });
     });
 });
 
-//cuando el usuario hace click en un botón de mapa
+// Escucha del click en la tabla de horarios urbanos para abrir/cerrar mapas
 tablaHorariosUrbanos.addEventListener("click", function(e) {
-    const btn = e.target.closest(".btn-mapa"); //nos aseguramos de que el click haya sido en un botón de mapa
+    const btn = e.target.closest(".btn-mapa"); // Si el click no fue en un botón de mapa, salimos
     if (!btn) return; 
 
-    //obtenemos el index y la ruta de la fila que se quiere abrir
+    // Obtenemos el índice y la llave de la ruta desde los atributos del botón
     const index = btn.getAttribute("data-index");
     const llaveRuta = btn.getAttribute("data-ruta"); 
     const contenedorMapa = document.getElementById(`mapa-urbano-${index}`);
     
-    //cambiamos la clase del botón para que se vea abierto o cerrado
+    // Alternamos la clase 'abierto' del botón para cambiar su apariencia
     btn.classList.toggle("abierto"); 
     
-    //mostramos u ocultamos el contenedor del mapa según corresponda
+    // Alternamos la visibilidad del contenedor del mapa
     if (contenedorMapa.style.display === "block") {
         contenedorMapa.style.display = "none"; 
     } else {
         contenedorMapa.style.display = "block"; 
         
-        //si el mapa no estaba inicializado, lo inicializamos
+        // Si el mapa del índice actual no existe, lo inicializamos
         if (!mapasInicializados[index]) {
             inicializarMapaUrbanoFila(index, llaveRuta);
         }
     }
 });
 
-//función para dibujar el mapa del urbano
+// Función para inicializar el mapa de una fila urbana específica
 function inicializarMapaUrbanoFila(index, llaveRuta) {
     const idContenedor = `mapa-urbano-${index}`;
     const map = L.map(idContenedor).setView([-34.42, -57.44], 13);
@@ -138,31 +138,31 @@ function inicializarMapaUrbanoFila(index, llaveRuta) {
     const datosDeRuta = rutasData[llaveRuta];
     
     if (datosDeRuta && datosDeRuta.coordinates) {
-        //geojson usa [longitud, latitud] pero Leaflet usa [latitud, longitud]
-        //por eso las invertimos, para que se dibuje correctamente en el mapa
+        // Invertimos las coordenadas de latitud y longitud para que se dibuje correctamente en el mapa
         const coordenadasConvertidas = datosDeRuta.coordinates.map(coord => [coord[1], coord[0]]);
         
-        //dibujamos la línea de la ruta con el color correspondiente
+        // Creamos la línea de la ruta en el mapa con el color especificado en los datos de la ruta
         const lineaRuta = L.polyline(coordenadasConvertidas, {
             color: datosDeRuta.color || '#3469b2',
             weight: 4
         }).addTo(map);
 
-        //agregamos los iconos de las paradas con su nombre y el omnibus al que pertenecen
+        // Agregamos marcadores para cada parada de la ruta, mostrando el nombre de la 
+        // parada y la línea a la que pertenece
         paradasData.forEach(parada => {
             L.marker([parada.lat, parada.lng])
                 .addTo(map)
                 .bindPopup(`<b>${parada.nombre}</b><br>Línea: ${datosDeRuta.nombre}`);
         });
 
-        //hacemos que el mapa se ajuste automáticamente para mostrar toda la ruta
+        // Ajustamos el zoom del mapa para que se enfoque en la ruta trazada
         map.fitBounds(lineaRuta.getBounds());
     }
 
     mapasInicializados[index] = map;
 
-    //cuando el mapa se dibuja dentro de un contenedor que estaba oculto, a veces no se ve bien
-    //por eso usamos un pequeño retraso para forzar a Leaflet a recalcular el tamaño del mapa
+    // Forzamos una actualización del tamaño del mapa después de un pequeño retraso para 
+    // asegurar que se renderice correctamente
     setTimeout(() => {
         map.invalidateSize();
     }, 50);

@@ -15,7 +15,7 @@ body {
     align-items: center;
 }
 
-/* ── Layout centrado ── */
+/* Layout centrado */
 .page {
     width: 100%;
     display: flex;
@@ -34,7 +34,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* ── Logo / título ── */
+/* Logo / título */
 .brand-logo {
     font-size: 28px;
     font-weight: bold;
@@ -43,7 +43,7 @@ body {
     margin-bottom: 16px;
 }
 
-/* ── Tabs ── */
+/* Tabs */
 .tabs {
     display: flex;
     border-bottom: 1px solid #dddfe2;
@@ -68,7 +68,7 @@ body {
     border-bottom: 3px solid #1877f2;
 }
 
-/* ── Secciones de formulario ── */
+/* Secciones de formulario */
 .form-section { display: none; }
 .form-section.active { display: block; }
 
@@ -85,7 +85,7 @@ body {
     margin-bottom: 16px;
 }
 
-/* ── Campos ── */
+/* Campos */
 .field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -149,7 +149,7 @@ body {
     min-height: 15px;
 }
 
-/* ── Fuerza de contraseña ── */
+/* Fuerza de contraseña */
 .pass-strength {
     display: flex;
     gap: 4px;
@@ -164,6 +164,7 @@ body {
     transition: background-color 0.3s;
 }
 
+/* Colores de fuerza de contraseña */
 .strength-bar.weak   { background-color: #e02020; }
 .strength-bar.medium { background-color: #f5a623; }
 .strength-bar.strong { background-color: #42b72a; }
@@ -174,7 +175,7 @@ body {
     margin-top: 3px;
 }
 
-/* ── Botón principal ── */
+/* Botón principal */
 .btn-primary {
     width: 100%;
     padding: 12px;
@@ -196,7 +197,7 @@ body {
     background-color: #1464d2;
 }
 
-/* ── Alerta de error ── */
+/* Alerta de error */
 .alert {
     padding: 10px 12px;
     border-radius: 6px;

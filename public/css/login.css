@@ -1,23 +1,24 @@
-*{
+* {
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-body{
+body {
     background:#e9f0fb;
     font-family:Arial,sans-serif;
     font-size:14px;
     color:#1c1e21;
 }
 
-.page{
+/* Layout centrado */
+.page {
     width:100%;
     text-align:center;
     padding:30px;
 }
 
-.card{
+.card {
     width:400px;
     margin:auto;
     background:#fff;
@@ -27,18 +28,19 @@ body{
     box-shadow:0 2px 8px rgba(0,0,0,.1);
 }
 
-.brand-logo{
+.brand-logo {
     text-align:center;
     margin-bottom:15px;
 }
 
-.tabs{
+/* Tabs */
+.tabs {
     width:100%;
     margin-bottom:20px;
     border-bottom:1px solid #dddfe2;
 }
 
-.tab-btn{
+.tab-btn {
     width:49%;
     padding:12px;
     background:white;
@@ -50,51 +52,54 @@ body{
     cursor:pointer;
 }
 
-.tab-btn.active{
+.tab-btn.active {
     color:#1877f2;
     border-bottom:3px solid #1877f2;
 }
 
-.form-section{
+/* Formulario */
+.form-section {
     display:none;
 }
 
-.form-section.active{
+.form-section.active {
     display:block;
 }
 
-.form-title{
+/* Títulos y subtítulos */
+.form-title {
     font-size:20px;
     font-weight:bold;
     margin-bottom:5px;
 }
 
-.form-subtitle{
+.form-subtitle {
     font-size:13px;
     color:#606770;
     margin-bottom:15px;
 }
 
-.field-row{
+/* Campos del formulario */
+.field-row {
     display:flex;
     justify-content:space-between;
 }
 
-.field-row .field{
+.field-row .field {
     width:48%;
 }
 
-.field{
+.field {
     text-align:left;
     margin-bottom:12px;
 }
 
-.field label{
+.field label {
     font-size:13px;
     font-weight:bold;
 }
 
-.info-icon{
+.info-icon {
     display:inline-block;
     width:14px;
     height:14px;
@@ -108,7 +113,7 @@ body{
     font-style:italic;
 }
 
-.field input{
+.field input {
     width:100%;
     margin-top:4px;
     padding:10px;
@@ -117,24 +122,24 @@ body{
     font-size:14px;
 }
 
-.field input:focus{
+.field input:focus {
     border:1px solid #1877f2;
 }
 
-.field input.invalid{
+.field input.invalid {
     border:1px solid #e02020;
 }
 
-.field-error{
+.field-error {
     color:#e02020;
     font-size:12px;
 }
 
-.pass-strength{
+.pass-strength {
     margin-top:5px;
 }
 
-.strength-bar{
+.strength-bar {
     display:inline-block;
     width:31%;
     height:4px;
@@ -142,23 +147,23 @@ body{
     border-radius:4px;
 }
 
-.strength-bar.weak{
+.strength-bar.weak {
     background:#e02020;
 }
 
-.strength-bar.medium{
+.strength-bar.medium {
     background:#f5a623;
 }
 
-.strength-bar.strong{
+.strength-bar.strong {
     background:#42b72a;
 }
 
-.strength-label{
+.strength-label {
     font-size:12px;
     margin-top:5px;
 }
-.btn-primary{
+.btn-primary {
     width:100%;
     padding:12px;
     margin-top:10px;
@@ -171,22 +176,22 @@ body{
     cursor:pointer;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
     background:#166fe5;
 }
 
-.btn-primary:active{
+.btn-primary:active {
     background:#1464d2;
 }
 
-.alert{
+.alert {
     margin-bottom:15px;
     padding:10px;
     border-radius:6px;
     font-size:13px;
 }
 
-.alert-error{
+.alert-error {
     background:#fff0f0;
     border:1px solid #f5c6c6;
     color:#e02020;

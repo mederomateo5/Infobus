@@ -1,3 +1,32 @@
+<?php
+    // Incluir la conexión a la base de datos
+    require_once '../config/database.php';
+
+    // Obtener orígenes disponibles en la base de datos
+    try {
+        $stmt_origenes = $pdo->query("SELECT DISTINCT origen FROM omnibus WHERE ya_salio = 0 ORDER BY origen ASC");
+        $origenes = $stmt_origenes->fetchAll(PDO::FETCH_COLUMN);
+    } catch (PDOException $e) {
+        $origenes = [];
+    }
+
+    // Respaldo por si la base de datos está vacía
+    if (empty($origenes)) {
+        $origenes = ['Montevideo', 'Paysandú', 'Salto'];
+    }
+
+    // Obtener destinos disponibles en la base de datos
+    try {
+        $stmt_destinos = $pdo->query("SELECT DISTINCT destino FROM omnibus WHERE ya_salio = 0 ORDER BY destino ASC");
+        $destinos = $stmt_destinos->fetchAll(PDO::FETCH_COLUMN);
+    } catch (PDOException $e) {
+        $destinos = [];
+    }
+
+    if (empty($destinos)) {
+        $destinos = ['Montevideo', 'Paysandú', 'Punta del Este', 'Salto'];
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,34 +38,28 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/index_style.css">
 </head>
-<body style="    background-image:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url(img/fondo.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;">
-    
+<body>
     <?php include '../includes/header.php'; ?>
 
+    <!-- Contenedor principal -->
     <div class="padre">
-        <!-- Botón para conectar con la sección de Urbanos -->
+        <!-- Botón para ir a la página de urbanos -->
         <div class="navegacion-paginas">
             <a href="urbanos.php" class="btn-enlace">Ir a Ómnibus Urbanos →</a>
         </div>
 
         <h1>Encuentra tu próximo viaje Interurbano</h1>
-
+        
+        <!-- Formulario de búsqueda de viajes -->
         <div class="hijo">
             <form class="form" id="formBusqueda">
-
                 <div class="options">
                     <label for="origen">Origen</label>
                     <select name="origen" id="origen" required>
                         <option value="" disabled selected hidden>Selecciona un origen</option>
-                        <option value="Montevideo">Montevideo</option>
-                        <option value="Paysandú">Paysandú</option>
-                        <option value="Salto">Salto</option>
+                        <?php foreach ($origenes as $ori) { ?>
+                            <option value="<?= htmlspecialchars($ori) ?>"><?= htmlspecialchars($ori) ?></option>
+                        <?php } ?>
                     </select>
                 </div>
 
@@ -44,10 +67,9 @@
                     <label for="destino">Destino</label>
                     <select name="destino" id="destino" required>
                         <option value="" disabled selected hidden>Selecciona un destino</option>
-                        <option value="Montevideo">Montevideo</option>
-                        <option value="Paysandú">Paysandú</option>
-                        <option value="Punta del Este">Punta del Este</option>
-                        <option value="Salto">Salto</option>
+                        <?php foreach ($destinos as $des) { ?>
+                            <option value="<?= htmlspecialchars($des) ?>"><?= htmlspecialchars($des) ?></option>
+                        <?php } ?>
                     </select>
                 </div>
 
@@ -65,8 +87,10 @@
             </form>
         </div>
 
+        <!-- Mensaje de error o información -->
         <p id="mensaje"></p>
 
+        <!-- Contenedor para mostrar los resultados de la búsqueda -->
         <div class="horarios" id="contenedorHorarios" style="display:none;">
             <h2>Viajes encontrados</h2>
             <table>
@@ -75,17 +99,19 @@
                         <th>Origen</th>
                         <th>Destino</th>
                         <th>Fecha</th>
-                        <th>Asientos</th>
+                        <th>Asientos Disp.</th>
                         <th>Agencia</th>
                         <th>Precio</th>
                         <th>Ruta</th>
                     </tr>
                 </thead>
+                <!-- Cuerpo de la tabla donde se mostrarán los resultados -->
                 <tbody id="tablaHorarios"></tbody>
             </table>
-        </div>
-    </div>
+        </div> <!-- Fin Contenedor de Resultados -->
+    </div> <!-- Fin Contenedor Principal -->
 
+    <!-- Contenedor de destinos populares -->
     <div class="destinos">
         <h1>Destinos Populares</h1>
         <div class="destinos_img">
@@ -96,7 +122,7 @@
         </div>
     </div>
 
-    <!-- JS de Leaflet y Script específico de Interurbanos -->
+    <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/scripts.js"></script>
 </body>

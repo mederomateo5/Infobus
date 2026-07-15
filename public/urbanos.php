@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ómnibus Urbanos</title>
+    <title>Urbanos</title>
     
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -20,7 +20,7 @@
 
         <h1>Ómnibus Urbanos</h1>
 
-        <div class="hijo">
+        <div class="hijo"> <!-- Formulario para asignar la ubicación de los urbanos -->
             <form class="form" id="formUbicacion">
                 <div class="options" style="grid-column: 1 / 3;">
                     <label for="ubicacion">Selecciona tu ubicación</label>
@@ -34,7 +34,7 @@
             </form>
         </div>
 
-        <p id="mensajeUrbano"></p>
+        <p id="mensajeUrbano"></p> <!-- Mensaje que se mostrará si no hay horarios disponibles -->
 
         <!-- Tabla de resultados (Oculta al principio, aparece al elegir ubicación) -->
         <div class="horarios" id="resultadosUrbanos" style="display:none;">

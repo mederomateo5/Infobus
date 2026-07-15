@@ -1,18 +1,17 @@
 <?php
-session_start();
+    session_start();
 
-// Verificar sesión
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
+    // Verificar sesión
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: login.php');
+        exit();
+    }
 
-// Verificar que sea chofer
-if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
-    die("Acceso denegado. Esta página es exclusiva para choferes.");
-}
+    // Verificar que sea chofer
+    if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
+        die("Acceso denegado. Esta página es exclusiva para choferes.");
+    }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,124 +21,114 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
     <link rel="stylesheet" href="css/chofer.css">
 </head>
 <body>
+    <?php include '../includes/header.php'; ?>
 
-<?php include '../includes/header.php'; ?>
+    <div class="contenedor">
+        <br><br><br>
+        <h1>Bienvenido, <?= htmlspecialchars($_SESSION['user_name']) ?></h1>
+        <h1>Selecciona una empresa</h1>
 
-<div class="contenedor">
-
-    <h1>Selecciona una empresa</h1> <!--poner padding que no se ve -->
-
-    <div class="empresas" id="listaEmpresas">
-
-        <button class="empresa-btn" onclick="mostrarFormulario('CUTCSA')">
-            <img src="img/tab.png" alt="CUTCSA">
-        </button>
-
-        <button class="empresa-btn" onclick="mostrarFormulario('COPSA')">
-            <img src="img/cot.png" alt="COPSA">
-        </button>
-
-        <button class="empresa-btn" onclick="mostrarFormulario('COME')">
-            <img src="img/turil.svg" alt="COME">
-        </button>
-
-    </div>
-
-    <div class="formulario" id="formulario">
-
-        <h2 class="empresa-seleccionada" id="empresaElegida"></h2>
-
-        <form action="procesar_ubicacion.php" method="POST" onsubmit="return confirmarEnvio()">
-
-            <input type="hidden" name="empresa" id="empresaInput">
-
-            <div class="campo">
-                <label>Nombre</label>
-                <input
-                    type="text"
-                    name="nombre"
-                    value="<?= htmlspecialchars($_SESSION['user_name']) ?>"
-                    required
-                >
-            </div>
-
-            <div class="campo">
-                <label>Latitud</label>
-                <input type="text" name="coordenada1" id="latitud" readonly required>
-            </div>
-
-            <div class="campo">
-                <label>Longitud</label>
-                <input type="text" name="coordenada2" id="longitud" readonly required>
-            </div>
-
-            <button type="button" class="btn" onclick="obtenerUbicacion()">
-                Obtener ubicación
+        <!-- Contenedor de empresas y formulario -->
+        <div class="empresas" id="listaEmpresas">
+            <button class="empresa-btn" onclick="mostrarFormulario('TAB')">
+                <img src="img/tab.png" alt="TAB">
             </button>
 
-            <br><br>
-
-            <button type="submit" class="btn">
-                Enviar
+            <button class="empresa-btn" onclick="mostrarFormulario('COT')">
+                <img src="img/cot.png" alt="COT">
             </button>
 
-        </form>
-    
-    </div>
+            <button class="empresa-btn" onclick="mostrarFormulario('TURIL')">
+                <img src="img/turil.svg" alt="TURIL">
+            </button>
+        </div>
 
-</div>
+        <!-- Formulario para enviar ubicación -->
+        <div class="formulario" id="formulario">
+            <h2 class="empresa-seleccionada" id="empresaElegida"></h2>
 
-<script>
+            <!-- Formulario que envía la ubicación al servidor -->
+            <form action="procesar_ubicacion.php" method="POST" onsubmit="return confirmarEnvio()">
+                <input type="hidden" name="empresa" id="empresaInput">
 
-function mostrarFormulario(nombreEmpresa){
+                <!-- Campo para mostrar el nombre del chofer -->
+                <div class="campo">
+                    <label>Nombre</label>
+                    <input
+                        type="text"
+                        name="nombre"
+                        value="<?= htmlspecialchars($_SESSION['user_name']) ?>"
+                        required
+                    >
+                </div>
 
-    document.getElementById('listaEmpresas').style.display = 'none';
+                <!-- Campos para mostrar latitud y longitud -->
+                <div class="campo">
+                    <label>Latitud</label>
+                    <input type="text" name="coordenada1" id="latitud" readonly required>
+                </div>
 
-    document.getElementById('formulario').style.display = 'block';
+                <div class="campo">
+                    <label>Longitud</label>
+                    <input type="text" name="coordenada2" id="longitud" readonly required>
+                </div>
 
-    document.getElementById('empresaElegida').textContent =
-        "Empresa seleccionada: " + nombreEmpresa;
+                <button type="button" class="btn" onclick="obtenerUbicacion()">
+                    Obtener ubicación
+                </button>
 
-    document.getElementById('empresaInput').value =
-        nombreEmpresa;
-}
+                <br><br>
 
-function obtenerUbicacion(){
+                <button type="submit" class="btn">
+                    Enviar
+                </button>
+            </form>
+        </div> <!-- Fin Formulario -->
+    </div> <!-- Fin Contenedor -->
 
-    if(!navigator.geolocation){
-        alert("Tu navegador no soporta geolocalización.");
-        return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-        function(posicion){
-
-            document.getElementById('latitud').value =
-                posicion.coords.latitude;
-
-            document.getElementById('longitud').value =
-                posicion.coords.longitude;
-        },
-
-        function(error){
-            alert("No se pudo obtener la ubicación.");
-            console.log(error);
+    <!-- Script para manejar la selección de empresa y la geolocalización -->
+    <script>
+        // Función para mostrar el formulario y ocultar la lista de empresas
+        function mostrarFormulario(nombreEmpresa) {
+            document.getElementById('listaEmpresas').style.display = 'none';
+            document.getElementById('formulario').style.display = 'block';
+            document.getElementById('empresaElegida').textContent = "Empresa seleccionada: " + nombreEmpresa;
+            document.getElementById('empresaInput').value = nombreEmpresa;
         }
-    );
-}
 
-function confirmarEnvio(){
+        // Función para obtener la ubicación del chofer usando la API de Geolocalización
+        function obtenerUbicacion() {
+            if (!navigator.geolocation) {
+                alert("Tu navegador no soporta geolocalización.");
+                return;
+            }
 
-    return confirm(
-        "¿Estás seguro? Recuerda que debes contar con datos móviles."
-    );
-}
+            // Solicitar la ubicación actual
+            navigator.geolocation.getCurrentPosition(
+                function(posicion) {
+                    document.getElementById('latitud').value = posicion.coords.latitude;
+                    document.getElementById('longitud').value = posicion.coords.longitude;
+                },
 
-</script>
-<div class="logout-container">
-    <button class="btn-logout" onclick="window.location.href='logout.php'">
-        Cerrar sesión
-    </button>
-</div>
+                function(error) {
+                    alert("No se pudo obtener la ubicación.");
+                    console.log(error);
+                }
+            );
+        }
+
+        function confirmarEnvio() {
+            return confirm(
+                "¿Estás seguro? Recuerda que debes contar con datos móviles."
+            );
+        }
+    </script>
+
+    <!-- Botón de cerrar sesión -->
+    <div class="logout-container">
+        <button class="btn-logout" onclick="window.location.href='logout.php'">
+            Cerrar sesión
+        </button>
+    </div>
 </body>
 </html>
