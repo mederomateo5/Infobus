@@ -179,3 +179,107 @@ th {
     margin-bottom:20px;
     font-weight:bold;
 }
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+/* Tablets */
+@media (max-width: 992px) {
+    .sidebar {
+        width:190px;
+    }
+
+    .contenido {
+        padding:20px;
+    }
+}
+
+/* Tablets chicas / celulares en horizontal */
+@media (max-width: 768px) {
+    .layout {
+        flex-direction:column;
+        padding-top:78px;
+    }
+
+    .sidebar {
+        width:100%;
+        flex-direction:row;
+        flex-wrap:wrap;
+        justify-content:center;
+        padding:10px;
+        box-shadow:0 2px 8px rgba(0,0,0,.15);
+    }
+
+    .sidebar h2 {
+        width:100%;
+        margin-bottom:10px;
+    }
+
+    .sidebar button {
+        border-left:none;
+        border-bottom:4px solid transparent;
+        padding:10px 14px;
+        text-align:center;
+    }
+
+    .sidebar button.activo {
+        border-left:none;
+        border-bottom:4px solid #1877f2;
+    }
+
+    .sidebar .salir {
+        margin-top:0;
+    }
+
+    .contenido {
+        padding:15px;
+    }
+
+    .tarjeta {
+        padding:18px;
+    }
+
+    .campo {
+        max-width:100%;
+    }
+
+    /* Las tablas se vuelven scrolleables horizontalmente */
+    table {
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    body {
+        background-attachment:scroll;
+    }
+
+    .sidebar h2 {
+        font-size:18px;
+    }
+
+    .sidebar button {
+        font-size:13px;
+        padding:8px 10px;
+    }
+
+    h1 {
+        font-size:22px;
+    }
+
+    .btn,
+    .btn-baja,
+    .btn-editar {
+        padding:8px 12px;
+        font-size:13px;
+    }
+
+    th, td {
+        padding:8px;
+        font-size:13px;
+    }
+}

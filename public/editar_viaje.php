@@ -58,6 +58,27 @@
         .btn-volver:hover {
             background-color: #5a6268;
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contenedor-editar {
+                max-width: 100%;
+                margin: 20px auto;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contenedor-editar {
+                margin: 10px auto;
+                padding: 10px;
+            }
+
+            .btn-volver {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
