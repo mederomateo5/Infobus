@@ -36,7 +36,7 @@
     
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="../css/index_style.css">
+    <link rel="stylesheet" href="css/index_style.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -115,15 +115,15 @@
     <div class="destinos">
         <h1>Destinos Populares</h1>
         <div class="destinos_img">
-            <img src="../img/placeholder.png" alt="Destino 1">
-            <img src="../img/placeholder.png" alt="Destino 2">
-            <img src="../img/placeholder.png" alt="Destino 3">
-            <img src="../img/placeholder.png" alt="Destino 4">
+            <img src="img/placeholder.png" alt="Destino 1">
+            <img src="img/placeholder.png" alt="Destino 2">
+            <img src="img/placeholder.png" alt="Destino 3">
+            <img src="img/placeholder.png" alt="Destino 4">
         </div>
     </div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="../js/scripts.js"></script>
+    <script src="../public/js/scripts.js"></script>
 </body>
 </html>

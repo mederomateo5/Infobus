@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Chofer</title>
-    <link rel="stylesheet" href="../css/chofer.css">
+    <link rel="stylesheet" href="../public/css/chofer.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -31,15 +31,15 @@
         <!-- Contenedor de empresas y formulario -->
         <div class="empresas" id="listaEmpresas">
             <button class="empresa-btn" onclick="mostrarFormulario('TAB')">
-                <img src="../img/tab.png" alt="TAB">
+                <img src="../public/img/tab.png" alt="TAB">
             </button>
 
             <button class="empresa-btn" onclick="mostrarFormulario('COT')">
-                <img src="../img/cot.png" alt="COT">
+                <img src="../public/img/cot.png" alt="COT">
             </button>
 
             <button class="empresa-btn" onclick="mostrarFormulario('TURIL')">
-                <img src="../img/turil.svg" alt="TURIL">
+                <img src="../public/img/turil.svg" alt="TURIL">
             </button>
         </div>
 

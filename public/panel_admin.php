@@ -34,7 +34,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administrador</title>
-    <link rel="stylesheet" href="../css/panel_admin.css">
+    <link rel="stylesheet" href="../public/css/panel_admin.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -202,12 +202,15 @@
                             <td><?= htmlspecialchars($v['hora']) ?></td>
                             <td><?= htmlspecialchars($v['hora_llegada']) ?></td>
                             <td>
-                                <!-- Botón de baja de viaje -->
-                                <form action="../public/baja_viaje.php" method="POST" onsubmit="return confirm('¿Seguro que querés eliminar este viaje?');" style="display:inline;">
-                                    <input type="hidden" name="id" value="<?= htmlspecialchars($v['id']) ?>">
-                                    <button type="submit" class="btn-baja">Eliminar</button>
-                                </form>
-                            </td>
+    <!-- Botón de Editar (Redirige a la nueva pantalla pasando el ID por GET) -->
+    <a href="../public/editar_viaje.php?id=<?= htmlspecialchars($v['id']) ?>" class="btn-editar">Editar</a>
+
+    <!-- Botón de baja de viaje -->
+    <form action="../public/baja_viaje.php" method="POST" onsubmit="return confirm('¿Seguro que querés eliminar este viaje?');" style="display:inline;">
+        <input type="hidden" name="id" value="<?= htmlspecialchars($v['id']) ?>">
+        <button type="submit" class="btn-baja">Eliminar</button>
+    </form>
+</td>
                         </tr>
                     <?php } ?>
                 </table>

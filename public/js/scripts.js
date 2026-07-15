@@ -32,7 +32,7 @@ form.addEventListener("submit", function (e) {
     mapasInicializados = {}; 
 
     // Petición a la API local de PHP
-    fetch(`../public/buscar_viajes.php?origen=${encodeURIComponent(origen)}&destino=${encodeURIComponent(destino)}&fecha=${encodeURIComponent(fecha)}&pasajeros=${pasajeros}`)
+    fetch(`../buscar_viajes.php?origen=${encodeURIComponent(origen)}&destino=${encodeURIComponent(destino)}&fecha=${encodeURIComponent(fecha)}&pasajeros=${pasajeros}`)
         .then(res => res.json())
         .then(viajesEncontrados => {
             mensaje.textContent = ""; 

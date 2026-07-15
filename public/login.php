@@ -63,16 +63,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso</title>
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../public/css/login.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
 
     <div class="page">
         <main>
-            <div class="card">
+            <div class="card" style="margin-top: 60px">
                 <!-- Logo -->
-                <div class="brand-logo"><img src="../img/logotipo.png" style="height: 100px;"></div>
+                <div class="brand-logo"><img src="../public/img/logotipo.png" style="height: 100px;"></div>
 
                 <!-- Tabs -->
                 <div class="tabs" role="tablist">

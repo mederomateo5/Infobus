@@ -153,8 +153,22 @@ th {
     font-weight:bold;
 }
 
+.btn-editar {
+    background:#f29211;
+    color:white;
+    border:none;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
 .btn-baja:hover {
     background:#c01e4e;
+}
+
+.btn-editar:hover {
+    background:#c07f1e;
 }
 
 .mensaje {
