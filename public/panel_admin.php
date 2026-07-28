@@ -48,8 +48,12 @@
 
         <!-- Contenido principal -->
         <div class="contenido">
-            <?php if ($mensaje) { ?>
-                <div class="mensaje"><?= htmlspecialchars($mensaje) ?></div>
+            <?php if ($mensaje) { 
+                $esExito = (strpos($mensaje, 'correctamente') !== false);
+            ?>
+                <div class="mensaje <?= $esExito ? 'exito' : 'error' ?>" id="mensajeAlerta">
+                    <?= htmlspecialchars($mensaje) ?>
+                </div>
             <?php } ?>
 
             <!-- INICIO -->
@@ -61,44 +65,48 @@
             <!-- LISTADO DE USUARIOS -->
             <div class="tarjeta" id="usuarios">
                 <h1>Usuarios registrados</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                            <th>Teléfono</th>
-                            <th>Tipo</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (empty($usuarios)) { ?>
-                            <tr><td colspan="7">No hay usuarios registrados.</td></tr>
-                        <?php } ?>
-                        <?php foreach ($usuarios as $u) { ?>
+                <div class="tabla-responsive">
+                    <table>
+                        <thead>
                             <tr>
-                                <td><?= htmlspecialchars($u['id']) ?></td>
-                                <td><?= htmlspecialchars($u['nombre']) ?></td>
-                                <td><?= htmlspecialchars($u['apellido']) ?></td>
-                                <td><?= htmlspecialchars($u['email']) ?></td>
-                                <td><?= htmlspecialchars($u['telefono']) ?></td>
-                                <td><?= htmlspecialchars($u['tipo']) ?></td>
-                                <td>
-                                    <?php if ($u['id'] != $_SESSION['user_id']) { ?>
-                                        <form action="../public/baja_usuario.php" method="POST" onsubmit="return confirm('¿Seguro que querés dar de baja a este usuario?');" style="display:inline;">
-                                            <input type="hidden" name="id" value="<?= htmlspecialchars($u['id']) ?>">
-                                            <button type="submit" class="btn-baja">Dar de baja</button>
-                                        </form>
-                                    <?php } else { ?>
-                                        <em>(vos)</em>
-                                    <?php } ?>
-                                </td>
+                                <th class="col-compacta">ID</th>
+                                <th class="col-texto">Nombre</th>
+                                <th class="col-texto">Apellido</th>
+                                <th class="col-texto">Email</th>
+                                <th class="col-compacta">Teléfono</th>
+                                <th class="col-compacta">Tipo</th>
+                                <th class="col-compacta">Acciones</th>
                             </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($usuarios)) { ?>
+                                <tr><td colspan="7" style="text-align:center;">No hay usuarios registrados.</td></tr>
+                            <?php } ?>
+                            <?php foreach ($usuarios as $u) { ?>
+                                <tr>
+                                    <td class="col-compacta"><?= htmlspecialchars($u['id']) ?></td>
+                                    <td class="col-texto"><?= htmlspecialchars($u['nombre']) ?></td>
+                                    <td class="col-texto"><?= htmlspecialchars($u['apellido']) ?></td>
+                                    <td class="col-texto"><?= htmlspecialchars($u['email']) ?></td>
+                                    <td class="col-compacta"><?= htmlspecialchars($u['telefono']) ?></td>
+                                    <td class="col-compacta"><?= htmlspecialchars($u['tipo']) ?></td>
+                                    <td class="col-compacta">
+                                        <?php if ($u['id'] != $_SESSION['user_id']) { ?>
+                                            <div class="acciones-cell">
+                                                <form action="../public/baja_usuario.php" method="POST" onsubmit="return confirm('¿Seguro que querés dar de baja a este usuario?');">
+                                                    <input type="hidden" name="id" value="<?= htmlspecialchars($u['id']) ?>">
+                                                    <button type="submit" class="btn-baja">Dar de baja</button>
+                                                </form>
+                                            </div>
+                                        <?php } else { ?>
+                                            <em>(vos)</em>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- ALTA DE USUARIO -->
@@ -140,7 +148,6 @@
             <!-- LISTADO DE VIAJES -->
             <div class="tarjeta" id="Viajes">
                 <h1>Viajes registrados</h1>
-                
                 <div class="tabla-responsive">
                     <table>
                         <thead>
@@ -194,13 +201,93 @@
                 </div>
             </div>
 
+            <!-- ALTA DE VIAJE -->
+            <div class="tarjeta" id="altaV">
+                <h1>Dar de alta un viaje</h1>
+
+                <form action="../public/alta_viaje.php" method="POST" onsubmit="return validarViaje(this);">
+                    <div class="campo">
+                        <label>Número de Ómnibus</label>
+                        <input type="number" name="n_omnibus" required min="1">
+                    </div>
+
+                    <div class="campo">
+                        <label>Asientos Totales</label>
+                        <input type="number" name="asientos" required min="1" max="70">
+                    </div>
+
+                    <div class="campo">
+                        <label>Origen</label>
+                        <input type="text" name="origen" required>
+                    </div>
+
+                    <div class="campo">
+                        <label>Destino</label>
+                        <input type="text" name="destino" required>
+                    </div>
+
+                    <div class="campo">
+                        <label>Precio ($)</label>
+                        <input type="number" step="0.01" name="precio" required min="0">
+                    </div>
+
+                    <div class="campo">
+                        <label>Agencia</label>
+                        <select name="agencia" required>
+                            <option value="COT">COT</option>
+                            <option value="TAB">TAB</option>
+                            <option value="TURIL">TURIL</option>
+                            <option value="URBANO">URBANO</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label>Fecha</label>
+                        <input type="date" name="fecha" required min="<?= date('Y-m-d') ?>">
+                    </div>
+
+                    <div class="campo">
+                        <label>Hora de Salida</label>
+                        <input type="time" name="hora" required>
+                    </div>
+
+                    <div class="campo">
+                        <label>Hora de Llegada</label>
+                        <input type="time" name="hora_llegada" required>
+                    </div>
+
+                    <button type="submit" class="btn">Dar de alta viaje</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Limpiar el parámetro 'msg' de la URL para que no quede guardado al actualizar
+        if (window.history.replaceState && window.location.search.includes('msg=')) {
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+        }
+
         function mostrarSeccion(id, boton) {
+            // Ocultar mensaje de alerta al cambiar de pestaña
+            const mensajeAlerta = document.getElementById('mensajeAlerta');
+            if (mensajeAlerta) {
+                mensajeAlerta.style.display = 'none';
+            }
+
+            // Ocultar todas las tarjetas
             document.querySelectorAll('.tarjeta').forEach(function(tarjeta) {
                 tarjeta.classList.remove('activa');
             });
-            document.getElementById(id).classList.add('activa');
+            
+            // Mostrar la seleccionada
+            const seccionTarget = document.getElementById(id);
+            if (seccionTarget) {
+                seccionTarget.classList.add('activa');
+            }
 
+            // Actualizar botón activo
             document.querySelectorAll('.menu-btn').forEach(function(btn) {
                 btn.classList.remove('activo');
             });
@@ -219,7 +306,7 @@
                 return false;
             }
 
-            // Obtener fecha y hora actual local del navegador
+            // Fecha y hora local
             const ahora = new Date();
             const anio = ahora.getFullYear();
             const mes = String(ahora.getMonth() + 1).padStart(2, '0');
@@ -245,7 +332,7 @@
                 return false;
             }
 
-            // Validar restricción: hora de salida > hora de llegada solo si salida >= 23:00
+            // Validar salidas mayores a llegadas solo a partir de las 23:00 hs
             const [hSalida, mSalida] = horaSalida.split(':').map(Number);
             const [hLlegada, mLlegada] = horaLlegada.split(':').map(Number);
 
@@ -254,7 +341,7 @@
 
             if (minSalida > minLlegada) {
                 if (hSalida < 23) {
-                    alert("La hora de salida no puede ser posterior a la hora de llegada");
+                    alert("La hora de salida solo puede ser posterior a la de llegada si el ómnibus sale a partir de las 23:00 hs.");
                     return false;
                 }
             }

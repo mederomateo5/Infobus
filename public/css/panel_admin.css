@@ -73,7 +73,7 @@ body {
 .contenido {
     flex: 1;
     padding: 30px;
-    min-width: 0; /* Evita que el flexbox desborde si el contenido es ancho */
+    min-width: 0;
 }
 
 .tarjeta {
@@ -114,7 +114,7 @@ th, td {
     padding: 10px 12px;
     border-bottom: 1px solid #eee;
     vertical-align: middle;
-    white-space: nowrap; /* Impide que las fechas o valores se partan en dos filas */
+    white-space: nowrap;
     font-size: 14px;
 }
 
@@ -124,20 +124,20 @@ th {
     background-color: #f8fafc;
 }
 
-/* Fuerza a la columna a ajustarse al tamaño exacto de su contenido */
+/* Columna compacta: se ajusta al contenido exactamente */
 .col-compacta {
     width: 1%;
     text-align: center;
 }
 
-/* Absorbe todo el espacio sobrante de la tarjeta */
+/* Columna flexible: absorbe el espacio sobrante */
 .col-texto {
     text-align: left;
     width: auto;
 }
 
 /* ==========================================================
-   CELDA Y BOTONES DE ACCIONES (Editar / Eliminar)
+   CELDA Y BOTONES DE ACCIONES
    ========================================================== */
 .acciones-cell {
     display: flex;
@@ -145,7 +145,7 @@ th {
     gap: 6px;
     align-items: center;
     justify-content: center;
-    width: 90px; /* Ancho uniforme e idéntico para ambas acciones */
+    width: 90px;
 }
 
 .acciones-cell form {
@@ -179,16 +179,11 @@ th {
     color: white;
 }
 
-.btn-editar:hover {
-    background: #c07f1e;
-}
-
-.btn-baja:hover {
-    background: #c01e4e;
-}
+.btn-editar:hover { background: #c07f1e; }
+.btn-baja:hover { background: #c01e4e; }
 
 /* ==========================================================
-   FORMULARIOS Y MENSAJES
+   FORMULARIOS Y MENSAJES DE ALERTA
    ========================================================== */
 .campo {
     display: flex;
@@ -224,30 +219,32 @@ th {
 }
 
 .mensaje {
-    background: #e6f4ea;
-    color: #1e7e34;
     padding: 12px 18px;
     border-radius: 6px;
     margin-bottom: 20px;
     font-weight: bold;
 }
 
-/* ==========================================================
-   DISEÑO ADAPTABLE (MEDIA QUERIES)
-   ========================================================== */
-
-/* Tablets */
-@media (max-width: 992px) {
-    .sidebar {
-        width: 190px;
-    }
-
-    .contenido {
-        padding: 20px;
-    }
+.mensaje.exito {
+    background: #e6f4ea;
+    color: #1e7e34;
+    border: 1px solid #b7e1cd;
 }
 
-/* Celulares / Tablets verticales */
+.mensaje.error {
+    background: #fde8e8;
+    color: #9b1c1c;
+    border: 1px solid #f8b4b4;
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 992px) {
+    .sidebar { width: 190px; }
+    .contenido { padding: 20px; }
+}
+
 @media (max-width: 768px) {
     .layout {
         flex-direction: column;
@@ -280,39 +277,15 @@ th {
         border-bottom: 4px solid #1877f2;
     }
 
-    .sidebar .salir {
-        margin-top: 0;
-    }
-
-    .contenido {
-        padding: 15px;
-    }
-
-    .tarjeta {
-        padding: 18px;
-    }
-
-    .campo {
-        max-width: 100%;
-    }
+    .sidebar .salir { margin-top: 0; }
+    .contenido { padding: 15px; }
+    .tarjeta { padding: 18px; }
+    .campo { max-width: 100%; }
 }
 
-/* Celulares pequeños */
 @media (max-width: 480px) {
-    body {
-        background-attachment: scroll;
-    }
-
-    .sidebar h2 {
-        font-size: 18px;
-    }
-
-    .sidebar button {
-        font-size: 13px;
-        padding: 8px 10px;
-    }
-
-    h1 {
-        font-size: 22px;
-    }
+    body { background-attachment: scroll; }
+    .sidebar h2 { font-size: 18px; }
+    .sidebar button { font-size: 13px; padding: 8px 10px; }
+    h1 { font-size: 22px; }
 }
