@@ -47,8 +47,8 @@
             padding: 20px;
         }
         .btn-volver {
-            background-color: #6c757d;
-            color: white;
+            background-color: #ffffff;
+            color: #1877f2;
             padding: 10px 15px;
             text-decoration: none;
             border-radius: 4px;
@@ -56,7 +56,7 @@
             margin-bottom: 20px;
         }
         .btn-volver:hover {
-            background-color: #5a6268;
+            background-color: #d1d1d1;
         }
 
         /* Responsive */
@@ -84,10 +84,12 @@
 <body>
     <?php include '../includes/header.php'; ?>
 
+    <br><br><br>
     <div class="contenedor-editar">
         <a href="panel_admin.php" class="btn-volver">← Volver al Panel</a>
 
         <div class="tarjeta activa">
+            
             <h1>Editar Viaje (ID: <?= htmlspecialchars($viaje['id']) ?>)</h1>
 
             <form action="../public/actualizar_viaje.php" method="POST">

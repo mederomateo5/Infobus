@@ -1,285 +1,318 @@
 * {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 body {
     margin: 0;
-    /* Establecemos un fondo con una imagen y un degradado semitransparente */
     background-image:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
         url("../img/fondo.jpg");
-
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
 
-/* Estructura general con panel lateral */
+/* ==========================================================
+   ESTRUCTURA GENERAL Y LAYOUT
+   ========================================================== */
 .layout {
-    display:flex;
-    min-height:calc(100vh);
-    padding-top:78px;
+    display: flex;
+    min-height: 100vh;
+    padding-top: 78px;
 }
 
 .sidebar {
-    width:230px;
-    background:white;
-    box-shadow:2px 0 8px rgba(0,0,0,.15);
-    padding:20px 0;
-    display:flex;
-    flex-direction:column;
+    width: 230px;
+    background: white;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, .15);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar h2 {
-    text-align:center;
-    color:#1877f2;
-    font-size:20px;
-    margin-bottom:25px;
-    padding:0 10px;
+    text-align: center;
+    color: #1877f2;
+    font-size: 20px;
+    margin-bottom: 25px;
+    padding: 0 10px;
 }
 
 .sidebar button {
-    border:none;
-    background:none;
-    text-align:left;
-    padding:14px 25px;
-    font-size:15px;
-    font-weight:bold;
-    color:#333;
-    cursor:pointer;
-    transition:.2s;
-    border-left:4px solid transparent;
+    border: none;
+    background: none;
+    text-align: left;
+    padding: 14px 25px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: .2s;
+    border-left: 4px solid transparent;
 }
 
-.sidebar button:hover {
-    background:#f0f4ff;
-    color:#1877f2;
-}
-
+.sidebar button:hover,
 .sidebar button.activo {
-    background:#f0f4ff;
-    color:#1877f2;
-    border-left:4px solid #1877f2;
+    background: #f0f4ff;
+    color: #1877f2;
+    border-left: 4px solid #1877f2;
 }
 
 .sidebar .salir {
-    margin-top:auto;
-    color:#e0245e;
+    margin-top: auto;
+    color: #e0245e;
 }
 
-/* Contenido */
+/* ==========================================================
+   CONTENIDO Y TARJETAS
+   ========================================================== */
 .contenido {
-    flex:1;
-    padding:30px;
+    flex: 1;
+    padding: 30px;
+    min-width: 0; /* Evita que el flexbox desborde si el contenido es ancho */
 }
 
 .tarjeta {
-    background:white;
-    border-radius:12px;
-    padding:25px;
-    box-shadow:0 2px 8px rgba(0,0,0,.1);
-    margin-bottom:20px;
-    display:none;
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+    margin-bottom: 20px;
+    display: none;
 }
 
 .tarjeta.activa {
-    display:block;
+    display: block;
 }
 
 h1 {
-    color:#1877f2;
-    margin-bottom:20px;
+    color: #1877f2;
+    margin-bottom: 20px;
+}
+
+/* ==========================================================
+   TABLAS RESPONSIVE Y COLUMNAS OPTIMIZADAS
+   ========================================================== */
+.tabla-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 10px;
+    border-radius: 8px;
 }
 
 table {
-    width:100%;
-    border-collapse:collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 th, td {
-    text-align:left;
-    padding:10px;
-    border-bottom:1px solid #eee;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    white-space: nowrap; /* Impide que las fechas o valores se partan en dos filas */
+    font-size: 14px;
 }
 
 th {
-    color:#1877f2;
+    color: #1877f2;
+    font-weight: bold;
+    background-color: #f8fafc;
 }
 
+/* Fuerza a la columna a ajustarse al tamaño exacto de su contenido */
+.col-compacta {
+    width: 1%;
+    text-align: center;
+}
+
+/* Absorbe todo el espacio sobrante de la tarjeta */
+.col-texto {
+    text-align: left;
+    width: auto;
+}
+
+/* ==========================================================
+   CELDA Y BOTONES DE ACCIONES (Editar / Eliminar)
+   ========================================================== */
+.acciones-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    width: 90px; /* Ancho uniforme e idéntico para ambas acciones */
+}
+
+.acciones-cell form {
+    width: 100%;
+    margin: 0;
+}
+
+.btn-editar,
+.btn-baja {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    box-sizing: border-box;
+    transition: background 0.2s;
+}
+
+.btn-editar {
+    background: #f29211;
+    color: white;
+}
+
+.btn-baja {
+    background: #e0245e;
+    color: white;
+}
+
+.btn-editar:hover {
+    background: #c07f1e;
+}
+
+.btn-baja:hover {
+    background: #c01e4e;
+}
+
+/* ==========================================================
+   FORMULARIOS Y MENSAJES
+   ========================================================== */
 .campo {
-    display:flex;
-    flex-direction:column;
-    margin-bottom:15px;
-    max-width:400px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    max-width: 400px;
 }
 
 .campo label {
-    margin-bottom:5px;
-    font-weight:bold;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .campo input,
 .campo select {
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:6px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
 .btn {
-    background:#1877f2;
-    color:white;
-    border:none;
-    padding:12px 18px;
-    border-radius:6px;
-    cursor:pointer;
-    font-weight:bold;
+    background: #1877f2;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .btn:hover {
-    background:#166fe5;
-}
-
-.btn-baja {
-    background:#e0245e;
-    color:white;
-    border:none;
-    padding:6px 12px;
-    border-radius:6px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.btn-editar {
-    background:#f29211;
-    color:white;
-    border:none;
-    padding:6px 12px;
-    border-radius:6px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.btn-baja:hover {
-    background:#c01e4e;
-}
-
-.btn-editar:hover {
-    background:#c07f1e;
+    background: #166fe5;
 }
 
 .mensaje {
-    background:#e6f4ea;
-    color:#1e7e34;
-    padding:12px 18px;
-    border-radius:6px;
-    margin-bottom:20px;
-    font-weight:bold;
+    background: #e6f4ea;
+    color: #1e7e34;
+    padding: 12px 18px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 /* ==========================================================
-   RESPONSIVE
+   DISEÑO ADAPTABLE (MEDIA QUERIES)
    ========================================================== */
 
 /* Tablets */
 @media (max-width: 992px) {
     .sidebar {
-        width:190px;
+        width: 190px;
     }
 
     .contenido {
-        padding:20px;
+        padding: 20px;
     }
 }
 
-/* Tablets chicas / celulares en horizontal */
+/* Celulares / Tablets verticales */
 @media (max-width: 768px) {
     .layout {
-        flex-direction:column;
-        padding-top:78px;
+        flex-direction: column;
+        padding-top: 78px;
     }
 
     .sidebar {
-        width:100%;
-        flex-direction:row;
-        flex-wrap:wrap;
-        justify-content:center;
-        padding:10px;
-        box-shadow:0 2px 8px rgba(0,0,0,.15);
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
     }
 
     .sidebar h2 {
-        width:100%;
-        margin-bottom:10px;
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     .sidebar button {
-        border-left:none;
-        border-bottom:4px solid transparent;
-        padding:10px 14px;
-        text-align:center;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+        padding: 10px 14px;
+        text-align: center;
     }
 
     .sidebar button.activo {
-        border-left:none;
-        border-bottom:4px solid #1877f2;
+        border-left: none;
+        border-bottom: 4px solid #1877f2;
     }
 
     .sidebar .salir {
-        margin-top:0;
+        margin-top: 0;
     }
 
     .contenido {
-        padding:15px;
+        padding: 15px;
     }
 
     .tarjeta {
-        padding:18px;
+        padding: 18px;
     }
 
     .campo {
-        max-width:100%;
-    }
-
-    /* Las tablas se vuelven scrolleables horizontalmente */
-    table {
-        display:block;
-        overflow-x:auto;
-        white-space:nowrap;
+        max-width: 100%;
     }
 }
 
-/* Celulares */
+/* Celulares pequeños */
 @media (max-width: 480px) {
     body {
-        background-attachment:scroll;
+        background-attachment: scroll;
     }
 
     .sidebar h2 {
-        font-size:18px;
+        font-size: 18px;
     }
 
     .sidebar button {
-        font-size:13px;
-        padding:8px 10px;
+        font-size: 13px;
+        padding: 8px 10px;
     }
 
     h1 {
-        font-size:22px;
-    }
-
-    .btn,
-    .btn-baja,
-    .btn-editar {
-        padding:8px 12px;
-        font-size:13px;
-    }
-
-    th, td {
-        padding:8px;
-        font-size:13px;
+        font-size: 22px;
     }
 }
