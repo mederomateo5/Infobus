@@ -20,12 +20,10 @@ body {
 }
 
 .contenedor {
-    width:100%;
     max-width:900px;
-    margin:30px auto;
-    padding:90px 20px 20px;
+    margin:100px auto 30px;
+    padding:20px;
 }
-
 h1 {
     text-align:center;
     color:white;
