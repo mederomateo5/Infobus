@@ -48,10 +48,11 @@ body {
     width:100%;
     margin-bottom:20px;
     border-bottom:1px solid #dddfe2;
+    display:flex;
 }
 
 .tab-btn {
-    width:49%;
+    flex:1;
     padding:12px;
     background:white;
     border:none;
@@ -254,7 +255,7 @@ body {
     }
 
     .tab-btn{
-        width:50%;
+        flex:1;
         font-size:14px;
         padding:10px;
     }
