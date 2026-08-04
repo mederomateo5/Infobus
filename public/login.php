@@ -70,9 +70,9 @@
 
     <div class="page">
         <main>
-            <div class="card" style="margin-top: 60px">
+            <div class="card">
                 <!-- Logo -->
-                <div class="brand-logo"><img src="../public/img/logotipo.png" style="height: 100px;"></div>
+                <div class="brand-logo img"><img src="../public/img/logotipo.png" alt="Logo"></div>
 
                 <!-- Tabs -->
                 <div class="tabs" role="tablist">

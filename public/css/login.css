@@ -12,14 +12,18 @@ body {
 }
 
 /* Layout centrado */
-.page {
+.page{
     width:100%;
-    text-align:center;
-    padding:30px;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:110px 15px 30px;
 }
 
-.card {
-    width:400px;
+.card{
+    width:100%;
+    max-width:450px;
     margin:auto;
     background:#fff;
     border:1px solid #dddfe2;
@@ -31,6 +35,12 @@ body {
 .brand-logo {
     text-align:center;
     margin-bottom:15px;
+}
+
+.brand-logo img{
+    width:160px;
+    max-width:100%;
+    height:auto;
 }
 
 /* Tabs */
@@ -195,4 +205,70 @@ body {
     background:#fff0f0;
     border:1px solid #f5c6c6;
     color:#e02020;
+}
+
+/* ===========================
+   TABLETS
+=========================== */
+
+@media (max-width:900px){
+
+    .card{
+        max-width:500px;
+    }
+
+}
+
+
+/* ===========================
+   CELULARES
+=========================== */
+
+@media (max-width:768px){
+
+    body{
+        font-size:16px;
+    }
+
+    .page{
+        padding:100px 10px 20px;
+    }
+
+    .card{
+        width:100%;
+        padding:18px;
+    }
+
+    .brand-logo img{
+        width:130px;
+        height:auto !important;
+    }
+
+    .field-row{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .field-row .field{
+        width:100%;
+    }
+
+    .tab-btn{
+        width:50%;
+        font-size:14px;
+        padding:10px;
+    }
+
+    .form-title{
+        font-size:22px;
+    }
+
+    .form-subtitle{
+        font-size:14px;
+    }
+
+    .btn-primary{
+        font-size:15px;
+    }
+
 }
