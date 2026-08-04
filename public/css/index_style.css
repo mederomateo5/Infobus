@@ -17,8 +17,8 @@ body {
 /* Contenedor principal */
 .padre {
     margin-top: 50px;
-    width: 900px;
-    background-color: #f0f0f0;
+    width:min(95%,1100px);
+    background: #f0f0f0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -83,7 +83,7 @@ input[type="submit"]:hover {
 /* Contenedor de destinos */
 .destinos {
     margin-top: 30px;
-    width: 900px;
+    width:min(95%,1100px);
     background-color: #f0f0f0;
     display: flex;
     flex-direction: column;
@@ -94,15 +94,19 @@ input[type="submit"]:hover {
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.destinos_img {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+.destinos_img{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
 }
 
 img {
-    width: 120px;
-    height: 120px;
+    width:220px;
+    max-width:100%;
+    height:auto;
+    border-radius:10px;
 }
 
 /* Mensajes de error */
@@ -118,6 +122,7 @@ img {
     width: 100%;
     margin-top: 25px;
     animation: aparecer .3s ease;
+    overflow-x:auto;
 }
 
 .horarios h2, .horarios h3 {
@@ -207,4 +212,78 @@ img {
 
 .btn-enlace:hover {
     background-color: #28558f;
+}
+
+/* ===========================
+   TABLETS
+=========================== */
+
+@media (max-width:992px){
+
+.form{
+    grid-template-columns:1fr;
+}
+
+input[type="submit"]{
+    grid-column:auto;
+    width:100%;
+}
+
+.navegacion-paginas{
+    justify-content:center;
+}
+
+}
+/* ===========================
+   CELULARES
+=========================== */
+
+@media (max-width:768px){
+
+body{
+    margin:15px;
+}
+
+.padre,
+.destinos{
+    padding:18px;
+}
+
+h1{
+    font-size:28px;
+    text-align:center;
+}
+
+.form{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+}
+
+.options{
+    width:100%;
+}
+
+label{
+    font-size:16px;
+}
+
+input,
+select{
+    font-size:16px;
+}
+
+.btn-enlace{
+    width:100%;
+    text-align:center;
+}
+
+.destinos_img{
+    flex-direction:column;
+    align-items:center;
+}
+
+.horarios table{
+    min-width:700px;
+}
 }
