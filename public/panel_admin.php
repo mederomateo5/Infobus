@@ -341,7 +341,7 @@
 
             if (minSalida > minLlegada) {
                 if (hSalida < 23) {
-                    alert("La hora de salida solo puede ser posterior a la de llegada si el ómnibus sale a partir de las 23:00 hs.");
+                    alert("La hora de salida no puede ser posterior a la hora de llegada");
                     return false;
                 }
             }

@@ -47,7 +47,6 @@
         <div class="navegacion-paginas">
             <a href="../public/urbanos.php" class="btn-enlace">Ir a Ómnibus Urbanos →</a>
         </div>
-
         <h1>Encuentra tu próximo viaje Interurbano</h1>
         
         <!-- Formulario de búsqueda de viajes -->
