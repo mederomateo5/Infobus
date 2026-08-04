@@ -6,6 +6,7 @@
 
 .navbar {
     position: fixed;
+    left:0;
     top: 0;
     width: 100%;
     display: flex;
@@ -20,6 +21,9 @@
 
 .navbar .navbar-logo img {
     height: 50px;
+    max-width:150px;
+    max-width:150px;
+    object-fit:contain;
     width: auto;
     display: block;
 }
@@ -90,4 +94,62 @@
     .navbar .navbar-user {
         margin-left: auto;
     }
+}
+/* ==========================
+   CELULARES
+========================== */
+
+@media(max-width:480px){
+
+    .navbar{
+        padding:10px 15px;
+    }
+
+
+    .navbar-logo img{
+        height:40px;
+    }
+
+
+    .navbar-links{
+        gap:15px !important;
+    }
+
+
+    .navbar-links a{
+        font-size:14px !important;
+    }
+
+
+    .navbar-user a{
+        font-size:18px;
+    }
+
+}
+
+/* ==========================
+   TABLETS
+========================== */
+
+@media (max-width: 900px){
+
+    .navbar{
+        padding:12px 30px;
+    }
+
+
+    .navbar .navbar-logo img{
+        height:45px;
+    }
+
+
+    .navbar .navbar-links{
+        gap:20px;
+    }
+
+
+    .navbar .navbar-links a{
+        font-size:0.9rem;
+    }
+
 }

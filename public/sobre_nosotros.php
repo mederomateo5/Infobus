@@ -18,7 +18,7 @@
                 definidos. También verifica que el sistema funcione correctamente en distintos 
                 dispositivos.
             </p>
-        </div class="info">
+        </div>
         <div class="info">
             <img src="../public/img/Placeholder_Person.jpg" alt="">
             <h2>Alejo Medina<br> Documentación</h2>
