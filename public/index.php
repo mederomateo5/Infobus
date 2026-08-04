@@ -4,7 +4,7 @@
 
     // Obtener orígenes disponibles en la base de datos
     try {
-        $stmt_origenes = $pdo->query("SELECT DISTINCT origen FROM omnibus WHERE ya_salio = 0 ORDER BY origen ASC");
+        $stmt_origenes = $pdo->query("SELECT DISTINCT v.origen FROM viajes v JOIN omnibus o ON v.omnibus_id = o.id WHERE v.ya_salio = 0 ORDER BY v.origen ASC");
         $origenes = $stmt_origenes->fetchAll(PDO::FETCH_COLUMN);
     } catch (PDOException $e) {
         $origenes = [];
@@ -17,7 +17,7 @@
 
     // Obtener destinos disponibles en la base de datos
     try {
-        $stmt_destinos = $pdo->query("SELECT DISTINCT destino FROM omnibus WHERE ya_salio = 0 ORDER BY destino ASC");
+        $stmt_destinos = $pdo->query("SELECT DISTINCT v.destino FROM viajes v JOIN omnibus o ON v.omnibus_id = o.id WHERE v.ya_salio = 0 ORDER BY v.destino ASC");
         $destinos = $stmt_destinos->fetchAll(PDO::FETCH_COLUMN);
     } catch (PDOException $e) {
         $destinos = [];
@@ -33,7 +33,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Inicio - Interurbanos</title>
-    
+
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/index_style.css">
@@ -48,7 +48,7 @@
             <a href="../public/urbanos.php" class="btn-enlace">Ir a Ómnibus Urbanos →</a>
         </div>
         <h1>Encuentra tu próximo viaje Interurbano</h1>
-        
+
         <!-- Formulario de búsqueda de viajes -->
         <div class="hijo">
             <form class="form" id="formBusqueda">

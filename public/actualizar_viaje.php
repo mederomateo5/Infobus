@@ -33,8 +33,8 @@
 
     // Validaciones de negocio básicas
     if (
-        !$id || !$n_omnibus || !$asientos || $asientos_disponibles === false || 
-        $origen === '' || $destino === '' || $precio === false || 
+        !$id || !$n_omnibus || !$asientos || $asientos_disponibles === false ||
+        $origen === '' || $destino === '' || $precio === false ||
         !in_array($agencia, $agenciasValidas) || ($ya_salio !== 0 && $ya_salio !== 1) ||
         $fecha === '' || $hora === '' || $hora_llegada === ''
     ) {
@@ -43,31 +43,41 @@
     }
 
     try {
-        // Ejecutar UPDATE
+        // Obtener el ID del ómnibus correspondiente al número y agencia
+        $stmtOmnibus = $pdo->prepare(
+            "SELECT o.id FROM omnibus o
+             JOIN compania c ON o.compania_id = c.id
+             WHERE o.n_omnibus = ? AND c.nombre = ?"
+        );
+        $stmtOmnibus->execute([$n_omnibus, $agencia]);
+        $omnibus = $stmtOmnibus->fetch();
+
+        if (!$omnibus) {
+            header('Location: ../public/panel_admin.php?msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
+            exit();
+        }
+
+        $omnibusId = (int)$omnibus['id'];
+
+        // Ejecutar UPDATE en la tabla de viajes
         $actualizar = $pdo->prepare(
-            "UPDATE omnibus 
-             SET n_omnibus = ?, 
-                 asientos = ?, 
-                 asientos_disponibles = ?, 
-                 origen = ?, 
-                 destino = ?, 
-                 precio = ?, 
-                 agencia = ?, 
-                 ya_salio = ?, 
-                 fecha = ?, 
-                 hora = ?, 
+            "UPDATE viajes
+             SET omnibus_id = ?,
+                 origen = ?,
+                 destino = ?,
+                 precio = ?,
+                 ya_salio = ?,
+                 fecha = ?,
+                 hora = ?,
                  hora_llegada = ?
              WHERE id = ?"
         );
 
         $actualizar->execute([
-            $n_omnibus,
-            $asientos,
-            $asientos_disponibles,
+            $omnibusId,
             $origen,
             $destino,
             $precio,
-            $agencia,
             $ya_salio,
             $fecha,
             $hora,

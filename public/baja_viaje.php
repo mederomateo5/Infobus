@@ -24,8 +24,8 @@
     }
 
     try {
-        // Eliminamos el viaje de la tabla 'omnibus'
-        $eliminar = $pdo->prepare("DELETE FROM omnibus WHERE id = ?");
+        // Eliminamos el viaje de la tabla 'viajes'
+        $eliminar = $pdo->prepare("DELETE FROM viajes WHERE id = ?");
         $eliminar->execute([$id]);
 
         header('Location: ../public/panel_admin.php?msg=' . urlencode('Viaje eliminado correctamente.'));

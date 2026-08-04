@@ -15,9 +15,14 @@
         exit();
     }
 
-    // Obtener los datos del viaje
+    // Obtener los datos del viaje con detalles del ómnibus y compañía
     try {
-        $stmt = $pdo->prepare("SELECT * FROM omnibus WHERE id = ?");
+        $stmt = $pdo->prepare("SELECT v.id, v.origen, v.destino, v.precio, v.ya_salio, v.fecha, v.hora, v.hora_llegada,
+                                      o.n_omnibus, o.asientos, o.asientos_disponibles, c.nombre AS agencia
+                               FROM viajes v
+                               JOIN omnibus o ON v.omnibus_id = o.id
+                               JOIN compania c ON o.compania_id = c.id
+                               WHERE v.id = ?");
         $stmt->execute([$id]);
         $viaje = $stmt->fetch();
 
@@ -30,7 +35,6 @@
         exit();
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -89,7 +93,6 @@
         <a href="panel_admin.php" class="btn-volver">← Volver al Panel</a>
 
         <div class="tarjeta activa">
-            
             <h1>Editar Viaje (ID: <?= htmlspecialchars($viaje['id']) ?>)</h1>
 
             <form action="../public/actualizar_viaje.php" method="POST">
@@ -104,12 +107,12 @@
                 <div class="campo">
                     <label>Asientos Totales</label>
                     <!-- Nota: si cambias la capacidad total de asientos, es buena idea actualizar la disponibilidad -->
-                    <input type="number" name="asientos" value="<?= htmlspecialchars($viaje['asientos']) ?>" required min="1">
+                    <input type="number" name="asientos" value="<?= htmlspecialchars($viaje['asientos']) ?>" required min="1" readonly>
                 </div>
 
                 <div class="campo">
                     <label>Asientos Disponibles</label>
-                    <input type="number" name="asientos_disponibles" value="<?= htmlspecialchars($viaje['asientos_disponibles']) ?>" required min="0">
+                    <input type="number" name="asientos_disponibles" value="<?= htmlspecialchars($viaje['asientos_disponibles']) ?>" required min="0" readonly>
                 </div>
 
                 <div class="campo">

@@ -29,8 +29,8 @@
 
     // Validar que no falten datos obligatorios
     if (
-        !$n_omnibus || !$asientos || $origen === '' || $destino === '' || 
-        $precio === false || !in_array($agencia, $agenciasValidas) || 
+        !$n_omnibus || !$asientos || $origen === '' || $destino === '' ||
+        $precio === false || !in_array($agencia, $agenciasValidas) ||
         $fecha === '' || $hora === '' || $hora_llegada === ''
     ) {
         header('Location: ../public/panel_admin.php?msg=' . urlencode('Faltan datos o se ingresaron valores inválidos.'));
@@ -38,29 +38,44 @@
     }
 
     try {
-        $asientos_disponibles = $asientos;
-        $ya_salio = 0;
-
-        $insertar = $pdo->prepare(
-            "INSERT INTO omnibus (n_omnibus, asientos, asientos_disponibles, origen, destino, precio, agencia, ya_salio, fecha, hora, hora_llegada)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        // Obtener el ID del ómnibus correspondiente al número y agencia
+        $stmtOmnibus = $pdo->prepare(
+            "SELECT o.id FROM omnibus o
+             JOIN compania c ON o.compania_id = c.id
+             WHERE o.n_omnibus = ? AND c.nombre = ?"
         );
-        
-        $insertar->execute([
-            $n_omnibus, 
-            $asientos, 
-            $asientos_disponibles, 
-            $origen, 
-            $destino, 
-            $precio, 
-            $agencia, 
-            $ya_salio, 
-            $fecha, 
-            $hora, 
+        $stmtOmnibus->execute([$n_omnibus, $agencia]);
+        $omnibus = $stmtOmnibus->fetch();
+
+        if (!$omnibus) {
+            header('Location: ../public/panel_admin.php?msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
+            exit();
+        }
+
+        $omnibusId = (int)$omnibus['id'];
+        $yaSalio = 0; // nuevo viaje no ha salido aún
+
+        // Insertar el viaje
+        $insertar = $pdo->prepare(
+            "INSERT INTO viajes (omnibus_id, origen, destino, precio, ya_salio, fecha, hora, hora_llegada)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+        $exito = $insertar->execute([
+            $omnibusId,
+            $origen,
+            $destino,
+            $precio,
+            $yaSalio,
+            $fecha,
+            $hora,
             $hora_llegada
         ]);
 
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('Viaje registrado correctamente.'));
+        if ($exito) {
+            header('Location: ../public/panel_admin.php?msg=' . urlencode('Viaje registrado correctamente.'));
+        } else {
+            header('Location: ../public/panel_admin.php?msg=' . urlencode('Error al registrar el viaje.'));
+        }
         exit();
 
     } catch (PDOException $e) {

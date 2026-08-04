@@ -17,12 +17,15 @@
     $stmt = $pdo->query("SELECT id, nombre, apellido, email, telefono, tipo FROM users ORDER BY id DESC");
     $usuarios = $stmt->fetchAll();
 
-    $stmt = $pdo->query("SELECT id, n_omnibus, asientos, asientos_disponibles, origen, destino, precio, agencia, ya_salio, fecha, hora, hora_llegada FROM omnibus ORDER BY id DESC");
+    $stmt = $pdo->query("SELECT v.id, v.omnibus_id, o.n_omnibus, o.asientos, o.asientos_disponibles, v.origen, v.destino, v.precio, c.nombre AS agencia, v.ya_salio, v.fecha, v.hora, v.hora_llegada
+                         FROM viajes v
+                         JOIN omnibus o ON v.omnibus_id = o.id
+                         JOIN compania c ON o.compania_id = c.id
+                         ORDER BY v.id DESC");
     $viajes = $stmt->fetchAll();
 
     $mensaje = $_GET['msg'] ?? null;
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -48,7 +51,7 @@
 
         <!-- Contenido principal -->
         <div class="contenido">
-            <?php if ($mensaje) { 
+            <?php if ($mensaje) {
                 $esExito = (strpos($mensaje, 'correctamente') !== false);
             ?>
                 <div class="mensaje <?= $esExito ? 'exito' : 'error' ?>" id="mensajeAlerta">
@@ -144,7 +147,7 @@
                     <button type="submit" class="btn">Dar de alta</button>
                 </form>
             </div>
-            
+
             <!-- LISTADO DE VIAJES -->
             <div class="tarjeta" id="Viajes">
                 <h1>Viajes registrados</h1>
@@ -280,7 +283,7 @@
             document.querySelectorAll('.tarjeta').forEach(function(tarjeta) {
                 tarjeta.classList.remove('activa');
             });
-            
+
             // Mostrar la seleccionada
             const seccionTarget = document.getElementById(id);
             if (seccionTarget) {

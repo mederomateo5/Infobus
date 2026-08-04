@@ -16,22 +16,24 @@
     }
 
     try {
-        // Consulta SQL seleccionando la columna ruta_key
-        $query = "SELECT 
-                    origen, 
-                    destino, 
-                    fecha, 
-                    asientos_disponibles AS asientosLibres, 
-                    agencia, 
-                    precio,
-                    ruta_key
-                FROM omnibus 
-                WHERE origen = :origen 
-                    AND destino = :destino 
-                    AND fecha = :fecha 
-                    AND asientos_disponibles >= :pasajeros
-                    AND ya_salio = 0
-                ORDER BY hora ASC";
+        // Consulta SQL: unirse a viajes con omnibus y compania para obtener datos necesarios
+        $query = "SELECT
+                    v.origen,
+                    v.destino,
+                    v.fecha,
+                    o.asientos_disponibles AS asientosLibres,
+                    c.nombre AS agencia,
+                    v.precio,
+                    o.ruta_key
+                FROM viajes v
+                JOIN omnibus o ON v.omnibus_id = o.id
+                JOIN compania c ON o.compania_id = c.id
+                WHERE v.origen = :origen
+                    AND v.destino = :destino
+                    AND v.fecha = :fecha
+                    AND o.asientos_disponibles >= :pasajeros
+                    AND v.ya_salio = 0
+                ORDER BY v.hora ASC";
 
         $stmt = $pdo->prepare($query);
         $stmt->execute([
