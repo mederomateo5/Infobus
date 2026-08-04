@@ -112,12 +112,20 @@
 
     <!-- Contenedor de destinos populares -->
     <div class="destinos">
-        <h1>Destinos Populares</h1>
+        <h1>Compra tus pasajes aqui</h1>
+        <h4>(Da click encima del logo de la compañia en la que deseas viajar)</h4>
         <div class="destinos_img">
-            <img src="img/placeholder.png" alt="Destino 1">
-            <img src="img/placeholder.png" alt="Destino 2">
-            <img src="img/placeholder.png" alt="Destino 3">
-            <img src="img/placeholder.png" alt="Destino 4">
+                <a href="https://tab.com.uy/#comprar_pasaje">
+                    <img src="img/tab.png" alt="">
+                </a>
+
+                <a href="https://www.cot.com.uy/inicio">
+                    <img src="img/cot.png" alt="">
+                </a>
+
+                <a href="https://www.turil.com.uy/index.php">
+                    <img src="img/turil.svg" alt="">
+                </a>
         </div>
     </div>
 
