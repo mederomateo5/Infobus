@@ -114,6 +114,8 @@ CREATE TABLE IF NOT EXISTS viajes (
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
     hora_llegada TIME NOT NULL,
+    es_directo BOOLEAN NOT NULL DEFAULT FALSE,
+    dias_semana SET('Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo') NOT NULL DEFAULT 'Lunes,Martes,Miercoles,Jueves,Viernes',
     PRIMARY KEY (id),
     INDEX idx_origen (origen),
     INDEX idx_destino (destino),
