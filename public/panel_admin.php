@@ -68,6 +68,12 @@
             <!-- LISTADO DE USUARIOS -->
             <div class="tarjeta" id="usuarios">
                 <h1>Usuarios registrados</h1>
+                <div class= "buscador">
+                
+                <input type="search" id="buscarUsuario" placeholder="Escribe para buscar...">
+                <button type="button" onClick="buscarUsuario()"><i class="fa-solid fa-magnifying-glass"></i></button> 
+               
+            </div>
                 <div class="tabla-responsive">
                     <table>
                         <thead>
@@ -148,6 +154,7 @@
                 </form>
             </div>
 
+            <div id="resultadoBusqueda"></div>
             <!-- LISTADO DE VIAJES -->
             <div class="tarjeta" id="Viajes">
                 <h1>Viajes registrados</h1>
@@ -352,5 +359,8 @@
             return true;
         }
     </script>
+
+    <script src="js/manejarbuscador.js"></script>
+
 </body>
 </html>
