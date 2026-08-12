@@ -1,39 +1,41 @@
 <?php
-    session_start();
+session_start();
 
-    // Verificar sesión y permisos de administrador
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: ../public/login.php');
-        exit();
-    }
+// Verificar sesión y permisos de administrador
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../public/login.php');
+    exit();
+}
 
-    if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
-        die("Acceso denegado. Esta página es exclusiva para administradores.");
-    }
+if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
+    die("Acceso denegado. Esta página es exclusiva para administradores.");
+}
 
-    require_once '../config/database.php';
+require_once '../config/database.php';
 
-    // Consultar usuarios y viajes
-    $stmt = $pdo->query("SELECT id, nombre, apellido, email, telefono, tipo FROM users ORDER BY id DESC");
-    $usuarios = $stmt->fetchAll();
+// Consultar usuarios y viajes
+$stmt = $pdo->query("SELECT id, nombre, apellido, email, telefono, tipo FROM users ORDER BY id DESC");
+$usuarios = $stmt->fetchAll();
 
-    $stmt = $pdo->query("SELECT v.id, v.omnibus_id, o.n_omnibus, o.asientos, o.asientos_disponibles, v.origen, v.destino, v.precio, c.nombre AS agencia, v.ya_salio, v.fecha, v.hora, v.hora_llegada
+$stmt = $pdo->query("SELECT v.id, v.omnibus_id, o.n_omnibus, o.asientos, o.asientos_disponibles, v.origen, v.destino, v.precio, c.nombre AS agencia, v.ya_salio, v.fecha, v.hora, v.hora_llegada
                          FROM viajes v
                          JOIN omnibus o ON v.omnibus_id = o.id
                          JOIN compania c ON o.compania_id = c.id
                          ORDER BY v.id DESC");
-    $viajes = $stmt->fetchAll();
+$viajes = $stmt->fetchAll();
 
-    $mensaje = $_GET['msg'] ?? null;
+$mensaje = $_GET['msg'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administrador</title>
     <link rel="stylesheet" href="../public/css/panel_admin.css">
 </head>
+
 <body>
     <?php include '../includes/header.php'; ?>
 
@@ -68,12 +70,29 @@
             <!-- LISTADO DE USUARIOS -->
             <div class="tarjeta" id="usuarios">
                 <h1>Usuarios registrados</h1>
-                <div class= "buscador">
-                
-                <input type="search" id="buscarUsuario" placeholder="Escribe para buscar...">
-                <button type="button" onClick="buscarUsuario()"><i class="fa-solid fa-magnifying-glass"></i></button> 
-               
-            </div>
+
+<input type="text" id="busqueda" placeholder="Buscar...">
+<button onclick="buscar()">Buscar</button>
+
+<div class="tabla-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-compacta">ID</th>
+                                <th class="col-texto">Nombre</th>
+                                <th class="col-texto">Apellido</th>
+                                <th class="col-texto">Email</th>
+                                <th class="col-compacta">Teléfono</th>
+                                <th class="col-compacta">Tipo</th>
+                                <th class="col-compacta">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultado">
+                        </tbody>
+</table>
+</div>
+
+
                 <div class="tabla-responsive">
                     <table>
                         <thead>
@@ -89,7 +108,9 @@
                         </thead>
                         <tbody>
                             <?php if (empty($usuarios)) { ?>
-                                <tr><td colspan="7" style="text-align:center;">No hay usuarios registrados.</td></tr>
+                                <tr>
+                                    <td colspan="7" style="text-align:center;">No hay usuarios registrados.</td>
+                                </tr>
                             <?php } ?>
                             <?php foreach ($usuarios as $u) { ?>
                                 <tr>
@@ -179,7 +200,9 @@
                         </thead>
                         <tbody>
                             <?php if (empty($viajes)) { ?>
-                                <tr><td colspan="13" style="text-align:center;">No hay viajes registrados.</td></tr>
+                                <tr>
+                                    <td colspan="13" style="text-align:center;">No hay viajes registrados.</td>
+                                </tr>
                             <?php } ?>
                             <?php foreach ($viajes as $v) { ?>
                                 <tr>
@@ -276,7 +299,9 @@
         // Limpiar el parámetro 'msg' de la URL para que no quede guardado al actualizar
         if (window.history.replaceState && window.location.search.includes('msg=')) {
             const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+            window.history.replaceState({
+                path: cleanUrl
+            }, '', cleanUrl);
         }
 
         function mostrarSeccion(id, boton) {
@@ -363,4 +388,5 @@
     <script src="js/manejarbuscador.js"></script>
 
 </body>
+
 </html>
