@@ -10,7 +10,7 @@
 
     // Solo aceptar POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: ../public/panel_admin.php');
+        header('Location: ../public/alta_usuario_gui.php');
         exit();
     }
 
@@ -27,13 +27,13 @@
 
     // Validar que no falten datos obligatorios y que el tipo de usuario sea válido
     if ($nombre === '' || $apellido === '' || $email === '' || $telefono === '' || $password === '' || !in_array($tipo, $tiposValidos)) {
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('Faltan datos o el tipo de usuario no es válido.'));
+        header('Location: ../public/alta_usuario_gui.php?msg=' . urlencode('Faltan datos o el tipo de usuario no es válido.'));
         exit();
     }
 
     // Validar que la contraseña tenga al menos 6 caracteres
     if (strlen($password) < 6) {
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('La contraseña debe tener al menos 6 caracteres.'));
+        header('Location: ../public/alta_usuario_gui.php?msg=' . urlencode('La contraseña debe tener al menos 6 caracteres.'));
         exit();
     }
 
@@ -43,7 +43,7 @@
         $verificar->execute([$email]);
 
         if ($verificar->fetch()) {
-            header('Location: ../public/panel_admin.php?msg=' . urlencode('Ya existe un usuario con ese email.'));
+            header('Location: ../public/alta_usuario_gui.php?msg=' . urlencode('Ya existe un usuario con ese email.'));
             exit();
         }
 
@@ -58,12 +58,12 @@
         $insertar->execute([$nombre, $apellido, $email, $telefono, $passwordHash, $tipo]);
 
         // Redirigir al panel de administrador con un mensaje de éxito
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('Usuario dado de alta correctamente.'));
+        header('Location: ../public/alta_usuario_gui.php?msg=' . urlencode('Usuario dado de alta correctamente.'));
         exit();
 
     } catch (PDOException $e) {
         // En caso de error, redirigimos con un mensaje de error
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('Error al dar de alta el usuario.'));
+        header('Location: ../public/alta_usuario_gui.php?msg=' . urlencode('Error al dar de alta el usuario.'));
         exit();
     }
 ?>

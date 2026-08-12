@@ -1,0 +1,1 @@
+falta agregar los botones de editar y borrar, hacer responsive, estilos (fondos, cambiar iconos del sidebar), linkear los phps de baja y eso.
