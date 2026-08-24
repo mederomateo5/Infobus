@@ -113,7 +113,7 @@
     <!-- Contenedor de destinos populares -->
     <div class="destinos">
         <h1>Compra tus pasajes aqui</h1>
-        <h4>(Da click encima del logo de la compañia en la que deseas viajar)</h4>
+        <h5>(Da click encima del logo de la compañia en la que deseas viajar)</h5>
         <div class="destinos_img">
                 <a href="https://tab.com.uy/#comprar_pasaje">
                     <img src="img/tab.png" alt="">

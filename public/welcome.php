@@ -57,7 +57,7 @@
 
             <!-- INICIO -->
             <div class="tarjeta activa" id="inicio">
-                <h1>Bienvenido,  <?= htmlspecialchars($_SESSION['user_name']) ?></h1>
+                <h1>Bienvenido  <?= htmlspecialchars($_SESSION['user_name']) ?>.</h1>
                 <p>Este es tu panel. Desde acá vas a poder acceder a las distintas opciones disponibles para tu cuenta.</p>
             </div>
 

@@ -96,7 +96,7 @@ ini_set('display_errors', 1);
                     <p class="form-subtitle">Ingresá con tu cuenta para continuar.</p>
 
                     <?php if ($loginError) { ?>
-                        <div class="alert alert-error"><?= htmlspecialchars($loginError) ?></div>
+                        <div class="alert-error"><?= htmlspecialchars($loginError) ?></div>
                     <?php } ?>
 
                     <!-- Formulario de login -->
