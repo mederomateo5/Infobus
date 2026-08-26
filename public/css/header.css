@@ -1,39 +1,70 @@
-/* Altura del logo por breakpoints */
-.header-logo {
-  height: 50px;
-  max-width: 150px;
-  object-fit: contain;
-  width: auto;
+/* Espacio para el navbar fijo */
+
+body {
+    padding-top: 80px;
 }
+
+
+/* Altura del logo */
+
+.header-logo {
+    height: 50px;
+    max-width: 150px;
+    object-fit: contain;
+    width: auto;
+}
+
 
 /* Efecto hover personalizado */
+
 .navbar a:hover,
 .navbar .nav-link:hover {
-  color: #0077ff !important;
-  transition: color 0.25s;
+    color: #0077ff !important;
+    transition: color 0.25s;
 }
+
 
 /* Centrado absoluto de enlaces en desktop */
+
 @media (min-width: 768px) {
-  .header-links {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+
+    .header-links {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
 }
 
-/* Ajustes de logo en móviles */
-@media (max-width: 768px) {
-  .header-links {
-    width: 100%;
-    justify-content: center;
-    border-top: 1px solid #eee;
-    padding-top: 8px;
-  }
+
+/* Ajustes de enlaces en móviles */
+
+@media (max-width: 767px) {
+
+    body {
+        padding-top: 125px;
+    }
+
+    .header-links {
+        width: 100%;
+        justify-content: center;
+        border-top: 1px solid #eee;
+        padding-top: 8px;
+    }
+
 }
+
+
+/* Ajustes para celulares pequeños */
 
 @media (max-width: 480px) {
-  .header-logo {
-    height: 40px;
-  }
+
+    body {
+        padding-top: 115px;
+    }
+
+    .header-logo {
+        height: 40px;
+    }
+
 }
