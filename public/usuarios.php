@@ -12,18 +12,26 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador'
 }
 
 require_once '../config/database.php';
+
+if (isset($_GET['msg'])) {
+    $mensaje = htmlspecialchars($_GET['msg'], ENT_QUOTES, 'UTF-8');
+    echo "<script>
+        alert('$mensaje');
+        // Limpiamos el ?msg= de la barra de direcciones para que no vuelva a saltar con F5
+        window.history.replaceState({}, document.title, window.location.pathname);
+    </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
     <!-- Incluimos el header que contiene el CSS de Bootstrap -->
-    <?php include '../includes/header.php'; ?>
+    <?php include '../includes/head.php'; ?>
     <link rel="stylesheet" href="../public/css/panel_admin.css">
 </head>
 <body>
+    <?php include '../includes/header.php'; ?>
 
     <!-- Contenedor Flexbox para alinear Sidebar + Contenido -->
     <div class="d-flex">
@@ -33,7 +41,7 @@ require_once '../config/database.php';
 
         <!-- 2. Contenido principal a la derecha (flex-grow-1 ocupa el espacio restante) -->
         <main class="flex-grow-1 p-4 bg-dark overflow-hidden">
-            
+
             <div id="usuarios" class="container-fluid">
                 <h1 class="h3 mb-4 text-white fw-bold">Usuarios registrados</h1>
 

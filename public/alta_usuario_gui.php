@@ -12,18 +12,18 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador'
 }
 
 require_once '../config/database.php';
+$msg = $_GET['msg'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta de Usuarios</title>
     <!-- Incluimos el header que contiene el CSS de Bootstrap -->
-    <?php include '../includes/header.php'; ?>
+    <?php include '../includes/head.php'; ?>
     <link rel="stylesheet" href="../public/css/panel_admin.css">
 </head>
 <body>
+    <?php include '../includes/header.php'; ?>
 
     <!-- Contenedor Flexbox para alinear Sidebar + Contenido sin tapar el fondo personalizado -->
     <div class="d-flex">
@@ -33,18 +33,27 @@ require_once '../config/database.php';
 
         <!-- Zona principal del formulario -->
         <main class="flex-grow-1 p-4 overflow-hidden">
-            
+
             <div id="alta" class="container-fluid">
-                
+
                 <h1 class="h3 mb-4 text-white fw-bold">Dar de alta un usuario</h1>
 
+                 <!-- Alerta de mensaje (éxito o error) -->
+                <?php if ($msg !== ''): ?>
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <?= htmlspecialchars($msg) ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
+                
                 <!-- Tarjeta contenedora con grilla adaptable de Bootstrap -->
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
-                        
+
                         <form action="../public/alta_usuario.php" method="POST">
                             <div class="row g-3">
-                                
+
                                 <!-- Nombre -->
                                 <div class="col-12 col-md-6">
                                     <label class="form-label fw-semibold">Nombre</label>

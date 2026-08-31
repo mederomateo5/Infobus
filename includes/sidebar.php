@@ -6,20 +6,13 @@ $pagina_actual = basename($_SERVER['PHP_SELF']);
 <aside class="d-flex flex-column flex-shrink-0 p-3 bg-white border-end shadow-sm" 
        style="width: 280px; min-height: 100vh;">
     
-    <!-- Brand / Logo del Panel -->
-    <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none px-2">
-        <i class="fa-solid fa-bus fs-4 me-2 text-primary"></i>
-        <span class="fs-5 fw-bold">InfoBus Admin</span>
-    </a>
-
-    <hr class="my-3 text-secondary opacity-25">
 
     <!-- Lista de Enlaces de Navegación -->
     <ul class="nav nav-pills flex-column mb-auto gap-1">
         
         <li class="nav-item">
-            <a href="inicio.php" 
-               class="nav-link <?= $pagina_actual == 'inicio.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+            <a href="panel_admin.php" 
+               class="nav-link <?= $pagina_actual == 'panel_admin.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
                 <i class="fa-solid fa-chart-line me-3 fs-5" style="width: 20px;"></i>
                 <span>Inicio</span>
             </a>

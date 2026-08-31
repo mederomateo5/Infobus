@@ -1,23 +1,22 @@
 <?php
-    session_start();
+session_start();
 
-    // Verificar sesión
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: ../public/login.php');
-        exit();
-    }
+// Verificar sesión
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../public/login.php');
+    exit();
+}
 
-    // Verificar que sea chofer
-    if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
-        die("Acceso denegado. Esta página es exclusiva para choferes.");
-    }
+// Verificar que sea chofer
+if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
+    die("Acceso denegado. Esta página es exclusiva para choferes.");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Chofer</title>
+    <?php include '../includes/head.php'; ?>
     <link rel="stylesheet" href="../public/css/chofer.css">
 </head>
 <body>
@@ -54,22 +53,12 @@
                 <!-- Campo para mostrar el nombre del chofer -->
                 <div class="campo">
                     <label>Nombre</label>
-                    <input
-                        type="text"
-                        name="nombre"
-                        value="<?= htmlspecialchars($_SESSION['user_name']) ?>"
-                        required
-                    >
+                    <input type="text" name="coordenada1" id="latitud" readonly required>
                 </div>
 
                 <!-- Campos para mostrar latitud y longitud -->
                 <div class="campo">
                     <label>Latitud</label>
-                    <input type="text" name="coordenada1" id="latitud" readonly required>
-                </div>
-
-                <div class="campo">
-                    <label>Longitud</label>
                     <input type="text" name="coordenada2" id="longitud" readonly required>
                 </div>
 

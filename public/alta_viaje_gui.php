@@ -19,14 +19,13 @@ $msg = $_GET['msg'] ?? '';
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta de Viajes</title>
     <!-- Incluimos el header que contiene el CSS de Bootstrap -->
-    <?php include '../includes/header.php'; ?>
+    <?php include '../includes/head.php'; ?>
     <link rel="stylesheet" href="../public/css/panel_admin.css">
 </head>
 <body>
+    <?php include '../includes/header.php'; ?>
 
     <!-- Contenedor Flexbox para alinear Sidebar + Contenido sin tapar el fondo personalizado -->
     <div class="d-flex">
@@ -36,7 +35,7 @@ $msg = $_GET['msg'] ?? '';
 
         <!-- Zona principal del formulario -->
         <main class="flex-grow-1 p-4 overflow-auto">
-            
+
             <!-- TARJETA ALTA DE VIAJE -->
             <div class="tarjeta" id="altaV">
                 <h2>Dar de alta un viaje</h2>
@@ -50,7 +49,7 @@ $msg = $_GET['msg'] ?? '';
                 <?php endif; ?>
 
                 <form action="../public/alta_viaje.php" method="POST" onsubmit="return validarViaje(this);">
-                    
+
                     <div class="campo">
                         <label for="n_omnibus">Número de Ómnibus</label>
                         <input type="number" id="n_omnibus" name="n_omnibus" class="form-control" placeholder="Ej: 104" required min="1">

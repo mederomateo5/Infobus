@@ -38,9 +38,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Viaje</title>
+    <?php include '../includes/head.php'; ?>
     <!-- Reutilizamos tu CSS de administración -->
     <link rel="stylesheet" href="../public/css/panel_admin.css">
     <style>

@@ -1,4 +1,4 @@
- <?php
+<?php
 session_start();
 
 // Verificar sesión y permisos de administrador
@@ -12,85 +12,75 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador'
 }
 
 require_once '../config/database.php';
-include '../includes/header.php';
-include '../includes/sidebar.php';
 ?>
-
-    
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administrador</title>
+    <title>Inicio - Panel de Administración</title>
+    <!-- Incluimos el header que contiene el CSS de Bootstrap -->
+    <?php include '../includes/head.php'; ?>
     <link rel="stylesheet" href="../public/css/panel_admin.css">
-    
 </head>
-
 <body>
-        
-    <script>
+    <?php include '../includes/header.php'; ?>
 
-        function validarViaje(form) {
-            const origen = form.origen.value.trim().toLowerCase();
-            const destino = form.destino.value.trim().toLowerCase();
-            const fecha = form.fecha.value;
-            const horaSalida = form.hora.value;
-            const horaLlegada = form.hora_llegada.value;
+    <!-- Contenedor Flexbox Responsivo (Columna en Móvil / Fila en PC) -->
+    <div class="d-flex flex-column flex-md-row">
 
-            if (origen === destino) {
-                alert("El origen y el destino no pueden ser el mismo.");
-                return false;
-            }
+        <!-- Sidebar Lateral -->
+        <?php include '../includes/sidebar.php'; ?>
 
-            // Fecha y hora local
-            const ahora = new Date();
-            const anio = ahora.getFullYear();
-            const mes = String(ahora.getMonth() + 1).padStart(2, '0');
-            const dia = String(ahora.getDate()).padStart(2, '0');
-            const hoy = `${anio}-${mes}-${dia}`;
+        <!-- Área Principal de Contenido -->
+        <main class="flex-grow-1 p-3 p-md-4 overflow-hidden">
 
-            const horasActuales = String(ahora.getHours()).padStart(2, '0');
-            const minutosActuales = String(ahora.getMinutes()).padStart(2, '0');
-            const horaActualStr = `${horasActuales}:${minutosActuales}`;
+            <div class="container-fluid">
 
-            if (fecha < hoy) {
-                alert("No podés seleccionar una fecha del pasado.");
-                return false;
-            }
+                <!-- Encabezado de Bienvenida -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 text-white fw-bold m-0">Panel de Control</h1>
+                    <span class="badge bg-primary fs-6 px-3 py-2">
+                        <i class="fa-solid fa-user-shield me-1"></i> Administrador
+                    </span>
+                </div>
 
-            if (fecha === hoy && horaSalida < horaActualStr) {
-                alert("La hora de salida no puede ser anterior a la hora actual.");
-                return false;
-            }
+                <!-- Tarjetas Informativas / Accesos Rápidos de Ejemplo -->
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="card shadow-sm border-0 border-start border-4 border-primary">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">GESTIÓN</p>
+                                    <h5 class="card-title fw-bold m-0">Usuarios</h5>
+                                </div>
+                                <a href="usuarios.php" class="btn btn-light-primary btn-sm text-primary fs-4">
+                                    <i class="fa-solid fa-users"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-            if (horaSalida === horaLlegada) {
-                alert("La hora de salida y la de llegada no pueden ser iguales.");
-                return false;
-            }
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="card shadow-sm border-0 border-start border-4 border-success">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">REGISTRO</p>
+                                    <h5 class="card-title fw-bold m-0">Alta Usuario</h5>
+                                </div>
+                                <a href="alta_usuario.php" class="btn btn-light-success btn-sm text-success fs-4">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            // Validar salidas mayores a llegadas solo a partir de las 23:00 hs
-            const [hSalida, mSalida] = horaSalida.split(':').map(Number);
-            const [hLlegada, mLlegada] = horaLlegada.split(':').map(Number);
+                <!-- Aquí puedes colocar más tablas, gráficos o contenido general de inicio -->
 
-            const minSalida = hSalida * 60 + mSalida;
-            const minLlegada = hLlegada * 60 + mLlegada;
+            </div>
 
-            if (minSalida > minLlegada) {
-                if (hSalida < 23) {
-                    alert("La hora de salida no puede ser posterior a la hora de llegada");
-                    return false;
-                }
-            }
+        </main>
 
-            return true;
-        }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/manejarbuscador.js"></script>
+    </div>
 
 </body>
-
 </html>

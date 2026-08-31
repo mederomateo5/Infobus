@@ -33,10 +33,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Inicio - Interurbanos</title>
-
+    
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/index_style.css">
+    <?php include '../includes/head.php'; ?>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>

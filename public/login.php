@@ -58,171 +58,519 @@ ini_set('display_errors', 1);
         }
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Acceso</title>
-    <link rel="stylesheet" href="../public/css/login.css">
+
+        <link rel="stylesheet" href="../public/css/login.css">
+        
+    <?php include '../includes/head.php'; ?>
+
+
+
 </head>
+
 <body>
+
     <?php include '../includes/header.php'; ?>
 
-    <div class="page">
-        <main>
-            <div class="card">
-                <!-- Logo -->
-                <div class="brand-logo img"><img src="../public/img/logotipo.png" alt="Logo"></div>
 
-                <!-- Tabs -->
-                <div class="tabs" role="tablist">
-                    <button class="tab-btn <?= $activeTab === 'login' ? 'active' : '' ?>"
-                            role="tab" onclick="switchTab('login')">
-                        Iniciar sesión
-                    </button>
-                    <button class="tab-btn <?= $activeTab === 'register' ? 'active' : '' ?>"
-                            role="tab" onclick="switchTab('register')">
-                        Registrarse
-                    </button>
+    <div class="container py-4 py-md-5">
+
+        <main class="row justify-content-center">
+
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+
+                <div class="card shadow-sm border rounded-3 p-3 p-md-4">
+
+
+                    <!-- Logo -->
+
+                    <div class="text-center mb-3">
+
+                        <img
+                            src="../public/img/logotipo.png"
+                            alt="Logo InfoBus"
+                            class="img-fluid"
+                            style="max-width: 160px;"
+                        >
+
+                    </div>
+
+
+                    <!-- Tabs -->
+
+                    <div
+                        class="d-flex border-bottom mb-4"
+                        role="tablist"
+                    >
+
+                        <button
+                            class="tab-btn <?= $activeTab === 'login' ? 'active' : '' ?>"
+                            role="tab"
+                            onclick="switchTab('login')"
+                        >
+                            Iniciar sesión
+                        </button>
+
+
+                        <button
+                            class="tab-btn <?= $activeTab === 'register' ? 'active' : '' ?>"
+                            role="tab"
+                            onclick="switchTab('register')"
+                        >
+                            Registrarse
+                        </button>
+
+                    </div>
+
+
+                    <!-- LOGIN -->
+
+                    <section
+                        class="form-section <?= $activeTab === 'login' ? 'active' : '' ?>"
+                        id="tab-login"
+                    >
+
+                        <h1 class="h4 fw-bold mb-1">
+                            Bienvenido de vuelta
+                        </h1>
+
+                        <p class="text-secondary mb-4">
+                            Ingresá con tu cuenta para continuar.
+                        </p>
+
+
+                        <?php if ($loginError) { ?>
+
+                            <div class="alert alert-danger">
+                                <?= htmlspecialchars($loginError) ?>
+                            </div>
+
+                        <?php } ?>
+
+
+                        <form
+                            method="POST"
+                            action="../public/login.php"
+                            novalidate
+                        >
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="login"
+                            >
+
+
+                            <!-- Email -->
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="login-email"
+                                    class="form-label fw-bold"
+                                >
+                                    Email
+
+                                    <span
+                                        class="info-icon"
+                                        title="Ingresá tu dirección de correo electrónico"
+                                    >
+                                        i
+                                    </span>
+
+                                </label>
+
+
+                                <input
+                                    type="email"
+                                    id="login-email"
+                                    name="email"
+                                    class="form-control"
+                                    placeholder="tu@email.com"
+                                    required
+                                    value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                                >
+
+                            </div>
+
+
+                            <!-- Contraseña -->
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="login-password"
+                                    class="form-label fw-bold"
+                                >
+                                    Contraseña
+
+                                    <span
+                                        class="info-icon"
+                                        title="Tu contraseña de acceso"
+                                    >
+                                        i
+                                    </span>
+
+                                </label>
+
+
+                                <input
+                                    type="password"
+                                    id="login-password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="••••••••"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary w-100 mt-2"
+                            >
+                                Ingresar →
+                            </button>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- REGISTRO -->
+
+                    <section
+                        class="form-section <?= $activeTab === 'register' ? 'active' : '' ?>"
+                        id="tab-register"
+                    >
+
+                        <h1 class="h4 fw-bold mb-1">
+                            Crear cuenta
+                        </h1>
+
+                        <p class="text-secondary mb-4">
+                            Completá tus datos para registrarte.
+                        </p>
+
+
+                        <form
+                            method="POST"
+                            action="../public/login.php"
+                            novalidate
+                        >
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="register"
+                            >
+
+
+                            <!-- Nombre y apellido -->
+
+                            <div class="row">
+
+                                <div class="col-12 col-md-6">
+
+                                    <div class="mb-3">
+
+                                        <label
+                                            for="reg-nombre"
+                                            class="form-label fw-bold"
+                                        >
+                                            Nombre
+
+                                            <span
+                                                class="info-icon"
+                                                title="Tu nombre"
+                                            >
+                                                i
+                                            </span>
+
+                                        </label>
+
+
+                                        <input
+                                            type="text"
+                                            id="reg-nombre"
+                                            name="nombre"
+                                            class="form-control <?= isset($regErrors['nombre']) ? 'is-invalid' : '' ?>"
+                                            placeholder="Juan"
+                                            value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>"
+                                        >
+
+
+                                        <?php if (isset($regErrors['nombre'])) { ?>
+
+                                            <div class="invalid-feedback">
+                                                <?= $regErrors['nombre'] ?>
+                                            </div>
+
+                                        <?php } ?>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-12 col-md-6">
+
+                                    <div class="mb-3">
+
+                                        <label
+                                            for="reg-apellido"
+                                            class="form-label fw-bold"
+                                        >
+                                            Apellido
+
+                                            <span
+                                                class="info-icon"
+                                                title="Tu apellido"
+                                            >
+                                                i
+                                            </span>
+
+                                        </label>
+
+
+                                        <input
+                                            type="text"
+                                            id="reg-apellido"
+                                            name="apellido"
+                                            class="form-control <?= isset($regErrors['apellido']) ? 'is-invalid' : '' ?>"
+                                            placeholder="García"
+                                            value="<?= htmlspecialchars($_POST['apellido'] ?? '') ?>"
+                                        >
+
+
+                                        <?php if (isset($regErrors['apellido'])) { ?>
+
+                                            <div class="invalid-feedback">
+                                                <?= $regErrors['apellido'] ?>
+                                            </div>
+
+                                        <?php } ?>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Email -->
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="reg-email"
+                                    class="form-label fw-bold"
+                                >
+                                    Email
+
+                                    <span
+                                        class="info-icon"
+                                        title="Tu dirección de correo electrónico"
+                                    >
+                                        i
+                                    </span>
+
+                                </label>
+
+
+                                <input
+                                    type="email"
+                                    id="reg-email"
+                                    name="email"
+                                    class="form-control <?= isset($regErrors['email']) ? 'is-invalid' : '' ?>"
+                                    placeholder="tu@email.com"
+                                    value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                                >
+
+
+                                <?php if (isset($regErrors['email'])) { ?>
+
+                                    <div class="invalid-feedback">
+                                        <?= $regErrors['email'] ?>
+                                    </div>
+
+                                <?php } ?>
+
+                            </div>
+
+
+                            <!-- Teléfono -->
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="reg-telefono"
+                                    class="form-label fw-bold"
+                                >
+                                    Teléfono
+
+                                    <span
+                                        class="info-icon"
+                                        title="Número de teléfono, solo dígitos. Ej: 099123456"
+                                    >
+                                        i
+                                    </span>
+
+                                </label>
+
+
+                                <input
+                                    type="tel"
+                                    id="reg-telefono"
+                                    name="telefono"
+                                    class="form-control <?= isset($regErrors['telefono']) ? 'is-invalid' : '' ?>"
+                                    placeholder="099 123 456"
+                                    value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>"
+                                >
+
+
+                                <?php if (isset($regErrors['telefono'])) { ?>
+
+                                    <div class="invalid-feedback">
+                                        <?= $regErrors['telefono'] ?>
+                                    </div>
+
+                                <?php } ?>
+
+                            </div>
+
+
+                            <!-- Contraseña -->
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="reg-password"
+                                    class="form-label fw-bold"
+                                >
+                                    Contraseña
+
+                                    <span
+                                        class="info-icon"
+                                        title="Mínimo 8 caracteres, una mayúscula y un símbolo especial"
+                                    >
+                                        i
+                                    </span>
+
+                                </label>
+
+
+                                <input
+                                    type="password"
+                                    id="reg-password"
+                                    name="password"
+                                    class="form-control <?= isset($regErrors['password']) ? 'is-invalid' : '' ?>"
+                                    placeholder="••••••••"
+                                    oninput="updateStrength(this.value)"
+                                >
+
+
+                                <div class="d-flex gap-1 mt-2">
+
+                                    <div
+                                        class="strength-bar flex-fill"
+                                        id="bar1"
+                                    ></div>
+
+                                    <div
+                                        class="strength-bar flex-fill"
+                                        id="bar2"
+                                    ></div>
+
+                                    <div
+                                        class="strength-bar flex-fill"
+                                        id="bar3"
+                                    ></div>
+
+                                </div>
+
+
+                                <span
+                                    class="strength-label d-block mt-1"
+                                    id="strength-label"
+                                ></span>
+
+
+                                <?php if (isset($regErrors['password'])) { ?>
+
+                                    <div class="text-danger small">
+                                        <?= $regErrors['password'] ?>
+                                    </div>
+
+                                <?php } ?>
+
+                            </div>
+
+
+                            <!-- Confirmar contraseña -->
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="reg-confirm"
+                                    class="form-label fw-bold"
+                                >
+                                    Confirmar contraseña
+
+                                    <span
+                                        class="info-icon"
+                                        title="Repetí la contraseña para confirmarla"
+                                    >
+                                        i
+                                    </span>
+
+                                </label>
+
+
+                                <input
+                                    type="password"
+                                    id="reg-confirm"
+                                    name="confirm_password"
+                                    class="form-control <?= isset($regErrors['confirm_password']) ? 'is-invalid' : '' ?>"
+                                    placeholder="••••••••"
+                                >
+
+
+                                <?php if (isset($regErrors['confirm_password'])) { ?>
+
+                                    <div class="invalid-feedback">
+                                        <?= $regErrors['confirm_password'] ?>
+                                    </div>
+
+                                <?php } ?>
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary w-100 mt-2"
+                            >
+                                Crear cuenta →
+                            </button>
+
+                        </form>
+
+                    </section>
+
                 </div>
 
-                <!-- LOGIN -->
-                <section class="form-section <?= $activeTab === 'login' ? 'active' : '' ?>"
-                        id="tab-login">
+            </div>
 
-                    <h1 class="form-title">Bienvenido de vuelta</h1>
-                    <p class="form-subtitle">Ingresá con tu cuenta para continuar.</p>
-
-                    <?php if ($loginError) { ?>
-                        <div class="alert-error"><?= htmlspecialchars($loginError) ?></div>
-                    <?php } ?>
-
-                    <!-- Formulario de login -->
-                    <form method="POST" action="../public/login.php" novalidate>
-                        <input type="hidden" name="action" value="login">
-
-                        <div class="field">
-                            <label for="login-email">
-                                Email
-                                <span class="info-icon" title="Ingresá tu dirección de correo electrónico">i</span>
-                            </label>
-                            <input type="email" id="login-email" name="email"
-                                placeholder="tu@email.com" required
-                                value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
-                        </div>
-
-                        <div class="field">
-                            <label for="login-password">
-                                Contraseña
-                                <span class="info-icon" title="Tu contraseña de acceso">i</span>
-                            </label>
-                            <input type="password" id="login-password" name="password"
-                                placeholder="••••••••" required>
-                        </div>
-
-                        <button type="submit" class="btn-primary">Ingresar →</button>
-                    </form>
-                </section>
-
-                <!-- REGISTRO -->
-                <section class="form-section <?= $activeTab === 'register' ? 'active' : '' ?>"
-                        id="tab-register">
-
-                    <h1 class="form-title">Crear cuenta</h1>
-                    <p class="form-subtitle">Completá tus datos para registrarte.</p>
-                    
-                    <!-- Formulario de registro -->
-                    <form method="POST" action="../public/login.php" novalidate>
-                        <input type="hidden" name="action" value="register">
-
-                        <div class="field-row">
-                            <div class="field">
-                                <label for="reg-nombre">
-                                    Nombre
-                                    <span class="info-icon" title="Tu nombre">i</span>
-                                </label>
-                                <input type="text" id="reg-nombre" name="nombre"
-                                    placeholder="Juan"
-                                    class="<?= isset($regErrors['nombre']) ? 'invalid' : '' ?>"
-                                    value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>">
-                                <span class="field-error"><?= $regErrors['nombre'] ?? '' ?></span>
-                            </div>
-
-                            <div class="field">
-                                <label for="reg-apellido">
-                                    Apellido
-                                    <span class="info-icon" title="Tu apellido">i</span>
-                                </label>
-                                <input type="text" id="reg-apellido" name="apellido"
-                                    placeholder="García"
-                                    class="<?= isset($regErrors['apellido']) ? 'invalid' : '' ?>"
-                                    value="<?= htmlspecialchars($_POST['apellido'] ?? '') ?>">
-                                <span class="field-error"><?= $regErrors['apellido'] ?? '' ?></span>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label for="reg-email">
-                                Email
-                                <span class="info-icon" title="Tu dirección de correo electrónico">i</span>
-                            </label>
-                            <input type="email" id="reg-email" name="email"
-                                placeholder="tu@email.com"
-                                class="<?= isset($regErrors['email']) ? 'invalid' : '' ?>"
-                                value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
-                            <span class="field-error"><?= $regErrors['email'] ?? '' ?></span>
-                        </div>
-
-                        <div class="field">
-                            <label for="reg-telefono">
-                                Teléfono
-                                <span class="info-icon" title="Número de teléfono, solo dígitos. Ej: 099123456">i</span>
-                            </label>
-                            <input type="tel" id="reg-telefono" name="telefono"
-                                placeholder="099 123 456"
-                                class="<?= isset($regErrors['telefono']) ? 'invalid' : '' ?>"
-                                value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>">
-                            <span class="field-error"><?= $regErrors['telefono'] ?? '' ?></span>
-                        </div>
-
-                        <div class="field">
-                            <label for="reg-password">
-                                Contraseña
-                                <span class="info-icon" title="Mínimo 8 caracteres, una mayúscula y un símbolo especial">i</span>
-                            </label>
-                            <input type="password" id="reg-password" name="password"
-                                placeholder="••••••••"
-                                class="<?= isset($regErrors['password']) ? 'invalid' : '' ?>"
-                                oninput="updateStrength(this.value)">
-                            <div class="pass-strength">
-                                <div class="strength-bar" id="bar1"></div>
-                                <div class="strength-bar" id="bar2"></div>
-                                <div class="strength-bar" id="bar3"></div>
-                            </div>
-                            <span class="strength-label" id="strength-label"></span>
-                            <span class="field-error"><?= $regErrors['password'] ?? '' ?></span>
-                        </div>
-
-                        <div class="field">
-                            <label for="reg-confirm">
-                                Confirmar contraseña
-                                <span class="info-icon" title="Repetí la contraseña para confirmarla">i</span>
-                            </label>
-                            <input type="password" id="reg-confirm" name="confirm_password"
-                                placeholder="••••••••"
-                                class="<?= isset($regErrors['confirm_password']) ? 'invalid' : '' ?>">
-                            <span class="field-error"><?= $regErrors['confirm_password'] ?? '' ?></span>
-                        </div>
-
-                        <button type="submit" class="btn-primary">Crear cuenta →</button>
-                    </form>
-                </section>
-            </div> <!-- Fin Card -->
         </main>
-    </div> <!-- Fin Page -->
 
+    </div>
     <script>
         // Tabs
         function switchTab(tab) {

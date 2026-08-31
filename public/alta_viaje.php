@@ -10,7 +10,7 @@
 
     // Solo aceptar POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: ../public/panel_admin.php');
+        header('Location: ../public/alta_viaje_gui.php');
         exit();
     }
 
@@ -33,7 +33,7 @@
         $precio === false || !in_array($agencia, $agenciasValidas) ||
         $fecha === '' || $hora === '' || $hora_llegada === ''
     ) {
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('Faltan datos o se ingresaron valores inválidos.'));
+        header('Location: ../public/alta_viaje_gui.php?msg=' . urlencode('Faltan datos o se ingresaron valores inválidos.'));
         exit();
     }
 
@@ -48,7 +48,7 @@
         $omnibus = $stmtOmnibus->fetch();
 
         if (!$omnibus) {
-            header('Location: ../public/panel_admin.php?msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
+            header('Location: ../public/alta_viaje_gui.php?msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
             exit();
         }
 
@@ -72,14 +72,14 @@
         ]);
 
         if ($exito) {
-            header('Location: ../public/panel_admin.php?msg=' . urlencode('Viaje registrado correctamente.'));
+            header('Location: ../public/alta_viaje_gui.php?msg=' . urlencode('Viaje registrado correctamente.'));
         } else {
-            header('Location: ../public/panel_admin.php?msg=' . urlencode('Error al registrar el viaje.'));
+            header('Location: ../public/alta_viaje_gui.php?msg=' . urlencode('Error al registrar el viaje.'));
         }
         exit();
 
     } catch (PDOException $e) {
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('Error en la base de datos al dar de alta el viaje.'));
+        header('Location: ../public/alta_viaje_gui.php?msg=' . urlencode('Error en la base de datos al dar de alta el viaje.'));
         exit();
     }
 ?>

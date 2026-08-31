@@ -1,275 +1,108 @@
-* {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body {
-    background:#e9f0fb;
-    font-family:Arial,sans-serif;
-    font-size:14px;
-    color:#1c1e21;
+    background: #e9f0fb;
 }
 
-/* Layout centrado */
-.page{
-    width:100%;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    padding:110px 15px 30px;
-}
 
-.card{
-    width:100%;
-    max-width:450px;
-    margin:auto;
-    background:#fff;
-    border:1px solid #dddfe2;
-    border-radius:8px;
-    padding:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,.1);
-}
-
-.brand-logo {
-    text-align:center;
-    margin-bottom:15px;
-}
-
-.brand-logo img{
-    width:160px;
-    max-width:100%;
-    height:auto;
-}
-
-/* Tabs */
-.tabs {
-    width:100%;
-    margin-bottom:20px;
-    border-bottom:1px solid #dddfe2;
-    display:flex;
-}
+/* =========================
+   PESTAÑAS
+========================= */
 
 .tab-btn {
-    flex:1;
-    padding:12px;
-    background:white;
-    border:none;
-    border-bottom:3px solid transparent;
-    font-size:15px;
-    font-weight:bold;
-    color:#606770;
-    cursor:pointer;
+    flex: 1;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 15px;
+    font-weight: bold;
+    color: #606770;
+    cursor: pointer;
 }
+
 
 .tab-btn.active {
-    color:#1877f2;
-    border-bottom:3px solid #1877f2;
+    color: #1877f2;
+    border-bottom-color: #1877f2;
 }
 
-/* Formulario */
+
+/* =========================
+   FORMULARIOS
+========================= */
+
 .form-section {
-    display:none;
+    display: none;
 }
+
 
 .form-section.active {
-    display:block;
+    display: block;
 }
 
-/* Títulos y subtítulos */
-.form-title {
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:5px;
-}
 
-.form-subtitle {
-    font-size:13px;
-    color:#606770;
-    margin-bottom:15px;
-}
-
-/* Campos del formulario */
-.field-row {
-    display:flex;
-    justify-content:space-between;
-}
-
-.field-row .field {
-    width:48%;
-}
-
-.field {
-    text-align:left;
-    margin-bottom:12px;
-}
-
-.field label {
-    font-size:13px;
-    font-weight:bold;
-}
+/* =========================
+   ICONOS DE INFORMACIÓN
+========================= */
 
 .info-icon {
-    display:inline-block;
-    width:14px;
-    height:14px;
-    line-height:14px;
-    text-align:center;
-    border:1px solid #606770;
-    border-radius:50%;
-    font-size:10px;
-    color:#606770;
-    cursor:pointer;
-    font-style:italic;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 15px;
+    height: 15px;
+
+    border: 1px solid #606770;
+    border-radius: 50%;
+
+    font-size: 10px;
+    font-style: italic;
+    color: #606770;
+
+    cursor: pointer;
 }
 
-.field input {
-    width:100%;
-    margin-top:4px;
-    padding:10px;
-    border:1px solid #ccd0d5;
-    border-radius:6px;
-    font-size:14px;
-}
 
-.field input:focus {
-    border:1px solid #1877f2;
-}
-
-.field input.invalid {
-    border:1px solid #e02020;
-}
-
-.field-error {
-    color:#e02020;
-    font-size:12px;
-}
-
-.pass-strength {
-    margin-top:5px;
-}
+/* =========================
+   BARRA DE CONTRASEÑA
+========================= */
 
 .strength-bar {
-    display:inline-block;
-    width:31%;
-    height:4px;
-    background:#dddfe2;
-    border-radius:4px;
+    height: 4px;
+    background: #dddfe2;
+    border-radius: 4px;
 }
+
 
 .strength-bar.weak {
-    background:#e02020;
+    background: #e02020;
 }
+
 
 .strength-bar.medium {
-    background:#f5a623;
+    background: #f5a623;
 }
+
 
 .strength-bar.strong {
-    background:#42b72a;
+    background: #42b72a;
 }
+
 
 .strength-label {
-    font-size:12px;
-    margin-top:5px;
-}
-.btn-primary {
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    background:#1877f2;
-    color:white;
-    border:none;
-    border-radius:6px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.btn-primary:hover {
-    background:#166fe5;
-}
-
-.btn-primary:active {
-    background:#1464d2;
-}
-
-.alert {
-    margin-bottom:15px;
-    padding:10px;
-    border-radius:6px;
-    font-size: 15px;
-}
-
-.alert-error {
-    background:#fff0f0;
-    border:1px solid #f5c6c6;
-    color:#e02020;
-}
-
-/* ===========================
-   TABLETS
-=========================== */
-
-@media (max-width:900px){
-
-    .card{
-        max-width:500px;
-    }
-
+    font-size: 12px;
 }
 
 
-/* ===========================
-   CELULARES
-=========================== */
+/* =========================
+   RESPONSIVE
+========================= */
 
-@media (max-width:768px){
+@media (max-width: 480px) {
 
-    body{
-        font-size:16px;
-    }
-
-    .page{
-        padding:100px 10px 20px;
-    }
-
-    .card{
-        width:100%;
-        padding:18px;
-    }
-
-    .brand-logo img{
-        width:130px;
-        height:auto !important;
-    }
-
-    .field-row{
-        flex-direction:column;
-        gap:12px;
-    }
-
-    .field-row .field{
-        width:100%;
-    }
-
-    .tab-btn{
-        flex:1;
-        font-size:14px;
-        padding:10px;
-    }
-
-    .form-title{
-        font-size:22px;
-    }
-
-    .form-subtitle{
-        font-size:14px;
-    }
-
-    .btn-primary{
-        font-size:15px;
+    .tab-btn {
+        font-size: 14px;
+        padding: 10px;
     }
 
 }
