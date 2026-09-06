@@ -1,4 +1,6 @@
 <?php
+    require_once __DIR__ . '/config.php';
+
     // Datos de conexión a la base de datos
     $host     = 'localhost';
     $dbname   = 'omnibus_app';

@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
     session_start();
 
     // Verificar sesión y rol de administrador
@@ -41,7 +42,7 @@
     <title>Editar Viaje</title>
     <?php include '../includes/head.php'; ?>
     <!-- Reutilizamos tu CSS de administración -->
-    <link rel="stylesheet" href="../public/css/panel_admin.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
     <style>
         /* Ajuste rápido para centrar el formulario de edición en pantalla */
         .contenedor-editar {
@@ -94,7 +95,7 @@
         <div class="tarjeta activa">
             <h1>Editar Viaje (ID: <?= htmlspecialchars($viaje['id']) ?>)</h1>
 
-            <form action="../public/actualizar_viaje.php" method="POST">
+            <form action="<?= BASE_URL ?>actualizar_viaje.php" method="POST">
                 <!-- ID Oculto para procesar la actualización en la BD -->
                 <input type="hidden" name="id" value="<?= htmlspecialchars($viaje['id']) ?>">
 

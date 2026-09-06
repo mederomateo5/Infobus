@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
     session_start();
 
     // Verificar sesión
@@ -32,7 +33,7 @@
 <head>
     <title>Panel de Usuario</title>
     <?php include '../includes/head.php'; ?>
-    <link rel="stylesheet" href="../public/css/welcome.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/welcome.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>

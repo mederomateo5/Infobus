@@ -1,3 +1,4 @@
+<?php require_once '../config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -23,7 +24,7 @@
 
     </main>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Importe de leaflet (mapa) -->
-    <script src="js/paradas.js"></script>
+    <script src="<?= BASE_URL ?>js/paradas.js"></script>
 </body>
 
 </html>

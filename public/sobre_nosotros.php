@@ -1,3 +1,4 @@
+<?php require_once '../config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,7 +6,7 @@
 
     <title>Sobre Nosotros</title>
 
-    <link rel="stylesheet" href="../public/css/sobre_nosotros.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/sobre_nosotros.css">
 
     <?php include '../includes/head.php'; ?>
 

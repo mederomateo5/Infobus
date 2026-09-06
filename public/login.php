@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
     require_once '../config/database.php';
@@ -65,7 +66,7 @@ ini_set('display_errors', 1);
 
     <title>Acceso</title>
 
-        <link rel="stylesheet" href="../public/css/login.css">
+        <link rel="stylesheet" href="<?= BASE_URL ?>css/login.css">
         
     <?php include '../includes/head.php'; ?>
 
@@ -155,7 +156,7 @@ ini_set('display_errors', 1);
 
                         <form
                             method="POST"
-                            action="../public/login.php"
+                            action="<?= BASE_URL ?>login.php"
                             novalidate
                         >
 
@@ -261,7 +262,7 @@ ini_set('display_errors', 1);
 
                         <form
                             method="POST"
-                            action="../public/login.php"
+                            action="<?= BASE_URL ?>login.php"
                             novalidate
                         >
 

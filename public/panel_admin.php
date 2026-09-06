@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
 session_start();
 
 // Verificar sesión y permisos de administrador
@@ -19,7 +20,7 @@ require_once '../config/database.php';
     <title>Inicio - Panel de Administración</title>
     <!-- Incluimos el header que contiene el CSS de Bootstrap -->
     <?php include '../includes/head.php'; ?>
-    <link rel="stylesheet" href="../public/css/panel_admin.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>

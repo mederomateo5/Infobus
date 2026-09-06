@@ -1,4 +1,6 @@
 <?php
+    require_once __DIR__ . '/../config/config.php';
+
     /*
         Clase User
         Maneja registro, login y validaciones de usuarios.

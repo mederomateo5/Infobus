@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
 session_start();
 
 // Verificar sesión
@@ -17,7 +18,7 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
 <head>
     <title>Panel de Chofer</title>
     <?php include '../includes/head.php'; ?>
-    <link rel="stylesheet" href="../public/css/chofer.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/chofer.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -47,7 +48,7 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
             <h2 class="empresa-seleccionada" id="empresaElegida"></h2>
 
             <!-- Formulario que envía la ubicación al servidor -->
-            <form action="../public/procesar_ubicacion.php" method="POST" onsubmit="return confirmarEnvio()">
+            <form action="<?= BASE_URL ?>procesar_ubicacion.php" method="POST" onsubmit="return confirmarEnvio()">
                 <input type="hidden" name="empresa" id="empresaInput">
 
                 <!-- Campo para mostrar el nombre del chofer -->

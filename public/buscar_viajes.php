@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
     // Configurar la respuesta como JSON
     header('Content-Type: application/json');
     require_once '../config/database.php';

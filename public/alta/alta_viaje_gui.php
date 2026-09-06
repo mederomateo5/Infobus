@@ -1,9 +1,10 @@
 <?php
+require_once '../../config/config.php';
 session_start();
 
 // Verificar sesión y permisos de administrador
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../public/login.php');
+    header('Location: ../login.php');
     exit();
 }
 
@@ -11,7 +12,7 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador'
     die("Acceso denegado. Esta página es exclusiva para administradores.");
 }
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 // Capturar mensaje de notificación si existe
 $msg = $_GET['msg'] ?? '';
@@ -21,17 +22,17 @@ $msg = $_GET['msg'] ?? '';
 <head>
     <title>Alta de Viajes</title>
     <!-- Incluimos el header que contiene el CSS de Bootstrap -->
-    <?php include '../includes/head.php'; ?>
-    <link rel="stylesheet" href="../public/css/panel_admin.css">
+    <?php include '../../includes/head.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <?php include '../../includes/header.php'; ?>
 
     <!-- Contenedor Flexbox para alinear Sidebar + Contenido sin tapar el fondo personalizado -->
     <div class="d-flex">
 
         <!-- Sidebar lateral -->
-        <?php include '../includes/sidebar.php'; ?>
+        <?php include '../../includes/sidebar.php'; ?>
 
         <!-- Zona principal del formulario -->
         <main class="flex-grow-1 p-4 overflow-auto">
@@ -48,7 +49,7 @@ $msg = $_GET['msg'] ?? '';
                     </div>
                 <?php endif; ?>
 
-                <form action="../public/alta_viaje.php" method="POST" onsubmit="return validarViaje(this);">
+                <form action="alta_viaje.php" method="POST" onsubmit="return validarViaje(this);">
 
                     <div class="campo">
                         <label for="n_omnibus">Número de Ómnibus</label>
@@ -109,6 +110,6 @@ $msg = $_GET['msg'] ?? '';
 
     </div>
 
-    <script src="js/validaciones.js"></script>
+    <script src="<?= BASE_URL ?>js/validaciones.js"></script>
 </body>
 </html>

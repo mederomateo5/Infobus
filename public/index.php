@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
     // Incluir la conexión a la base de datos
     require_once '../config/database.php';
 
@@ -36,7 +37,7 @@
     
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="css/index_style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/index_style.css">
     <?php include '../includes/head.php'; ?>
 </head>
 <body>
@@ -132,6 +133,6 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="../public/js/scripts.js"></script>
+    <script src="<?= BASE_URL ?>js/scripts.js"></script>
 </body>
 </html>

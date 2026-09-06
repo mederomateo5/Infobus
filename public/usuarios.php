@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
 session_start();
 
 // Verificar sesión y permisos de administrador
@@ -28,7 +29,7 @@ if (isset($_GET['msg'])) {
     <title>Usuarios</title>
     <!-- Incluimos el header que contiene el CSS de Bootstrap -->
     <?php include '../includes/head.php'; ?>
-    <link rel="stylesheet" href="../public/css/panel_admin.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -75,7 +76,7 @@ if (isset($_GET['msg'])) {
                                         <th scope="col" class="py-3">Email</th>
                                         <th scope="col" class="py-3">Teléfono</th>
                                         <th scope="col" class="py-3">Tipo</th>
-                                        <th scope="col" class="py-3 px-3 text-end">Acciones</th>
+                                        <th scope="col" class="py-3 px-3 text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="resultado" class="table-group-divider">
@@ -91,6 +92,12 @@ if (isset($_GET['msg'])) {
         </main>
     </div>
 
-    <script src="js/manejarbuscador.js"></script>
+    <script src="<?= BASE_URL ?>js/buscarusuarios.js"></script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mostrarTodo();
+        });
+    </script>
 </body>
 </html>

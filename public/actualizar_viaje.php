@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
     session_start();
 
     // Verificar sesión y rol de administrador

@@ -1,9 +1,10 @@
 <?php
+require_once '../../config/config.php';
 session_start();
 
 // Verificar sesión y permisos de administrador
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../public/login.php');
+    header('Location: ../login.php');
     exit();
 }
 
@@ -11,7 +12,7 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador'
     die("Acceso denegado. Esta página es exclusiva para administradores.");
 }
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 $msg = $_GET['msg'] ?? '';
 ?>
 <!DOCTYPE html>
@@ -19,17 +20,17 @@ $msg = $_GET['msg'] ?? '';
 <head>
     <title>Alta de Usuarios</title>
     <!-- Incluimos el header que contiene el CSS de Bootstrap -->
-    <?php include '../includes/head.php'; ?>
-    <link rel="stylesheet" href="../public/css/panel_admin.css">
+    <?php include '../../includes/head.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <?php include '../../includes/header.php'; ?>
 
     <!-- Contenedor Flexbox para alinear Sidebar + Contenido sin tapar el fondo personalizado -->
     <div class="d-flex">
 
         <!-- Sidebar lateral -->
-        <?php include '../includes/sidebar.php'; ?>
+        <?php include '../../includes/sidebar.php'; ?>
 
         <!-- Zona principal del formulario -->
         <main class="flex-grow-1 p-4 overflow-hidden">
@@ -51,7 +52,7 @@ $msg = $_GET['msg'] ?? '';
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
 
-                        <form action="../public/alta_usuario.php" method="POST">
+                        <form action="alta_usuario.php" method="POST">
                             <div class="row g-3">
 
                                 <!-- Nombre -->
@@ -89,7 +90,7 @@ $msg = $_GET['msg'] ?? '';
                                     <label class="form-label fw-semibold">Tipo de usuario</label>
                                     <select name="tipo" class="form-select" required>
                                         <option value="usuario">Usuario</option>
-                                        <option value="chofer">Chofer</option>
+                                        <option value="compania">Compania</option>
                                         <option value="administrador">Administrador</option>
                                     </select>
                                 </div>
@@ -113,6 +114,6 @@ $msg = $_GET['msg'] ?? '';
 
     </div>
 
-    <script src="js/validaciones.js"></script>
+    <script src="<?= BASE_URL ?>js/validaciones.js"></script>
 </body>
 </html>
