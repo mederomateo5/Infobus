@@ -8,85 +8,107 @@ let rutasData = {};
 let paradasData = [];     
 let mapasInicializados = {}; 
 
-// Cargar archivos de configuración geográfica locales (rutas y paradas)
+// --- FUNCIÓN PARA CREAR PINES TRADICIONALES DE COLORES CON CSS ---
+function crearPinColor(colorHex) {
+    return L.divIcon({
+        className: 'custom-pin',
+        html: `<div style="
+            background-color: ${colorHex};
+            width: 20px;
+            height: 20px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -10px 0 0 -10px;
+            position: absolute;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+        "></div>`,
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -30]
+    });
+}
+
+// Definición de los 3 colores para las paradas
+const pinUrbano = crearPinColor("#28a745");       // 🟢 Solo Urbanos
+const pinInterurbano = crearPinColor("#007bff");  // 🔵 Solo Interurbanos
+const pinAmbos = crearPinColor("#ffc107");        // 🟠 Ambos
+
+// Configuración de líneas por ubicación
 const lineasPorUbicacion = {
     "juan-lacaze": ["urbano", "ruta1"],
     "colonia": ["ruta1"],
     "montevideo": ["urbano"]
 };
 
-// Cargar archivos de configuración geográfica locales (rutas y paradas)
 const horariosPorLinea = {
     urbano: [
-        { salida: "07:00", llegada: "07:25", estimado: "25 minutos", frecuencia: "Lunes a Viernes", empresa: "Coche 14" },
-        { salida: "12:15", llegada: "12:40",estimado: "25 minutos", frecuencia: "Diario", empresa: "Coche 14" },
-        { salida: "18:30", llegada: "18:55",estimado: "25 minutos", frecuencia: "Lunes a Viernes", empresa: "Coche 02" }
+        { salida: "07:00", llegada: "07:25", frecuencia: "Lunes a Viernes", empresa: "Coche 14" },
+        { salida: "12:15", llegada: "12:40", frecuencia: "Diario", empresa: "Coche 14" },
+        { salida: "18:30", llegada: "18:55", frecuencia: "Lunes a Viernes", empresa: "Coche 02" }
     ],
     ruta1: [
-        { salida: "06:00", llegada: "06:45", estimado: "45 minutos", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
-        { salida: "08:00", llegada: "08:45", estimado: "45 minutos", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
-        { salida: "14:00", llegada: "14:45", estimado: "45 minutos",frecuencia: "Diario", empresa: "Empresa Local" }
+        { salida: "06:00", llegada: "06:45", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
+        { salida: "08:00", llegada: "08:45", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
+        { salida: "14:00", llegada: "14:45", frecuencia: "Diario", empresa: "Empresa Local" }
     ]
 };
 
-// Cargar archivos de configuración geográfica locales (rutas y paradas)
+// --- CARGA DIRECTA CON RUTAS RELATIVAS EXACTAS ---
 Promise.all([
-    fetch('../js/rutasomnibus.json').then(res => res.json()),
-    fetch('../js/paradasomnibus.json').then(res => res.json())
+    fetch('./js/rutasomnibus.json').then(res => {
+        if (!res.ok) throw new Error("No se pudo cargar rutasomnibus.json");
+        return res.json();
+    }),
+    fetch('../data/paradas.json').then(res => {
+        if (!res.ok) throw new Error("No se pudo cargar paradas.json");
+        return res.json();
+    })
 ]).then(([dataRutas, dataParadas]) => {
     rutasData = dataRutas;
     paradasData = dataParadas;
-}).catch(error => console.error("Error al traer mapas urbanos:", error));
-
+    console.log("¡Datos cargados con éxito!", { rutas: dataRutas, paradas: dataParadas });
+}).catch(error => {
+    console.error("Error al traer los datos de rutas y paradas:", error);
+});
 
 // Escucha del cambio en el select de ubicación
 selectUbicacion.addEventListener("change", function() {
-    const ubicacionSeleccionada = this.value; // Obtenemos la ubicación seleccionada
+    const ubicacionSeleccionada = this.value; 
     
-    // Resetear la tabla y el mensaje antes de mostrar nuevos resultados
     tablaHorariosUrbanos.innerHTML = "";
     mensajeUrbano.textContent = "";
     resultadosUrbanos.style.display = "none";
     mapasInicializados = {};
 
-    // Obtenemos las líneas disponibles para la ubicación seleccionada
     const lineasDisponibles = lineasPorUbicacion[ubicacionSeleccionada] || [];
 
-    // Si no hay líneas disponibles, mostramos un mensaje y salimos
     if (lineasDisponibles.length === 0) {
         mensajeUrbano.textContent = "No hay líneas urbanas registradas para esta zona";
         return;
     }
 
-    // Si hay líneas disponibles, mostramos la tabla de resultados
     resultadosUrbanos.style.display = "block";
-    
-    // Armamos la tabla de horarios urbanos según los ómnibus disponibles
     let globalIndex = 0;
 
-    // Por cada línea disponible, obtenemos sus horarios y creamos filas en la tabla
     lineasDisponibles.forEach(llaveRuta => {
-        const infoRuta = rutasData[llaveRuta]; // Obtenemos la información de la ruta desde el JSON cargado
-        const listaHorarios = horariosPorLinea[llaveRuta] || []; // Obtenemos los horarios de la línea desde el objeto de horarios
+        const listaHorarios = horariosPorLinea[llaveRuta] || []; 
 
-        // Si no hay horarios para la línea, mostramos un mensaje y continuamos con la siguiente línea
         listaHorarios.forEach(h => {
-            // Creamos una fila para cada horario y la agregamos a la tabla
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${h.salida}</td>
                 <td>${h.llegada}</td>
-                <td>${h.estimado}</td>
                 <td>${h.frecuencia}</td>
                 <td>${h.empresa}</td>
                 <td>
-                    <!-- Guardamos la línea en 'data-ruta' para saber qué recorrido pintar al abrir el mapa -->
                     <button class="btn-mapa" data-index="${globalIndex}" data-ruta="${llaveRuta}">▼</button>
                 </td>
             `;
             tablaHorariosUrbanos.appendChild(fila);
 
-            // Creamos una fila adicional para el contenedor del mapa, que estará inicialmente oculta
             const filaMapa = document.createElement("tr");
             filaMapa.className = "fila-mapa";
             filaMapa.innerHTML = `
@@ -96,38 +118,38 @@ selectUbicacion.addEventListener("change", function() {
             `;
             tablaHorariosUrbanos.appendChild(filaMapa);
             
-            globalIndex++; // Incrementamos el índice global para la siguiente fila de mapa
+            globalIndex++; 
         });
     });
 });
 
 // Escucha del click en la tabla de horarios urbanos para abrir/cerrar mapas
 tablaHorariosUrbanos.addEventListener("click", function(e) {
-    const btn = e.target.closest(".btn-mapa"); // Si el click no fue en un botón de mapa, salimos
+    const btn = e.target.closest(".btn-mapa"); 
     if (!btn) return; 
 
-    // Obtenemos el índice y la llave de la ruta desde los atributos del botón
     const index = btn.getAttribute("data-index");
     const llaveRuta = btn.getAttribute("data-ruta"); 
     const contenedorMapa = document.getElementById(`mapa-urbano-${index}`);
     
-    // Alternamos la clase 'abierto' del botón para cambiar su apariencia
     btn.classList.toggle("abierto"); 
     
-    // Alternamos la visibilidad del contenedor del mapa
     if (contenedorMapa.style.display === "block") {
         contenedorMapa.style.display = "none"; 
     } else {
         contenedorMapa.style.display = "block"; 
         
-        // Si el mapa del índice actual no existe, lo inicializamos
-        if (!mapasInicializados[index]) {
+        if (mapasInicializados[index]) {
+            setTimeout(() => {
+                mapasInicializados[index].invalidateSize();
+            }, 100);
+        } else {
             inicializarMapaUrbanoFila(index, llaveRuta);
         }
     }
 });
 
-// Función para inicializar el mapa de una fila urbana específica
+// Función para inicializar el mapa de una fila urbana específica y pintar todas las paradas
 function inicializarMapaUrbanoFila(index, llaveRuta) {
     const idContenedor = `mapa-urbano-${index}`;
     const map = L.map(idContenedor).setView([-34.42, -57.44], 13);
@@ -139,32 +161,38 @@ function inicializarMapaUrbanoFila(index, llaveRuta) {
     const datosDeRuta = rutasData[llaveRuta];
     
     if (datosDeRuta && datosDeRuta.coordinates) {
-        // Invertimos las coordenadas de latitud y longitud para que se dibuje correctamente en el mapa
         const coordenadasConvertidas = datosDeRuta.coordinates.map(coord => [coord[1], coord[0]]);
         
-        // Creamos la línea de la ruta en el mapa con el color especificado en los datos de la ruta
         const lineaRuta = L.polyline(coordenadasConvertidas, {
             color: datosDeRuta.color || '#3469b2',
             weight: 4
         }).addTo(map);
 
-        // Agregamos marcadores para cada parada de la ruta, mostrando el nombre de la 
-        // parada y la línea a la que pertenece
-        paradasData.forEach(parada => {
-            L.marker([parada.lat, parada.lng])
-                .addTo(map)
-                .bindPopup(`<b>${parada.nombre}</b><br>Línea: ${datosDeRuta.nombre}`);
-        });
+        // Agregamos TODAS las paradas del paradas.json con sus respectivos pines de colores
+        if (paradasData && paradasData.length > 0) {
+            paradasData.forEach(parada => {
+                let iconoSeleccionado = pinInterurbano; // 🔵 Azul por defecto
 
-        // Ajustamos el zoom del mapa para que se enfoque en la ruta trazada
+                if (parada.tipo === "urbano") {
+                    iconoSeleccionado = pinUrbano;       // 🟢 Verde
+                } else if (parada.tipo === "ambos") {
+                    iconoSeleccionado = pinAmbos;       // 🟠 Naranja
+                }
+
+                let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
+
+                L.marker([parada.lat, parada.lng], { icon: iconoSeleccionado })
+                    .addTo(map)
+                    .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}<br>Línea: ${datosDeRuta.nombre || 'Urbano'}`);
+            });
+        }
+
         map.fitBounds(lineaRuta.getBounds());
     }
 
     mapasInicializados[index] = map;
 
-    // Forzamos una actualización del tamaño del mapa después de un pequeño retraso para 
-    // asegurar que se renderice correctamente
     setTimeout(() => {
         map.invalidateSize();
-    }, 50);
+    }, 150);
 }

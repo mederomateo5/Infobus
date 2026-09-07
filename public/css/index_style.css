@@ -291,3 +291,42 @@ select{
     min-width:700px;
 }
 }
+
+/* Estilos específicos para la sección de paradas */
+.hijo-paradas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.contenedor-boton-ubicacion {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.btn-ubicacion-custom {
+    background-color: #3469b2;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.btn-ubicacion-custom:hover {
+    background-color: #28558f;
+}
+
+.custom-pin {
+    background: transparent;
+    border: none;
+}

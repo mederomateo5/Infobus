@@ -36,6 +36,9 @@
 
         <p id="mensajeUrbano"></p> <!-- Mensaje que se mostrará si no hay horarios disponibles -->
 
+        <!-- Contenedor del Mapa -->
+        <div id="mapa" style="height: 450px; width: 100%; margin: 25px 0; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: none;"></div>
+
         <!-- Tabla de resultados (Oculta al principio, aparece al elegir ubicación) -->
         <div class="horarios" id="resultadosUrbanos" style="display:none;">
             <h2>Líneas y Horarios Disponibles</h2>

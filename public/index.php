@@ -1,32 +1,44 @@
 <?php
 require_once '../config/config.php';
-    // Incluir la conexión a la base de datos
-    require_once '../config/database.php';
+// Incluir la conexión a la base de datos
+require_once '../config/database.php';
 
-    // Obtener orígenes disponibles en la base de datos
-    try {
-        $stmt_origenes = $pdo->query("SELECT DISTINCT v.origen FROM viajes v JOIN omnibus o ON v.omnibus_id = o.id WHERE v.ya_salio = 0 ORDER BY v.origen ASC");
-        $origenes = $stmt_origenes->fetchAll(PDO::FETCH_COLUMN);
-    } catch (PDOException $e) {
-        $origenes = [];
-    }
+// Obtener orígenes disponibles en la base de datos
+try {
+    $stmt_origenes = $pdo->query("
+        SELECT DISTINCT p.nombre 
+        FROM viajes v 
+        JOIN paradas p ON v.origen_id = p.id 
+        WHERE v.ya_salio = 0 
+        ORDER BY p.nombre ASC
+    ");
+    $origenes = $stmt_origenes->fetchAll(PDO::FETCH_COLUMN);
+} catch (PDOException $e) {
+    $origenes = [];
+}
 
-    // Respaldo por si la base de datos está vacía
-    if (empty($origenes)) {
-        $origenes = ['Montevideo', 'Paysandú', 'Salto'];
-    }
+// Respaldo por si la base de datos está vacía
+if (empty($origenes)) {
+    $origenes = ['Montevideo', 'Paysandú', 'Salto'];
+}
 
-    // Obtener destinos disponibles en la base de datos
-    try {
-        $stmt_destinos = $pdo->query("SELECT DISTINCT v.destino FROM viajes v JOIN omnibus o ON v.omnibus_id = o.id WHERE v.ya_salio = 0 ORDER BY v.destino ASC");
-        $destinos = $stmt_destinos->fetchAll(PDO::FETCH_COLUMN);
-    } catch (PDOException $e) {
-        $destinos = [];
-    }
+// Obtener destinos disponibles en la base de datos
+try {
+    $stmt_destinos = $pdo->query("
+        SELECT DISTINCT p.nombre 
+        FROM viajes v 
+        JOIN paradas p ON v.destino_id = p.id 
+        WHERE v.ya_salio = 0 
+        ORDER BY p.nombre ASC
+    ");
+    $destinos = $stmt_destinos->fetchAll(PDO::FETCH_COLUMN);
+} catch (PDOException $e) {
+    $destinos = [];
+}
 
-    if (empty($destinos)) {
-        $destinos = ['Montevideo', 'Paysandú', 'Punta del Este', 'Salto'];
-    }
+if (empty($destinos)) {
+    $destinos = ['Montevideo', 'Paysandú', 'Punta del Este', 'Salto'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,7 +59,7 @@ require_once '../config/config.php';
     <div class="padre">
         <!-- Botón para ir a la página de urbanos -->
         <div class="navegacion-paginas">
-            <a href="../public/urbanos.php" class="btn-enlace">Ir a Ómnibus Urbanos →</a>
+            <a href="urbanos.php" class="btn-enlace">Ir a Ómnibus Urbanos →</a>
         </div>
         <h1>Encuentra tu próximo viaje Interurbano</h1>
 
@@ -114,19 +126,19 @@ require_once '../config/config.php';
 
     <!-- Contenedor de destinos populares -->
     <div class="destinos">
-        <h1>Compra tus pasajes aqui</h1>
-        <h5>(Da click encima del logo de la compañia en la que deseas viajar)</h5>
+        <h1>Compra tus pasajes aquí</h1>
+        <h5>(Da click encima del logo de la compañía en la que deseas viajar)</h5>
         <div class="destinos_img">
-                <a href="https://tab.com.uy/#comprar_pasaje">
-                    <img src="img/tab.png" alt="">
+                <a href="https://tab.com.uy/#comprar_pasaje" target="_blank" rel="noopener noreferrer">
+                    <img src="<?= BASE_URL ?>img/tab.png" alt="TAB">
                 </a>
 
-                <a href="https://www.cot.com.uy/inicio">
-                    <img src="img/cot.png" alt="">
+                <a href="https://www.cot.com.uy/inicio" target="_blank" rel="noopener noreferrer">
+                    <img src="<?= BASE_URL ?>img/cot.png" alt="COT">
                 </a>
 
-                <a href="https://www.turil.com.uy/index.php">
-                    <img src="img/turil.svg" alt="">
+                <a href="https://www.turil.com.uy/index.php" target="_blank" rel="noopener noreferrer">
+                    <img src="<?= BASE_URL ?>img/turil.svg" alt="TURIL">
                 </a>
         </div>
     </div>
