@@ -44,6 +44,7 @@
                     <tr>
                         <th>Salida</th>
                         <th>Llegada</th>
+                        <th>Estimado</th>
                         <th>Frecuencia</th>
                         <th>Empresa</th>
                         <th>Ver Ruta</th>

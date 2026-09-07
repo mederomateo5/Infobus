@@ -18,14 +18,14 @@ const lineasPorUbicacion = {
 // Cargar archivos de configuración geográfica locales (rutas y paradas)
 const horariosPorLinea = {
     urbano: [
-        { salida: "07:00", llegada: "07:25", frecuencia: "Lunes a Viernes", empresa: "Coche 14" },
-        { salida: "12:15", llegada: "12:40", frecuencia: "Diario", empresa: "Coche 14" },
-        { salida: "18:30", llegada: "18:55", frecuencia: "Lunes a Viernes", empresa: "Coche 02" }
+        { salida: "07:00", llegada: "07:25", estimado: "25 minutos", frecuencia: "Lunes a Viernes", empresa: "Coche 14" },
+        { salida: "12:15", llegada: "12:40",estimado: "25 minutos", frecuencia: "Diario", empresa: "Coche 14" },
+        { salida: "18:30", llegada: "18:55",estimado: "25 minutos", frecuencia: "Lunes a Viernes", empresa: "Coche 02" }
     ],
     ruta1: [
-        { salida: "06:00", llegada: "06:45", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
-        { salida: "08:00", llegada: "08:45", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
-        { salida: "14:00", llegada: "14:45", frecuencia: "Diario", empresa: "Empresa Local" }
+        { salida: "06:00", llegada: "06:45", estimado: "45 minutos", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
+        { salida: "08:00", llegada: "08:45", estimado: "45 minutos", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
+        { salida: "14:00", llegada: "14:45", estimado: "45 minutos",frecuencia: "Diario", empresa: "Empresa Local" }
     ]
 };
 
@@ -76,6 +76,7 @@ selectUbicacion.addEventListener("change", function() {
             fila.innerHTML = `
                 <td>${h.salida}</td>
                 <td>${h.llegada}</td>
+                <td>${h.estimado}</td>
                 <td>${h.frecuencia}</td>
                 <td>${h.empresa}</td>
                 <td>

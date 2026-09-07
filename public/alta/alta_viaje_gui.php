@@ -47,7 +47,7 @@ $msg = $_GET['msg'] ?? '';
 
             <!-- TARJETA ALTA DE VIAJE -->
             <div class="tarjeta" id="altaV">
-                <h2>Dar de alta un viaje</h2>
+                <h2 class="h3 text-white fw-bold" >Dar de alta un viaje</h2>
 
                 <!-- Alerta de mensaje (éxito o error) -->
                 <?php if ($msg !== ''): ?>

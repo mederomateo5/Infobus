@@ -40,7 +40,7 @@ if (isset($_GET['msg'])) {
         <?php include '../includes/sidebar.php'; ?>
 
         <!-- 2. Contenido principal a la derecha -->
-        <main class="flex-grow-1 p-4 bg-dark overflow-hidden">
+        <main class="flex-grow-1 p-4 overflow-auto">
 
             <div id="viajes" class="container-fluid">
                 <h1 class="h3 mb-4 text-white fw-bold">Viajes registrados</h1>

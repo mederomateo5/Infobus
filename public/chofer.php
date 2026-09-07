@@ -58,16 +58,24 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'chofer') {
                 </div>
 
                 <!-- Campos para mostrar latitud y longitud -->
+                
+                <div class="campo">
+                    <label>Longitud</label>
+                    <input type="text" name="coordenada1" id="longitud" readonly required>
+                </div>
+
                 <div class="campo">
                     <label>Latitud</label>
                     <input type="text" name="coordenada2" id="longitud" readonly required>
                 </div>
+                
 
                 <button type="button" class="btn" onclick="obtenerUbicacion()">
                     Obtener ubicación
                 </button>
 
                 <br><br>
+                
 
                 <button type="submit" class="btn">
                     Enviar

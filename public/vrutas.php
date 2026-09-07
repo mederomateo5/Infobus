@@ -41,7 +41,7 @@ if (isset($_GET['msg'])) {
         <?php include '../includes/sidebar.php'; ?>
 
         <!-- 2. Contenido principal a la derecha (flex-grow-1 ocupa el espacio restante) -->
-        <main class="flex-grow-1 p-4 bg-dark overflow-hidden">
+        <main class="flex-grow-1 p-4 overflow-auto">
 
             <div id="rutas" class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center mb-4">

@@ -26,7 +26,7 @@ $msg = $_GET['msg'] ?? '';
 
         <main class="flex-grow-1 p-4 overflow-auto">
             <div class="tarjeta">
-                <h2>Dar de alta un ómnibus</h2>
+                <h2 class="h3 text-white fw-bold">Dar de alta un ómnibus</h2>
 
                 <?php if ($msg !== ''): ?>
                     <div class="alert alert-info alert-dismissible fade show" role="alert">

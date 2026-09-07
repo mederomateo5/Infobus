@@ -25,14 +25,14 @@ require_once '../config/database.php';
 <body>
     <?php include '../includes/header.php'; ?>
 
-    <!-- Contenedor Flexbox Responsivo (Columna en Móvil / Fila en PC) -->
-    <div class="d-flex flex-column flex-md-row">
+    <!-- Contenedor Flexbox Responsivo de Alto Completo -->
+    <div class="d-flex flex-column flex-md-row min-vh-100">
 
         <!-- Sidebar Lateral -->
         <?php include '../includes/sidebar.php'; ?>
 
         <!-- Área Principal de Contenido -->
-        <main class="flex-grow-1 p-3 p-md-4 overflow-hidden">
+        <main class="flex-grow-1 p-4 overflow-auto">
 
             <div class="container-fluid">
 
@@ -44,10 +44,12 @@ require_once '../config/database.php';
                     </span>
                 </div>
 
-                <!-- Tarjetas Informativas / Accesos Rápidos de Ejemplo -->
-                <div class="row g-3 mb-4">
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card shadow-sm border-0 border-start border-4 border-primary">
+                <!-- Tarjetas Informativas / Accesos Rápidos (3 Columnas por Fila) -->
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+
+                    <!-- Usuarios -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-primary">
                             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                                 <div>
                                     <p class="text-muted small fw-medium mb-1">GESTIÓN</p>
@@ -60,22 +62,142 @@ require_once '../config/database.php';
                         </div>
                     </div>
 
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card shadow-sm border-0 border-start border-4 border-success">
+                    <!-- Alta Usuario -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-success">
                             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                                 <div>
                                     <p class="text-muted small fw-medium mb-1">REGISTRO</p>
                                     <h5 class="card-title fw-bold m-0">Alta Usuario</h5>
                                 </div>
-                                <a href="alta_usuario.php" class="btn btn-light-success btn-sm text-success fs-4">
+                                <a href="alta/alta_usuario_gui.php" class="btn btn-light-success btn-sm text-success fs-4">
                                     <i class="fa-solid fa-user-plus"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Aquí puedes colocar más tablas, gráficos o contenido general de inicio -->
+                    <!-- Ver Ómnibus -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-info">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">GESTIÓN</p>
+                                    <h5 class="card-title fw-bold m-0">Ver Ómnibus</h5>
+                                </div>
+                                <a href="vomnibus.php" class="btn btn-light-info btn-sm text-info fs-4">
+                                    <i class="fa-solid fa-bus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alta Ómnibus -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-info">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">REGISTRO</p>
+                                    <h5 class="card-title fw-bold m-0">Alta de Ómnibus</h5>
+                                </div>
+                                <a href="alta/alta_omnibus_gui.php" class="btn btn-light-info btn-sm text-info fs-4">
+                                    <i class="fa-solid fa-bus-simple"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ver Recorridos -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-warning">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">GESTIÓN</p>
+                                    <h5 class="card-title fw-bold m-0">Ver Recorridos</h5>
+                                </div>
+                                <a href="vrutas.php" class="btn btn-light-warning btn-sm text-warning fs-4">
+                                    <i class="fa-solid fa-route"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Asignar Recorridos -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-warning">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">REGISTRO</p>
+                                    <h5 class="card-title fw-bold m-0">Asignar Recorridos</h5>
+                                </div>
+                                <a href="alta/alta_ruta_gui.php" class="btn btn-light-warning btn-sm text-warning fs-4">
+                                    <i class="fa-solid fa-map-location-dot"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ver Viajes -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-primary">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">GESTIÓN</p>
+                                    <h5 class="card-title fw-bold m-0">Ver Viajes</h5>
+                                </div>
+                                <a href="viajes.php" class="btn btn-light-primary btn-sm text-primary fs-4">
+                                    <i class="fa-solid fa-ticket"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alta de Viajes -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-primary">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">REGISTRO</p>
+                                    <h5 class="card-title fw-bold m-0">Alta de Viajes</h5>
+                                </div>
+                                <a href="alta/alta_viaje_gui.php" class="btn btn-light-primary btn-sm text-primary fs-4">
+                                    <i class="fa-solid fa-calendar-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ver Paradas -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-danger">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">GESTIÓN</p>
+                                    <h5 class="card-title fw-bold m-0">Ver Paradas</h5>
+                                </div>
+                                <a href="vparadas.php" class="btn btn-light-danger btn-sm text-danger fs-4">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alta de Paradas -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-danger">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">REGISTRO</p>
+                                    <h5 class="card-title fw-bold m-0">Alta de Paradas</h5>
+                                </div>
+                                <a href="alta/alta_parada_gui.php" class="btn btn-light-danger btn-sm text-danger fs-4">
+                                    <i class="fa-solid fa-map-pin"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
 

@@ -116,5 +116,5 @@ $pagina_actual = basename($_SERVER['PHP_SELF']);
             <span class="fw-medium text-danger">Cerrar Sesión</span>
         </a>
     </div>
-
+    
 </aside>
