@@ -1,12 +1,12 @@
 function validarViaje(form) {
-  const origen = form.origen.value.trim().toLowerCase();
-  const destino = form.destino.value.trim().toLowerCase();
+  const origenId = form.origen_id.value;
+  const destinoId = form.destino_id.value;
   const fecha = form.fecha.value;
   const horaSalida = form.hora.value;
   const horaLlegada = form.hora_llegada.value;
 
-  if (origen === destino) {
-    alert("El origen y el destino no pueden ser el mismo.");
+  if (origenId === destinoId) {
+    alert("El origen y el destino no pueden ser la misma parada.");
     return false;
   }
 
@@ -45,7 +45,7 @@ function validarViaje(form) {
 
   if (minSalida > minLlegada) {
     if (hSalida < 23) {
-      alert("La hora de salida no puede ser posterior a la hora de llegada");
+      alert("La hora de salida no puede ser posterior a la hora de llegada.");
       return false;
     }
   }

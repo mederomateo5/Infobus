@@ -14,6 +14,14 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador'
 
 require_once '../../config/database.php';
 
+// Obtener la lista de paradas para los select de origen y destino
+try {
+    $stmtParadas = $pdo->query("SELECT id, nombre FROM paradas ORDER BY nombre ASC");
+    $paradas = $stmtParadas->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $paradas = [];
+}
+
 // Capturar mensaje de notificación si existe
 $msg = $_GET['msg'] ?? '';
 ?>
@@ -57,26 +65,6 @@ $msg = $_GET['msg'] ?? '';
                     </div>
 
                     <div class="campo">
-                        <label for="asientos">Asientos Totales</label>
-                        <input type="number" id="asientos" name="asientos" class="form-control" placeholder="Ej: 44" required min="1" max="70">
-                    </div>
-
-                    <div class="campo">
-                        <label for="origen">Origen</label>
-                        <input type="text" id="origen" name="origen" class="form-control" placeholder="Ej: Montevideo" required>
-                    </div>
-
-                    <div class="campo">
-                        <label for="destino">Destino</label>
-                        <input type="text" id="destino" name="destino" class="form-control" placeholder="Ej: Colonia" required>
-                    </div>
-
-                    <div class="campo">
-                        <label for="precio">Precio ($)</label>
-                        <input type="number" id="precio" step="0.01" name="precio" class="form-control" placeholder="Ej: 350.00" required min="0">
-                    </div>
-
-                    <div class="campo">
                         <label for="agencia">Agencia</label>
                         <select id="agencia" name="agencia" class="form-select" required>
                             <option value="" disabled selected>Seleccione una agencia...</option>
@@ -85,6 +73,36 @@ $msg = $_GET['msg'] ?? '';
                             <option value="TURIL">TURIL</option>
                             <option value="URBANO">URBANO</option>
                         </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="origen_id">Parada de Origen</label>
+                        <select id="origen_id" name="origen_id" class="form-select" required>
+                            <option value="" disabled selected>Seleccione origen...</option>
+                            <?php foreach ($paradas as $parada): ?>
+                                <option value="<?= $parada['id'] ?>"><?= htmlspecialchars($parada['nombre']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="destino_id">Parada de Destino</label>
+                        <select id="destino_id" name="destino_id" class="form-select" required>
+                            <option value="" disabled selected>Seleccione destino...</option>
+                            <?php foreach ($paradas as $parada): ?>
+                                <option value="<?= $parada['id'] ?>"><?= htmlspecialchars($parada['nombre']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="asientos_disponibles">Asientos Disponibles</label>
+                        <input type="number" id="asientos_disponibles" name="asientos_disponibles" class="form-control" placeholder="Ej: 44" required min="1" max="100">
+                    </div>
+
+                    <div class="campo">
+                        <label for="precio">Precio ($)</label>
+                        <input type="number" id="precio" step="0.01" name="precio" class="form-control" placeholder="Ej: 350.00" required min="0">
                     </div>
 
                     <div class="campo">
@@ -100,6 +118,15 @@ $msg = $_GET['msg'] ?? '';
                     <div class="campo">
                         <label for="hora_llegada">Hora de Llegada</label>
                         <input type="time" id="hora_llegada" name="hora_llegada" class="form-control" required>
+                    </div>
+
+                    <div class="campo mt-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="es_directo" name="es_directo" value="1">
+                            <label class="form-check-label text-white" for="es_directo">
+                                Es servicio directo
+                            </label>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100 mt-3">Dar de alta viaje</button>
