@@ -37,6 +37,23 @@ $pagina_actual = basename($_SERVER['PHP_SELF']);
             </a>
         </li>
 
+        <!-- Compañías -->
+        <li class="nav-item">
+            <a href="<?= BASE_URL ?>vcompania.php" 
+               class="nav-link <?= $pagina_actual == 'vcompania.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-building me-3 fs-5" style="width: 20px;"></i>
+                <span>Ver Compañías</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="<?= BASE_URL ?>alta/alta_compania_gui.php" 
+               class="nav-link <?= $pagina_actual == 'alta_compania_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-building-circle-check me-3 fs-5" style="width: 20px;"></i>
+                <span>Alta de Compañías</span>
+            </a>
+        </li>
+
         <!-- Ómnibus -->
         <li class="nav-item">
             <a href="<?= BASE_URL ?>vomnibus.php" 

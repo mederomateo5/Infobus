@@ -77,6 +77,36 @@ require_once '../config/database.php';
                         </div>
                     </div>
 
+                    <!-- Ver Compañías -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-secondary">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">GESTIÓN</p>
+                                    <h5 class="card-title fw-bold m-0">Ver Compañías</h5>
+                                </div>
+                                <a href="vcompania.php" class="btn btn-light-secondary btn-sm text-secondary fs-4">
+                                    <i class="fa-solid fa-building"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alta Compañía -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 border-start border-4 border-secondary">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted small fw-medium mb-1">REGISTRO</p>
+                                    <h5 class="card-title fw-bold m-0">Alta de Compañía</h5>
+                                </div>
+                                <a href="alta/alta_compania_gui.php" class="btn btn-light-secondary btn-sm text-secondary fs-4">
+                                    <i class="fa-solid fa-building-circle-check"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Ver Ómnibus -->
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0 border-start border-4 border-info">

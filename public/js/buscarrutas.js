@@ -46,7 +46,7 @@ function mostrarResultados(datos) {
         formData.append("omnibus_id", recorrido.omnibus_id);
         formData.append("parada_id", recorrido.parada_id);
 
-        fetch("alta/baja_ruta.php", {
+        fetch("baja/baja_ruta.php", {
           method: "POST",
           body: formData,
         })

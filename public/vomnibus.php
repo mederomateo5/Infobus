@@ -40,40 +40,44 @@ if (isset($_GET['msg'])) {
         <!-- 1. Sidebar a la izquierda -->
         <?php include '../includes/sidebar.php'; ?>
 
-        <!-- 2. Contenido principal a la derecha (flex-grow-1 ocupa el espacio restante) -->
+        <!-- 2. Contenido principal a la derecha -->
         <main class="flex-grow-1 p-4 overflow-auto">
 
             <div id="omnibus" class="container-fluid">
+                
+                <!-- Encabezado (Texto oscuro para fondo claro) -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 text-white fw-bold m-0">Ómnibus Registrados</h1>
-                    <a href="<?= BASE_URL ?>alta/alta_omnibus_gui.php" class="btn btn-success d-inline-flex align-items-center gap-2">
+                    <h1 class="h3 text-dark fw-bold m-0">Ómnibus Registrados</h1>
+                    <a href="<?= BASE_URL ?>alta/alta_omnibus_gui.php" class="btn btn-primary d-inline-flex align-items-center gap-2 shadow-sm">
                         <i class="fa-solid fa-plus"></i> Nuevo Ómnibus
                     </a>
                 </div>
 
-                <!-- Barra de Búsqueda -->
-                <div class="row g-2 mb-4 align-items-center">
-                    <div class="col-12 col-md-5 col-lg-4">
-                        <input type="text" id="busqueda" class="form-control" placeholder="Buscar por coche, compañía, ruta...">
-                    </div>
-                    <div class="col-auto">
-                        <button onclick="buscar()" class="btn btn-primary d-inline-flex align-items-center gap-2">
-                            <i class="fa-solid fa-magnifying-glass"></i> Buscar
-                        </button>
-                    </div>
-                    <div class="col-auto">
-                        <button onclick="mostrarTodo()" class="btn btn-outline-secondary">
-                            Mostrar todo
-                        </button>
-                    </div>
-                </div>
+                <!-- Tarjeta contenedora para Búsqueda y Tabla -->
+                <div class="card shadow-sm border-0 bg-white rounded-3">
+                    <div class="card-body p-4">
+                        
+                        <!-- Barra de Búsqueda -->
+                        <div class="row g-2 mb-4 align-items-center">
+                            <div class="col-12 col-md-5 col-lg-4">
+                                <input type="text" id="busqueda" class="form-control" placeholder="Buscar por coche, compañía, ruta...">
+                            </div>
+                            <div class="col-auto">
+                                <button onclick="buscar()" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <button onclick="mostrarTodo()" class="btn btn-outline-secondary">
+                                    Mostrar todo
+                                </button>
+                            </div>
+                        </div>
 
-                <!-- Tabla dentro de una tarjeta -->
-                <div class="card shadow-sm border-0">
-                    <div class="card-body p-0">
+                        <!-- Tabla con encabezado suave -->
                         <div class="table-responsive">
-                            <table class="table table-hover table-striped align-middle mb-0">
-                                <thead class="table-dark">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
                                     <tr>
                                         <th scope="col" class="py-3 px-3">ID</th>
                                         <th scope="col" class="py-3">Compañía</th>
@@ -83,11 +87,12 @@ if (isset($_GET['msg'])) {
                                         <th scope="col" class="py-3 px-3 text-center">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody id="resultado" class="table-group-divider">
+                                <tbody id="resultado">
                                     <!-- El JavaScript renderizará los <tr> aquí -->
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
 
