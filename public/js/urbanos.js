@@ -43,6 +43,9 @@ const lineasPorUbicacion = {
     "montevideo": ["urbano"]
 };
 
+// ==========================================
+// Horarios (sin "estimado" fijo: se calcula al vuelo)
+// ==========================================
 const horariosPorLinea = {
     urbano: [
         { salida: "07:00", llegada: "07:25", frecuencia: "Lunes a Viernes", empresa: "Coche 14" },
@@ -55,6 +58,35 @@ const horariosPorLinea = {
         { salida: "14:00", llegada: "14:45", frecuencia: "Diario", empresa: "Empresa Local" }
     ]
 };
+
+// --- Helpers para calcular el estimado en base a la hora actual del navegador ---
+function horaAMinutos(hora) {
+    const [h, m] = hora.split(":").map(Number);
+    return h * 60 + m;
+}
+
+function minutosAHora(minutos) {
+    const h = Math.floor(minutos / 60) % 24;
+    const m = minutos % 60;
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
+function calcularEstimado(llegada, ahora = new Date()) {
+    const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+    const minutosLlegada = horaAMinutos(llegada);
+    const diferencia = minutosLlegada - minutosActuales;
+
+    if (diferencia < -5) return "Viaje finalizado";
+    if (diferencia >= -5 && diferencia <= 0) return "Llegando ahora";
+
+    if (diferencia > 60) {
+        const horas = Math.floor(diferencia / 60);
+        const mins = diferencia % 60;
+        return mins > 0 ? `${horas}h ${mins}min` : `${horas}h`;
+    }
+
+    return `${diferencia} min`;
+}
 
 // --- CARGA DIRECTA CON RUTAS RELATIVAS EXACTAS ---
 Promise.all([
@@ -92,15 +124,19 @@ selectUbicacion.addEventListener("change", function() {
 
     resultadosUrbanos.style.display = "block";
     let globalIndex = 0;
+    const ahora = new Date(); // misma hora de referencia para toda la tabla renderizada
 
     lineasDisponibles.forEach(llaveRuta => {
         const listaHorarios = horariosPorLinea[llaveRuta] || []; 
 
         listaHorarios.forEach(h => {
+            const estimado = calcularEstimado(h.llegada, ahora);
+
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${h.salida}</td>
                 <td>${h.llegada}</td>
+                <td>${estimado}</td>
                 <td>${h.frecuencia}</td>
                 <td>${h.empresa}</td>
                 <td>
