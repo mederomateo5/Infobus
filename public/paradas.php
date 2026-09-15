@@ -26,7 +26,7 @@
             <div class="contenedor-boton-ubicacion">
                 <label for="btnUbicacion">Selecciona tu ubicación</label>
                 <button type="button" id="btnUbicacion" class="btn-ubicacion-custom">
-                    📍 Encontrar mi ubicación
+                    Encontrar mi ubicación
                 </button>
             </div>
 

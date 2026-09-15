@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS omnibus (
 CREATE TABLE IF NOT EXISTS paradas (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
+    tipo ENUM('urbano','interurbano','urbano/interurbano') NOT NULL DEFAULT 'urbano',
     latitud DECIMAL(10,7) NOT NULL,
     longitud DECIMAL(10,7) NOT NULL,
 
@@ -177,3 +178,8 @@ VALUES
 
 (2, 'Montevideo', 'Salto', 980.00, FALSE,
 '2026-09-16', '08:00:00', '14:00:00');
+
+INSERT INTO paradas (nombre, tipo, latitud, longitud)
+VALUES
+('Rosario y José Enrique Rodó', 'urbano', -34.4179560, -57.4522300),
+('Rosario y Zorrilla de San Martín', 'interurbano', -34.4157700, -57.4508890);
