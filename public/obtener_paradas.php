@@ -2,35 +2,34 @@
 require_once '../config/config.php';
 
 require_once '../config/database.php';
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
 
 header('Content-Type: application/json; charset=utf-8');
 
 try {
+    // Incluir la base de datos
+    require_once __DIR__ . '/../config/database.php';
 
-    $sql = "SELECT
-                id,
-                nombre,
-                latitud AS lat,
-                longitud AS lng
-            FROM paradas
-            ORDER BY id ASC";
+    if (!isset($pdo)) {
+        throw new Exception("La variable \$pdo no está definida en database.php.");
+    }
 
-    $stmt = $pdo->query($sql);
+    // Consulta adaptada con los nombres exactos de tu phpMyAdmin: 'latitud' y 'longitud'
+    $stmt = $pdo->query("SELECT id, nombre, latitud AS lat, longitud AS lng, tipo FROM paradas");
+    $paradas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $paradas = $stmt->fetchAll();
+    if (!$paradas) {
+        $paradas = [];
+    }
 
-    echo json_encode(
-        $paradas,
-        JSON_UNESCAPED_UNICODE
-    );
+    echo json_encode($paradas);
 
-} catch (PDOException $e) {
-
+} catch (Exception $e) {
     http_response_code(500);
-
     echo json_encode([
-        'error' => 'No se pudieron obtener las paradas'
+        'error' => true,
+        'mensaje' => $e->getMessage()
     ]);
-
 }
 ?>

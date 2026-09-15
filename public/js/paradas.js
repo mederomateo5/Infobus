@@ -1,10 +1,10 @@
-// Busca el botón "btnUbicacion" que tenemos en el HTML y lo guarda en una variable.
+// Busca el botón "btnUbicacion" en el HTML
 const btnUbicacion = document.getElementById("btnUbicacion");
 
-// Crea el mapa dentro del elemento HTML que tiene id="mapa".
-const mapa = L.map("mapa").setView([-34.4, -57.45], 13);
+// Crea el mapa dentro del elemento HTML con id="mapa" (centrado por defecto en la zona de pruebas)
+const mapa = L.map("mapa").setView([-34.4188, -57.4523], 13);
 
-// Agrega las imágenes que forman el mapa (OpenStreetMap).
+// Agrega las teselas de OpenStreetMap
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors",
 }).addTo(mapa);
@@ -15,7 +15,7 @@ let marcadorUsuario = null;
 let paradas = [];
 let marcadoresParadas = [];
 
-// --- FUNCIÓN PARA CREAR PINES TRADICIONALES DE COLORES CON CSS ---
+// --- FUNCIÓN PARA CREAR PINES DE COLORES CON CSS ---
 function crearPinColor(colorHex) {
     return L.divIcon({
         className: 'custom-pin',
@@ -38,13 +38,13 @@ function crearPinColor(colorHex) {
     });
 }
 
-// Definición de los pines según los 3 colores pedidos + el rojo de usuario
-const pinRojoUsuario = crearPinColor("#dc3545");   // 🔴 Usuario
-const pinUrbano = crearPinColor("#28a745");       // 🟢 Solo Urbanos
-const pinInterurbano = crearPinColor("#007bff");  // 🔵 Solo Interurbanos
-const pinAmbos = crearPinColor("#ffc107");        // 🟠 Ambos (o podés cambiar el hex si preferís otro)
+// Definición de pines según el ENUM de la base de datos
+const pinRojoUsuario = crearPinColor("#dc3545");   // Usuario
+const pinUrbano = crearPinColor("#28a745");       // Urbano
+const pinInterurbano = crearPinColor("#007bff");  // Interurbano
+const pinAmbos = crearPinColor("#ffc107");        // Urbano/Interurbano
 
-// Detecta cuando el usuario hace clic en el botón.
+// Detecta el clic en el botón de ubicación
 btnUbicacion.addEventListener("click", obtenerUbicacion);
 
 function obtenerUbicacion() {
@@ -55,13 +55,13 @@ function obtenerUbicacion() {
     navigator.geolocation.getCurrentPosition(
         (position) => {
             mostrarUbicacion(position);
-            btnUbicacion.textContent = "📍 Ubicación encontrada";
+            btnUbicacion.textContent = "Ubicación encontrada";
             btnUbicacion.classList.replace("btn-primary", "btn-success");
             btnUbicacion.disabled = false;
         },
         (error) => {
             mostrarError(error);
-            btnUbicacion.textContent = "📍 Encontrar mi ubicación";
+            btnUbicacion.textContent = "Encontrar mi ubicación";
             btnUbicacion.disabled = false;
         }
     );
@@ -81,10 +81,9 @@ function mostrarUbicacion(position) {
         mapa.removeLayer(marcadorUsuario);
     }
 
-    // Marcador del usuario en ROJO tradicional
     marcadorUsuario = L.marker([latitud, longitud], { icon: pinRojoUsuario })
         .addTo(mapa)
-        .bindPopup("<strong>📍 Tu ubicación actual</strong>")
+        .bindPopup("<strong>Tu ubicación actual</strong>")
         .openPopup();
 
     calcularParadasCercanas();
@@ -96,30 +95,40 @@ function mostrarError(error) {
     console.log("Error de ubicación:", error);
 }
 
-// Cargar las paradas desde el JSON
-fetch("../data/paradas.json")
-    .then(response => response.json())
+// Cargar las paradas DIRECTAMENTE desde la Base de Datos a través de PHP
+fetch("obtener_paradas.php")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("El servidor respondió con un error HTTP: " + response.status);
+        }
+        return response.json();
+    })
     .then(datos => {
+        // Validación estricta: aseguramos que 'datos' sea un Array
+        if (!Array.isArray(datos)) {
+            console.error("El servidor no devolvió una lista válida:", datos);
+            throw new Error(datos.mensaje || "Formato de datos inválido recibido del servidor.");
+        }
+
         paradas = datos;
         paradas.forEach(parada => {
-            // Asignación de icono según el tipo que tenga en el JSON
             let iconoSeleccionado = pinInterurbano; // Por defecto
 
             if (parada.tipo === "urbano") {
                 iconoSeleccionado = pinUrbano;
-            } else if (parada.tipo === "ambos") {
+            } else if (parada.tipo === "urbano/interurbano") {
                 iconoSeleccionado = pinAmbos;
             }
 
             const marcador = L.marker([parada.lat, parada.lng], { icon: iconoSeleccionado })
                 .addTo(mapa)
-                .bindPopup(`<strong>${parada.nombre}</strong><br>Tipo: ${parada.tipo || 'interurbano'}`);
+                .bindPopup(`<strong>${parada.nombre}</strong><br>Tipo: ${parada.tipo}`);
             
             marcadoresParadas.push(marcador);
         });
     })
     .catch(error => {
-        console.log("Error al cargar las paradas:", error);
+        console.error("Error al cargar las paradas desde la base de datos:", error.message);
     });
 
 
@@ -140,25 +149,23 @@ function calcularParadasCercanas() {
     // Ordenar de menor a mayor distancia
     paradasConDistancia.sort((a, b) => a.distancia - b.distancia);
 
-    // Seleccionar las 6 más cercanas
+    // Seleccionar las 6 más cercanas (o las disponibles si hay menos)
     const paradasCercanas = paradasConDistancia.slice(0, 6);
     
     const tbody = document.getElementById("tablaParadasCercanas");
     tbody.innerHTML = "";
 
-    // Mostrar la sección de la tabla de resultados
     const resultadosParadas = document.getElementById("resultadosParadas");
     resultadosParadas.style.display = "block";
 
     paradasCercanas.forEach(parada => {
         const fila = document.createElement("tr");
 
-        // Columna 1: Nombre de la Parada con etiqueta según su tipo
         const colNombre = document.createElement("td");
         let badgeTipo = '';
         if (parada.tipo === "urbano") {
             badgeTipo = ' <span style="background:#28a745; color:white; padding:2px 6px; border-radius:4px; font-size:11px;">Urbano</span>';
-        } else if (parada.tipo === "ambos") {
+        } else if (parada.tipo === "urbano/interurbano") {
             badgeTipo = ' <span style="background:#ffc107; color:black; padding:2px 6px; border-radius:4px; font-size:11px;">Ambos</span>';
         } else {
             badgeTipo = ' <span style="background:#007bff; color:white; padding:2px 6px; border-radius:4px; font-size:11px;">Interurbano</span>';
@@ -167,11 +174,9 @@ function calcularParadasCercanas() {
 
         colNombre.innerHTML = `🚏 ${parada.nombre}${badgeTipo}`;
 
-        // Columna 2: Distancia
         const colDistancia = document.createElement("td");
         colDistancia.textContent = `A ${Math.round(parada.distancia)} metros`;
 
-        // Columna 3: Botón de acción para ver en el mapa
         const colAccion = document.createElement("td");
         const btnVer = document.createElement("button");
         btnVer.textContent = "Ver Ruta";
@@ -182,25 +187,22 @@ function calcularParadasCercanas() {
 
             const marcador = marcadoresParadas.find(m => {
                 const posicion = m.getLatLng();
-                return (posicion.lat === parada.lat && posicion.lng === parada.lng);
+                return (posicion.lat === parseFloat(parada.lat) && posicion.lng === parseFloat(parada.lng));
             });
 
             if (marcador) {
                 marcador.openPopup();
             }
 
-            // Desplazamiento suave hacia el mapa
             document.getElementById("mapa").scrollIntoView({ behavior: "smooth", block: "center" });
         });
 
         colAccion.appendChild(btnVer);
 
-        // Agregar celdas a la fila
         fila.appendChild(colNombre);
         fila.appendChild(colDistancia);
         fila.appendChild(colAccion);
 
-        // Agregar fila a la tabla
         tbody.appendChild(fila);
     });
 
