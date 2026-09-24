@@ -1,5 +1,5 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 session_start();
 
 // Verificar sesión y permisos de administrador
@@ -7,11 +7,11 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION[
     die("Acceso denegado.");
 }
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 // Solo aceptar peticiones por método POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../public/viajes.php');
+    header('Location: ../viajes.php');
     exit();
 }
 
@@ -37,12 +37,12 @@ if (
     $precio === false || !in_array($agencia, $agenciasValidas) ||
     $fecha === '' || $hora === '' || $hora_llegada === ''
 ) {
-    header('Location: ../public/actualizar_viaje_gui.php?id=' . $id . '&msg=' . urlencode('Faltan datos obligatorios o se ingresaron valores inválidos.'));
+    header('Location: actualizar_viaje_gui.php?id=' . $id . '&msg=' . urlencode('Faltan datos obligatorios o se ingresaron valores inválidos.'));
     exit();
 }
 
 if ($origen_id === $destino_id) {
-    header('Location: ../public/actualizar_viaje_gui.php?id=' . $id . '&msg=' . urlencode('El origen y el destino deben ser paradas diferentes.'));
+    header('Location: actualizar_viaje_gui.php?id=' . $id . '&msg=' . urlencode('El origen y el destino deben ser paradas diferentes.'));
     exit();
 }
 
@@ -57,7 +57,7 @@ try {
     $omnibus = $stmtOmnibus->fetch();
 
     if (!$omnibus) {
-        header('Location: ../public/actualizar_viaje_gui.php?id=' . $id . '&msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
+        header('Location: actualizar_viaje_gui.php?id=' . $id . '&msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
         exit();
     }
 
@@ -83,11 +83,11 @@ try {
         $id
     ]);
 
-    header('Location: ../public/viajes.php?msg=' . urlencode('Viaje actualizado correctamente.'));
+    header('Location: ../viajes.php?msg=' . urlencode('Viaje actualizado correctamente.'));
     exit();
 
 } catch (PDOException $e) {
-    header('Location: ../public/actualizar_viaje_gui.php?id=' . $id . '&msg=' . urlencode('Error al actualizar el viaje en la base de datos.'));
+    header('Location: actualizar_viaje_gui.php?id=' . $id . '&msg=' . urlencode('Error al actualizar el viaje en la base de datos.'));
     exit();
 }
 ?>

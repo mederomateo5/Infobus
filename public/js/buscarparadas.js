@@ -70,7 +70,7 @@ function mostrarResultados(datos) {
     btn2.className = "btn btn-sm btn-warning";
 
     btn2.addEventListener("click", () => {
-      window.location.href = `actualizar_parada_gui.php?id=${parada.id}`;
+      window.location.href = `actualizar/actualizar_parada_gui.php?id=${parada.id}`;
     });
 
     // Construcción limpia de la fila HTML
@@ -104,7 +104,7 @@ function buscar() {
     </tr>
   `;
 
-  fetch("buscador_paradas.php", {
+  fetch("buscador/buscador_paradas.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -145,7 +145,7 @@ function mostrarTodo() {
     </tr>
   `;
 
-  fetch("buscador_paradas.php", {
+  fetch("buscador/buscador_paradas.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -73,7 +73,7 @@ function mostrarResultados(datos) {
     btn2.textContent = "Editar";
     btn2.className = "btn btn-sm btn-warning";
     btn2.addEventListener("click", () => {
-      window.location.href = `actualizar_usuario_gui.php?id=${usuario.id}`;
+      window.location.href = `actualizar/actualizar_usuario_gui.php?id=${usuario.id}`;
     });
 
     tr.appendChild(tdId);
@@ -108,7 +108,7 @@ function buscar() {
     </tr>
   `;
 
-  fetch("buscador.php", {
+  fetch("buscador/buscador_usuarios.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -149,7 +149,7 @@ function mostrarTodo() {
     </tr>
   `;
 
-  fetch("buscador.php", {
+  fetch("buscador/buscador_usuarios.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 session_start();
 
 // Verificar sesión y permisos
@@ -7,13 +7,13 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION[
     die("Acceso denegado.");
 }
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 $msg = $_GET['msg'] ?? '';
 $id = $_GET['id'] ?? null;
 
 if (!$id || !ctype_digit((string)$id)) {
-    header('Location: panel_admin.php?msg=' . urlencode('ID de usuario no válido.'));
+    header('Location: ../usuarios.php?msg=' . urlencode('ID de usuario no válido.'));
     exit();
 }
 
@@ -23,7 +23,7 @@ $stmt->execute([$id]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$usuario) {
-    header('Location: panel_admin.php?msg=' . urlencode('Usuario no encontrado.'));
+    header('Location: ../usuarios.php?msg=' . urlencode('Usuario no encontrado.'));
     exit();
 }
 ?>
@@ -31,14 +31,14 @@ if (!$usuario) {
 <html lang="es">
 <head>
     <title>Editar Usuario</title>
-    <?php include '../includes/head.php'; ?>
+    <?php include '../../includes/head.php'; ?>
     <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <?php include '../../includes/header.php'; ?>
 
     <div class="d-flex">
-        <?php include '../includes/sidebar.php'; ?>
+        <?php include '../../includes/sidebar.php'; ?>
 
         <main class="flex-grow-1 p-4 overflow-hidden">
             <div class="container-fluid">
@@ -53,7 +53,7 @@ if (!$usuario) {
 
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
-                        <form action="<?= BASE_URL ?>actualizar_usuario.php" method="POST">
+                        <form action="<?= BASE_URL ?>actualizar/actualizar_usuario.php" method="POST">
                             <!-- Enviaremos el ID oculto -->
                             <input type="hidden" name="id" value="<?= htmlspecialchars($usuario['id']) ?>">
 
@@ -96,7 +96,7 @@ if (!$usuario) {
                                     <button type="submit" class="btn btn-primary px-4 py-2">
                                         Guardar cambios
                                     </button>
-                                    <a href="panel_admin.php" class="btn btn-secondary px-4 py-2">Cancelar</a>
+                                    <a href="../usuarios.php" class="btn btn-secondary px-4 py-2">Cancelar</a>
                                 </div>
                             </div>
                         </form>

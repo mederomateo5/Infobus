@@ -1,8 +1,8 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 header("Content-Type: application/json");
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 try {
     // Leer el JSON enviado desde JavaScript
@@ -14,7 +14,7 @@ try {
 
     if (isset($datos["mostrarTodo"]) && $datos["mostrarTodo"] === true) {
 
-        $sql = "SELECT * FROM paradas";
+        $sql = "SELECT * FROM users";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
@@ -28,6 +28,26 @@ try {
         exit;
     }
 
+
+    // ==========================================
+    // MOSTRAR TODOS LOS VIAJES
+    // ==========================================
+
+    if (isset($datos["mostrarTodoViajes"]) && $datos["mostrarTodoViajes"] === true) {
+
+        $sql = "SELECT * FROM viajes";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+
+        $resultados = $stmt->fetchAll();
+
+        echo json_encode([
+            "exito" => true,
+            "resultados" => $resultados
+        ]);
+
+        exit;
+    }
 
 
     // ==========================================
@@ -45,7 +65,7 @@ try {
         exit;
     }
 
-    $sql = "SELECT * FROM paradas WHERE nombre LIKE :busqueda";
+    $sql = "SELECT * FROM users WHERE nombre LIKE :busqueda";
     $stmt = $pdo->prepare($sql);
 
     $parametro = "%" . $texto . "%";

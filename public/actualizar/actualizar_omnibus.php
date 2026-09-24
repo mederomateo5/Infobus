@@ -1,15 +1,15 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
     die("Acceso denegado.");
 }
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../public/vomnibus.php');
+    header('Location: ../vomnibus.php');
     exit();
 }
 
@@ -20,7 +20,7 @@ $asientos    = filter_input(INPUT_POST, 'asientos', FILTER_VALIDATE_INT);
 $ruta_key    = trim($_POST['ruta_key'] ?? 'urbano');
 
 if (!$id || !$compania_id || !$n_omnibus || !$asientos) {
-    header('Location: ../public/actualizar_omnibus_gui.php?id=' . $id . '&msg=' . urlencode('Datos obligatorios incompletos.'));
+    header('Location: actualizar_omnibus_gui.php?id=' . $id . '&msg=' . urlencode('Datos obligatorios incompletos.'));
     exit();
 }
 
@@ -29,18 +29,18 @@ try {
     $chk = $pdo->prepare("SELECT id FROM omnibus WHERE compania_id = ? AND n_omnibus = ? AND id != ?");
     $chk->execute([$compania_id, $n_omnibus, $id]);
     if ($chk->fetch()) {
-        header('Location: ../public/actualizar_omnibus_gui.php?id=' . $id . '&msg=' . urlencode('Esa compañía ya posee un coche registrado con ese número.'));
+        header('Location: actualizar_omnibus_gui.php?id=' . $id . '&msg=' . urlencode('Esa compañía ya posee un coche registrado con ese número.'));
         exit();
     }
 
     $update = $pdo->prepare("UPDATE omnibus SET compania_id = ?, n_omnibus = ?, asientos = ?, ruta_key = ? WHERE id = ?");
     $update->execute([$compania_id, $n_omnibus, $asientos, $ruta_key, $id]);
 
-    header('Location: ../public/vomnibus.php?msg=' . urlencode('Ómnibus actualizado con éxito.'));
+    header('Location: ../vomnibus.php?msg=' . urlencode('Ómnibus actualizado con éxito.'));
     exit();
 
 } catch (PDOException $e) {
-    header('Location: ../public/actualizar_omnibus_gui.php?id=' . $id . '&msg=' . urlencode('Error al actualizar el ómnibus.'));
+    header('Location: actualizar_omnibus_gui.php?id=' . $id . '&msg=' . urlencode('Error al actualizar el ómnibus.'));
     exit();
 }
 ?>

@@ -1,23 +1,16 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 header("Content-Type: application/json");
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 try {
     $datos = json_decode(file_get_contents("php://input"), true);
 
-    $sqlBase = "SELECT r.omnibus_id, r.parada_id, r.orden,
-                       p.nombre AS parada_nombre,
-                       o.n_omnibus,
-                       c.nombre AS compania_nombre
-                FROM recorre r
-                INNER JOIN paradas p ON r.parada_id = p.id
-                INNER JOIN omnibus o ON r.omnibus_id = o.id
-                INNER JOIN compania c ON o.compania_id = c.id";
+    $sqlBase = "SELECT id, nombre, email, telefono FROM compania";
 
     if (isset($datos["mostrarTodo"]) && $datos["mostrarTodo"] === true) {
-        $sql = $sqlBase . " ORDER BY o.n_omnibus ASC, r.orden ASC";
+        $sql = $sqlBase . " ORDER BY nombre ASC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
@@ -39,10 +32,10 @@ try {
         exit;
     }
 
-    $sql = $sqlBase . " WHERE p.nombre LIKE :busqueda 
-                       OR c.nombre LIKE :busqueda 
-                       OR CAST(o.n_omnibus AS CHAR) LIKE :busqueda 
-                       ORDER BY o.n_omnibus ASC, r.orden ASC";
+    $sql = $sqlBase . " WHERE nombre LIKE :busqueda 
+                       OR email LIKE :busqueda 
+                       OR telefono LIKE :busqueda 
+                       ORDER BY nombre ASC";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['busqueda' => "%" . $texto . "%"]);

@@ -1,15 +1,15 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
     die("Acceso denegado.");
 }
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../public/panel_admin.php');
+    header('Location: ../panel_admin.php');
     exit();
 }
 
@@ -24,7 +24,7 @@ $tipo     = $_POST['tipo']          ?? '';
 $tiposValidos = ['usuario', 'compania', 'administrador'];
 
 if (!$id || $nombre === '' || $apellido === '' || $email === '' || $telefono === '' || !in_array($tipo, $tiposValidos)) {
-    header('Location: ../public/actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('Faltan datos obligatorios.'));
+    header('Location: actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('Faltan datos obligatorios.'));
     exit();
 }
 
@@ -34,14 +34,14 @@ try {
     $verificar->execute([$email, $id]);
 
     if ($verificar->fetch()) {
-        header('Location: ../public/actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('El email ya pertenece a otro usuario.'));
+        header('Location: actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('El email ya pertenece a otro usuario.'));
         exit();
     }
 
     // Actualizar datos de usuario
     if (!empty($password)) {
         if (strlen($password) < 6) {
-            header('Location: ../public/actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('La contraseña debe tener al menos 6 caracteres.'));
+            header('Location: actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('La contraseña debe tener al menos 6 caracteres.'));
             exit();
         }
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
@@ -53,10 +53,10 @@ try {
         $update->execute([$nombre, $apellido, $email, $telefono, $tipo, $id]);
     }
 
-    header('Location: ../public/panel_admin.php?msg=' . urlencode('Usuario actualizado correctamente.'));
+    header('Location: ../usuarios.php?msg=' . urlencode('Usuario actualizado correctamente.'));
     exit();
 
 } catch (PDOException $e) {
-    header('Location: ../public/actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('Error al actualizar el usuario.'));
+    header('Location: actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('Error al actualizar el usuario.'));
     exit();
 }

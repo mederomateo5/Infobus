@@ -88,7 +88,7 @@ function mostrarResultados(datos) {
     btn2.textContent = "Editar";
     btn2.className = "btn btn-sm btn-warning";
     btn2.addEventListener("click", () => {
-      window.location.href = `actualizar_viaje_gui.php?id=${viaje.id}`;
+      window.location.href = `actualizar/actualizar_viaje_gui.php?id=${viaje.id}`;
     });
 
     tr.appendChild(tdId);
@@ -128,7 +128,7 @@ function buscar() {
     </tr>
   `;
 
-  fetch("buscador_viajes.php", {
+  fetch("buscador/buscador_viajes.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -169,7 +169,7 @@ function mostrarTodo() {
     </tr>
   `;
 
-  fetch("buscador_viajes.php", {
+  fetch("buscador/buscador_viajes.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

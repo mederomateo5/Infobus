@@ -1,8 +1,8 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 // Configurar la respuesta como JSON
 header('Content-Type: application/json; charset=utf-8');
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 // Obtener parámetros de la URL
 $origen    = $_GET['origen'] ?? '';

@@ -1,25 +1,38 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 header("Content-Type: application/json");
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 try {
+    // Leer el JSON enviado desde JavaScript
     $datos = json_decode(file_get_contents("php://input"), true);
 
-    $sqlBase = "SELECT id, nombre, email, telefono FROM compania";
+    // ==========================================
+    // MOSTRAR TODOS
+    // ==========================================
 
     if (isset($datos["mostrarTodo"]) && $datos["mostrarTodo"] === true) {
-        $sql = $sqlBase . " ORDER BY nombre ASC";
+
+        $sql = "SELECT * FROM paradas";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
+        $resultados = $stmt->fetchAll();
+
         echo json_encode([
             "exito" => true,
-            "resultados" => $stmt->fetchAll(PDO::FETCH_ASSOC)
+            "resultados" => $resultados
         ]);
+
         exit;
     }
+
+
+
+    // ==========================================
+    // BUSCAR
+    // ==========================================
 
     $texto = trim($datos["busqueda"] ?? "");
 
@@ -32,22 +45,26 @@ try {
         exit;
     }
 
-    $sql = $sqlBase . " WHERE nombre LIKE :busqueda 
-                       OR email LIKE :busqueda 
-                       OR telefono LIKE :busqueda 
-                       ORDER BY nombre ASC";
-
+    $sql = "SELECT * FROM paradas WHERE nombre LIKE :busqueda";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(['busqueda' => "%" . $texto . "%"]);
+
+    $parametro = "%" . $texto . "%";
+    $stmt->execute([
+        'busqueda' => $parametro
+    ]);
+
+    $resultados = $stmt->fetchAll();
 
     echo json_encode([
         "exito" => true,
         "texto" => $texto,
-        "resultados" => $stmt->fetchAll(PDO::FETCH_ASSOC)
+        "resultados" => $resultados
     ]);
 
 } catch (\PDOException $e) {
+
     http_response_code(500);
+
     echo json_encode([
         "exito" => false,
         "mensaje" => "Error en la base de datos: " . $e->getMessage()

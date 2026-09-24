@@ -95,7 +95,7 @@ require_once '../config/config.php';
         <div class="tarjeta activa">
             <h1>Editar Viaje (ID: <?= htmlspecialchars($viaje['id']) ?>)</h1>
 
-            <form action="<?= BASE_URL ?>actualizar_viaje.php" method="POST">
+            <form action="<?= BASE_URL ?>actualizar/actualizar_viaje.php" method="POST">
                 <!-- ID Oculto para procesar la actualización en la BD -->
                 <input type="hidden" name="id" value="<?= htmlspecialchars($viaje['id']) ?>">
 

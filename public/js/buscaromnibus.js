@@ -70,7 +70,7 @@ function mostrarResultados(datos) {
     btnEditar.textContent = "Editar";
     btnEditar.className = "btn btn-sm btn-warning";
     btnEditar.addEventListener("click", () => {
-      window.location.href = `actualizar_omnibus_gui.php?id=${omnibus.id}`;
+      window.location.href = `actualizar/actualizar_omnibus_gui.php?id=${omnibus.id}`;
     });
 
     tr.appendChild(tdId);
@@ -104,7 +104,7 @@ function buscar() {
     </tr>
   `;
 
-  fetch("buscador_omnibus.php", {
+  fetch("buscador/buscador_omnibus.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -145,7 +145,7 @@ function mostrarTodo() {
     </tr>
   `;
 
-  fetch("buscador_omnibus.php", {
+  fetch("buscador/buscador_omnibus.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

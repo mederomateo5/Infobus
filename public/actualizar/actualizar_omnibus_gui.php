@@ -1,18 +1,18 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
     die("Acceso denegado.");
 }
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 $msg = $_GET['msg'] ?? '';
 $id  = $_GET['id'] ?? null;
 
 if (!$id || !ctype_digit((string)$id)) {
-    header('Location: vomnibus.php?msg=' . urlencode('ID no válido.'));
+    header('Location: ../vomnibus.php?msg=' . urlencode('ID no válido.'));
     exit();
 }
 
@@ -21,7 +21,7 @@ $stmt->execute([$id]);
 $omnibus = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$omnibus) {
-    header('Location: vomnibus.php?msg=' . urlencode('Ómnibus no encontrado.'));
+    header('Location: ../vomnibus.php?msg=' . urlencode('Ómnibus no encontrado.'));
     exit();
 }
 
@@ -31,14 +31,14 @@ $companias = $pdo->query("SELECT id, nombre FROM compania ORDER BY nombre ASC")-
 <html lang="es">
 <head>
     <title>Editar Ómnibus</title>
-    <?php include '../includes/head.php'; ?>
+    <?php include '../../includes/head.php'; ?>
     <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <?php include '../../includes/header.php'; ?>
 
     <div class="d-flex">
-        <?php include '../includes/sidebar.php'; ?>
+        <?php include '../../includes/sidebar.php'; ?>
 
         <main class="flex-grow-1 p-4 overflow-auto">
             <div class="container-fluid">
@@ -53,7 +53,7 @@ $companias = $pdo->query("SELECT id, nombre FROM compania ORDER BY nombre ASC")-
 
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
-                        <form action="<?= BASE_URL ?>actualizar_omnibus.php" method="POST">
+                        <form action="<?= BASE_URL ?>actualizar/actualizar_omnibus.php" method="POST">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($omnibus['id']) ?>">
 
                             <div class="row g-3">
@@ -85,7 +85,7 @@ $companias = $pdo->query("SELECT id, nombre FROM compania ORDER BY nombre ASC")-
 
                                 <div class="col-12 mt-4 d-flex gap-2">
                                     <button type="submit" class="btn btn-primary px-4 py-2">Guardar cambios</button>
-                                    <a href="vomnibus.php" class="btn btn-secondary px-4 py-2">Cancelar</a>
+                                    <a href="../vomnibus.php" class="btn btn-secondary px-4 py-2">Cancelar</a>
                                 </div>
                             </div>
                         </form>

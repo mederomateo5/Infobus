@@ -1,18 +1,23 @@
 <?php
-require_once '../config/config.php';
+require_once '../../config/config.php';
 header("Content-Type: application/json");
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 try {
     $datos = json_decode(file_get_contents("php://input"), true);
 
-    $sqlBase = "SELECT o.*, c.nombre AS compania_nombre 
-                FROM omnibus o
+    $sqlBase = "SELECT r.omnibus_id, r.parada_id, r.orden,
+                       p.nombre AS parada_nombre,
+                       o.n_omnibus,
+                       c.nombre AS compania_nombre
+                FROM recorre r
+                INNER JOIN paradas p ON r.parada_id = p.id
+                INNER JOIN omnibus o ON r.omnibus_id = o.id
                 INNER JOIN compania c ON o.compania_id = c.id";
 
     if (isset($datos["mostrarTodo"]) && $datos["mostrarTodo"] === true) {
-        $sql = $sqlBase . " ORDER BY c.nombre ASC, o.n_omnibus ASC";
+        $sql = $sqlBase . " ORDER BY o.n_omnibus ASC, r.orden ASC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
@@ -34,10 +39,10 @@ try {
         exit;
     }
 
-    $sql = $sqlBase . " WHERE c.nombre LIKE :busqueda 
+    $sql = $sqlBase . " WHERE p.nombre LIKE :busqueda 
+                       OR c.nombre LIKE :busqueda 
                        OR CAST(o.n_omnibus AS CHAR) LIKE :busqueda 
-                       OR o.ruta_key LIKE :busqueda 
-                       ORDER BY c.nombre ASC, o.n_omnibus ASC";
+                       ORDER BY o.n_omnibus ASC, r.orden ASC";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['busqueda' => "%" . $texto . "%"]);

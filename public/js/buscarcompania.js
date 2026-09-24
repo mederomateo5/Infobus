@@ -67,7 +67,7 @@ function mostrarResultados(datos) {
     btnEditar.textContent = "Editar";
     btnEditar.className = "btn btn-sm btn-warning";
     btnEditar.addEventListener("click", () => {
-      window.location.href = `actualizar_compania_gui.php?id=${compania.id}`;
+      window.location.href = `actualizar/actualizar_compania_gui.php?id=${compania.id}`;
     });
 
     tr.appendChild(tdId);
@@ -100,7 +100,7 @@ function buscar() {
     </tr>
   `;
 
-  fetch("buscador_compania.php", {
+  fetch("buscador/buscador_compania.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -141,7 +141,7 @@ function mostrarTodo() {
     </tr>
   `;
 
-  fetch("buscador_compania.php", {
+  fetch("buscador/buscador_compania.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -68,7 +68,7 @@ function mostrarResultados(datos) {
     btnEditar.textContent = "Editar";
     btnEditar.className = "btn btn-sm btn-warning";
     btnEditar.addEventListener("click", () => {
-      window.location.href = `actualizar_ruta_gui.php?omnibus_id=${recorrido.omnibus_id}&parada_id=${recorrido.parada_id}`;
+      window.location.href = `actualizar/actualizar_ruta_gui.php?omnibus_id=${recorrido.omnibus_id}&parada_id=${recorrido.parada_id}`;
     });
 
     tr.appendChild(tdCoche);
@@ -101,7 +101,7 @@ function buscar() {
     </tr>
   `;
 
-  fetch("buscador_rutas.php", {
+  fetch("buscador/buscador_rutas.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -142,7 +142,7 @@ function mostrarTodo() {
     </tr>
   `;
 
-  fetch("buscador_rutas.php", {
+  fetch("buscador/buscador_rutas.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
