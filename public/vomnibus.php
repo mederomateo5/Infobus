@@ -8,8 +8,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
-    die("Acceso denegado. Esta página es exclusiva para administradores.");
+if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['compania', 'administrador'])) {
+    die("Acceso denegado. Esta página es exclusiva para compañías o administradores.");
 }
 
 require_once '../config/database.php';
@@ -77,7 +77,7 @@ if (isset($_GET['msg'])) {
                         <!-- Tabla con encabezado suave -->
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
-                                <thead class="table-light">
+                                <thead class="table-primary">
                                     <tr>
                                         <th scope="col" class="py-3 px-3">ID</th>
                                         <th scope="col" class="py-3">Compañía</th>

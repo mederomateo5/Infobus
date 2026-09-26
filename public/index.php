@@ -17,11 +17,6 @@ try {
     $origenes = [];
 }
 
-// Respaldo por si la base de datos está vacía
-if (empty($origenes)) {
-    $origenes = ['Montevideo', 'Paysandú', 'Salto'];
-}
-
 // Obtener destinos disponibles en la base de datos
 try {
     $stmt_destinos = $pdo->query("
@@ -34,10 +29,6 @@ try {
     $destinos = $stmt_destinos->fetchAll(PDO::FETCH_COLUMN);
 } catch (PDOException $e) {
     $destinos = [];
-}
-
-if (empty($destinos)) {
-    $destinos = ['Montevideo', 'Paysandú', 'Punta del Este', 'Salto'];
 }
 ?>
 <!DOCTYPE html>

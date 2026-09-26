@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
     session_start();
 
     if (isset($_SESSION['user_id'])) {
-        header('Location: ../public/welcome.php');
+        header('Location: ../public/redirigir.php');
         exit();
     }
 
@@ -31,7 +31,7 @@ ini_set('display_errors', 1);
             $_SESSION['user_id']   = $loggedUser['id'];
             $_SESSION['user_name'] = $loggedUser['nombre'];
             $_SESSION['user_tipo'] = $loggedUser['tipo'];
-            header('Location: ../public/welcome.php');
+            header('Location: ../public/redirigir.php');
             exit();
         } else {
             $loginError = 'Email o contraseña incorrectos.';
@@ -53,7 +53,7 @@ ini_set('display_errors', 1);
                 $_SESSION['user_id']   = $newUser['id'];
                 $_SESSION['user_name'] = $newUser['nombre'];
                 $_SESSION['user_tipo'] = $newUser['tipo'];
-                header('Location: welcome.php');
+                header('Location: redirigir.php');
                 exit();
             }
         }

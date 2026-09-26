@@ -8,8 +8,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
-    die("Acceso denegado. Esta página es exclusiva para administradores.");
+if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['compania', 'administrador'])) {
+    die("Acceso denegado. Esta página es exclusiva para compañías o administradores.");
 }
 
 require_once '../../config/database.php';
@@ -43,11 +43,11 @@ $msg = $_GET['msg'] ?? '';
         <?php include '../../includes/sidebar.php'; ?>
 
         <!-- Zona principal del formulario -->
-        <main class="flex-grow-1 p-4 overflow-hidden">
+        <main class="flex-grow-1 p-4 overflow-auto">
 
             <div id="alta" class="container-fluid">
 
-                <h1 class="h3 mb-4 text-white fw-bold">Dar de alta un viaje</h1>
+                <h1 class="h3 mb-4 text-dark fw-bold">Dar de alta un viaje</h1>
 
                 <!-- Alerta de mensaje (éxito o error) -->
                 <?php if ($msg !== ''): ?>
@@ -58,7 +58,7 @@ $msg = $_GET['msg'] ?? '';
                 <?php endif; ?>
 
                 <!-- Tarjeta contenedora con grilla adaptable de Bootstrap -->
-                <div class="card shadow-sm border-0">
+                <div class="card shadow-sm border-0 bg-white rounded-3">
                     <div class="card-body p-4">
 
                         <form action="alta_viaje.php" method="POST" onsubmit="return validarViaje(this);">

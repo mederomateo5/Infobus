@@ -22,7 +22,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-dark fw-medium px-0" href="<?= BASE_URL ?>welcome.php">
+                <a class="nav-link text-dark fw-medium px-0" href="<?= BASE_URL ?>redirigir.php">
                     Panel
                 </a>
             </li>

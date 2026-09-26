@@ -38,7 +38,7 @@ require_once '../config/database.php';
 
                 <!-- Encabezado de Bienvenida -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 text-white fw-bold m-0">Panel de Control</h1>
+                    <h1 class="h3 text-dark fw-bold m-0">Panel de Control</h1>
                     <span class="badge bg-primary fs-6 px-3 py-2">
                         <i class="fa-solid fa-user-shield me-1"></i> Administrador
                     </span>

@@ -8,8 +8,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
-    die("Acceso denegado. Esta página es exclusiva para administradores.");
+if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['compania', 'administrador'])) {
+    die("Acceso denegado. Esta página es exclusiva para compañías o administradores.");
 }
 
 require_once '../config/database.php';
@@ -42,32 +42,38 @@ if (isset($_GET['msg'])) {
         <!-- 2. Contenido principal a la derecha -->
         <main class="flex-grow-1 p-4 overflow-auto">
 
-            <div id="viajes" class="container-fluid">
-                <h1 class="h3 mb-4 text-white fw-bold">Viajes registrados</h1>
-
-                <!-- Barra de Búsqueda -->
-                <div class="row g-2 mb-4 align-items-center">
-                    <div class="col-12 col-md-5 col-lg-4">
-                        <input type="text" id="busqueda" class="form-control" placeholder="Buscar por origen o destino...">
-                    </div>
-                    <div class="col-auto">
-                        <button onclick="buscar()" class="btn btn-primary d-inline-flex align-items-center gap-2">
-                            <i class="fa-solid fa-magnifying-glass"></i> Buscar
-                        </button>
-                    </div>
-                    <div class="col-auto">
-                        <button onclick="mostrarTodo()" class="btn btn-outline-secondary">
-                            Mostrar todo
-                        </button>
-                    </div>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 text-dark fw-bold m-0">Viajes Registrados</h1>
+                    <a href="<?= BASE_URL ?>alta/alta_viaje_gui.php" class="btn btn-primary d-inline-flex align-items-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-plus"></i> Nuevo Viaje
+                    </a>
                 </div>
 
-                <!-- Tabla dentro de una tarjeta -->
-                <div class="card shadow-sm border-0">
-                    <div class="card-body p-0">
+                <!-- Tarjeta contenedora para Búsqueda y Tabla -->
+                <div class="card shadow-sm border-0 bg-white rounded-3">
+                    <div class="card-body p-4">
+
+                        <!-- Barra de Búsqueda -->
+                        <div class="row g-2 mb-4 align-items-center">
+                            <div class="col-12 col-md-5 col-lg-4">
+                                <input type="text" id="busqueda" class="form-control" placeholder="Buscar por origen o destino...">
+                            </div>
+                            <div class="col-auto">
+                                <button onclick="buscar()" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <button onclick="mostrarTodo()" class="btn btn-outline-secondary">
+                                    Mostrar todo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Tabla con encabezado suave -->
                         <div class="table-responsive">
-                            <table class="table table-hover table-striped align-middle mb-0">
-                                <thead class="table-dark">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-primary">
                                     <tr>
                                         <th scope="col" class="py-3 px-3">ID</th>
                                         <th scope="col" class="py-3">Ómnibus</th>
@@ -83,11 +89,12 @@ if (isset($_GET['msg'])) {
                                         <th scope="col" class="py-3 px-3 text-end">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody id="resultado" class="table-group-divider">
+                                <tbody id="resultado">
                                     <!-- Renderizado desde JS -->
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
 

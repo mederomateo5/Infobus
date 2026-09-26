@@ -3,6 +3,9 @@ require_once __DIR__ . '/../config/config.php';
 
 // Detecta la página actual para marcar el enlace activo automáticamente
 $pagina_actual = basename($_SERVER['PHP_SELF']);
+
+// Obtener el tipo de usuario actual de la sesión de forma segura
+$tipo_usuario = $_SESSION['user_tipo'] ?? '';
 ?>
 
 <aside class="d-flex flex-column flex-shrink-0 p-3 bg-white border-end shadow-sm" 
@@ -11,48 +14,92 @@ $pagina_actual = basename($_SERVER['PHP_SELF']);
     <!-- Lista de Enlaces de Navegación -->
     <ul class="nav nav-pills flex-column mb-auto gap-1">
         
-        <!-- Dashboard -->
+    <?php if ($tipo_usuario === 'compania'): ?>
+
         <li class="nav-item">
+            <a href="<?= BASE_URL ?>panel_compania.php" 
+               class="nav-link <?= $pagina_actual == 'panel_compania.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-chart-line me-3 fs-5" style="width: 20px;"></i>
+                <span>Inicio</span>
+            </a>
+        </li>
+
+        <?php endif; ?>
+
+        <!-- ========================================== -->
+        <!-- 1. SECCIÓN EXCLUSIVA PARA ADMINISTRADORES  -->
+        <!-- ========================================== -->
+        <?php if ($tipo_usuario === 'administrador'): ?>
+
+            <li class="nav-item">
             <a href="<?= BASE_URL ?>panel_admin.php" 
                class="nav-link <?= $pagina_actual == 'panel_admin.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
                 <i class="fa-solid fa-chart-line me-3 fs-5" style="width: 20px;"></i>
                 <span>Inicio</span>
             </a>
         </li>
+            
+            <!-- Ver Usuarios -->
+            <li class="nav-item">
+                <a href="<?= BASE_URL ?>usuarios.php" 
+                   class="nav-link <?= $pagina_actual == 'usuarios.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                    <i class="fa-solid fa-users me-3 fs-5" style="width: 20px;"></i>
+                    <span>Ver Usuarios</span>
+                </a>
+            </li>
 
-        <!-- Usuarios -->
+            <!-- Alta de Usuarios -->
+            <li class="nav-item">
+                <a href="<?= BASE_URL ?>alta/alta_usuario_gui.php" 
+                   class="nav-link <?= $pagina_actual == 'alta_usuario_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                    <i class="fa-solid fa-user-plus me-3 fs-5" style="width: 20px;"></i>
+                    <span>Alta de Usuarios</span>
+                </a>
+            </li>
+
+            <!-- Ver Compañías -->
+            <li class="nav-item">
+                <a href="<?= BASE_URL ?>vcompania.php" 
+                   class="nav-link <?= $pagina_actual == 'vcompania.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                    <i class="fa-solid fa-building me-3 fs-5" style="width: 20px;"></i>
+                    <span>Ver Compañías</span>
+                </a>
+            </li>
+
+            <!-- Alta de Compañías -->
+            <li class="nav-item">
+                <a href="<?= BASE_URL ?>alta/alta_compania_gui.php" 
+                   class="nav-link <?= $pagina_actual == 'alta_compania_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                    <i class="fa-solid fa-building-circle-check me-3 fs-5" style="width: 20px;"></i>
+                    <span>Alta de Compañías</span>
+                </a>
+            </li>
+            
+            
+        <!-- Paradas -->
         <li class="nav-item">
-            <a href="<?= BASE_URL ?>usuarios.php" 
-               class="nav-link <?= $pagina_actual == 'usuarios.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
-                <i class="fa-solid fa-users me-3 fs-5" style="width: 20px;"></i>
-                <span>Ver Usuarios</span>
+            <a href="<?= BASE_URL ?>vparadas.php" 
+               class="nav-link <?= $pagina_actual == 'vparadas.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-location-dot me-3 fs-5" style="width: 20px;"></i>
+                <span>Ver Paradas</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a href="<?= BASE_URL ?>alta/alta_usuario_gui.php" 
-               class="nav-link <?= $pagina_actual == 'alta_usuario_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
-                <i class="fa-solid fa-user-plus me-3 fs-5" style="width: 20px;"></i>
-                <span>Alta de Usuarios</span>
+            <a href="<?= BASE_URL ?>alta/alta_parada_gui.php" 
+               class="nav-link <?= $pagina_actual == 'alta_parada_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-map-pin me-3 fs-5" style="width: 20px;"></i>
+                <span>Alta de Paradas</span>
             </a>
         </li>
 
-        <!-- Compañías -->
-        <li class="nav-item">
-            <a href="<?= BASE_URL ?>vcompania.php" 
-               class="nav-link <?= $pagina_actual == 'vcompania.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
-                <i class="fa-solid fa-building me-3 fs-5" style="width: 20px;"></i>
-                <span>Ver Compañías</span>
-            </a>
-        </li>
 
-        <li class="nav-item">
-            <a href="<?= BASE_URL ?>alta/alta_compania_gui.php" 
-               class="nav-link <?= $pagina_actual == 'alta_compania_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
-                <i class="fa-solid fa-building-circle-check me-3 fs-5" style="width: 20px;"></i>
-                <span>Alta de Compañías</span>
-            </a>
-        </li>
+        <?php endif; ?>
+
+
+        <!-- ========================================== -->
+        <!-- 2. SECCIÓN COMPARTIDA (Admin y Compañía)   -->
+        <!-- ========================================== -->
 
         <!-- Ómnibus -->
         <li class="nav-item">
@@ -105,24 +152,6 @@ $pagina_actual = basename($_SERVER['PHP_SELF']);
             </a>
         </li>
 
-        <!-- Paradas -->
-        <li class="nav-item">
-            <a href="<?= BASE_URL ?>vparadas.php" 
-               class="nav-link <?= $pagina_actual == 'vparadas.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
-                <i class="fa-solid fa-location-dot me-3 fs-5" style="width: 20px;"></i>
-                <span>Ver Paradas</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="<?= BASE_URL ?>alta/alta_parada_gui.php" 
-               class="nav-link <?= $pagina_actual == 'alta_parada_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
-                <i class="fa-solid fa-map-pin me-3 fs-5" style="width: 20px;"></i>
-                <span>Alta de Paradas</span>
-            </a>
-        </li>
-
-    </ul>
 
     <hr class="my-3 text-secondary opacity-25">
 

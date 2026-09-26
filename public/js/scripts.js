@@ -83,7 +83,7 @@ form.addEventListener("submit", function (e) {
     // ========================================================
 
     fetch(
-        `buscar_viajes.php?origen=${encodeURIComponent(origen)}&destino=${encodeURIComponent(destino)}&fecha=${encodeURIComponent(fecha)}&pasajeros=${pasajeros}`
+        `buscador/buscar_viajes.php?origen=${encodeURIComponent(origen)}&destino=${encodeURIComponent(destino)}&fecha=${encodeURIComponent(fecha)}&pasajeros=${pasajeros}`
     )
         .then(res => {
             if (!res.ok) {
@@ -255,3 +255,50 @@ function inicializarMapaTabla(index, rutaKey) {
     // Guardar instancia del mapa
     mapasInicializados[index] = map;
 }
+
+// ============================================================
+// Sincronización de los selects de Origen y Destino
+// ============================================================
+const selectOrigen = document.getElementById("origen");
+const selectDestino = document.getElementById("destino");
+
+function actualizarSelects() {
+    const origenSeleccionado = selectOrigen.value;
+    const destinoSeleccionado = selectDestino.value;
+
+    // 1. Rehabilitar todas las opciones en ambos selects
+    Array.from(selectOrigen.options).forEach(option => {
+        option.disabled = false;
+    });
+    Array.from(selectDestino.options).forEach(option => {
+        option.disabled = false;
+    });
+
+    // 2. Si hay un destino seleccionado, deshabilitarlo en el origen
+    if (destinoSeleccionado) {
+        const opcionEnOrigen = Array.from(selectOrigen.options).find(opt => opt.value === destinoSeleccionado);
+        if (opcionEnOrigen) {
+            opcionEnOrigen.disabled = true;
+        }
+        // Si el usuario ya tenía seleccionado el mismo origen, lo reseteamos
+        if (origenSeleccionado === destinoSeleccionado) {
+            selectOrigen.value = "";
+        }
+    }
+
+    // 3. Si hay un origen seleccionado, deshabilitarlo en el destino (opcional pero recomendado)
+    if (origenSeleccionado) {
+        const opcionEnDestino = Array.from(selectDestino.options).find(opt => opt.value === origenSeleccionado);
+        if (opcionEnDestino) {
+            opcionEnDestino.disabled = true;
+        }
+        // Si el usuario ya tenía seleccionado el mismo destino, lo reseteamos
+        if (destinoSeleccionado === origenSeleccionado) {
+            selectDestino.value = "";
+        }
+    }
+}
+
+// Escuchar los cambios en ambos selects
+selectOrigen.addEventListener("change", actualizarSelects);
+selectDestino.addEventListener("change", actualizarSelects);

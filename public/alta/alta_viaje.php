@@ -3,8 +3,8 @@ require_once '../../config/config.php';
 session_start();
 
 // Verificar sesión y rol de administrador
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
-    die("Acceso denegado.");
+if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['compania', 'administrador'])) {
+    die("Acceso denegado. Esta página es exclusiva para compañías o administradores.");
 }
 
 require_once '../../config/database.php';
@@ -39,15 +39,10 @@ if (
     exit();
 }
 
-if ($origen_id === $destino_id) {
-    header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('El origen y el destino deben ser paradas diferentes.'));
-    exit();
-}
-
 try {
     // Obtener el ID del ómnibus
     $stmtOmnibus = $pdo->prepare(
-        "SELECT o.id FROM omnibus o
+        "SELECT o.id, o.asientos FROM omnibus o
          JOIN compania c ON o.compania_id = c.id
          WHERE o.n_omnibus = ? AND c.nombre = ?"
     );
@@ -58,6 +53,11 @@ try {
         header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
         exit();
     }
+
+    if ($asientos_disp > $omnibus['asientos']) {
+    header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('La cantidad de asientos disponibles no puede ser mayor a la cantidad de asientos.'));
+    exit();
+}
 
     $omnibusId = (int)$omnibus['id'];
     $yaSalio = 0; // Por defecto FALSE según esquema

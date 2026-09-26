@@ -27,8 +27,6 @@
                     <select id="ubicacion" required>
                         <option value="" disabled selected hidden>Selecciona una ciudad o localidad</option>
                         <option value="juan-lacaze">Juan Lacaze</option>
-                        <option value="colonia">Colonia del Sacramento</option>
-                        <option value="montevideo">Montevideo</option>
                     </select>
                 </div>
             </form>
@@ -49,7 +47,6 @@
                         <th>Llegada</th>
                         <th>Estimado</th>
                         <th>Frecuencia</th>
-                        <th>Empresa</th>
                         <th>Ver Ruta</th>
                     </tr>
                 </thead>

@@ -17,7 +17,7 @@ if (empty($origen) || empty($destino) || empty($fecha) || !$pasajeros) {
 }
 
 try {
-    // Consulta SQL corregida según schema.sql
+    // Consulta SQL
     $query = "SELECT
                 po.nombre AS origen,
                 pd.nombre AS destino,

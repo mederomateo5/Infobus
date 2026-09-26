@@ -2,8 +2,8 @@
 require_once '../../config/config.php';
 session_start();
 
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
-    die("Acceso denegado.");
+if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['compania', 'administrador'])) {
+    die("Acceso denegado. Esta página es exclusiva para compañías o administradores.");
 }
 
 require_once '../../config/database.php';

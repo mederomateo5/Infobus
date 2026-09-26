@@ -36,28 +36,36 @@ const pinUrbano = crearPinColor("#28a745");       // 🟢 Solo Urbanos
 const pinInterurbano = crearPinColor("#007bff");  // 🔵 Solo Interurbanos
 const pinAmbos = crearPinColor("#ffc107");        // 🟠 Ambos
 
-// Configuración de líneas por ubicación
-const lineasPorUbicacion = {
-    "juan-lacaze": ["urbano", "ruta1"],
-    "colonia": ["ruta1"],
-    "montevideo": ["urbano"]
-};
+// --- Helpers para calcular el estimado en base a la hora actual del navegador ---
+function horaAMinutos(hora) {
+    const [h, m] = hora.split(":").map(Number);
+    return h * 60 + m;
+}
 
+function minutosAHora(minutos) {
+    const h = Math.floor(minutos / 60) % 24;
+    const m = minutos % 60;
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
 
-const horariosPorLinea = {
-    urbano: [
-        { salida: "07:00", llegada: "07:25", frecuencia: "Lunes a Viernes", empresa: "Coche 14" },
-        { salida: "12:15", llegada: "12:40", frecuencia: "Diario", empresa: "Coche 14" },
-        { salida: "18:30", llegada: "18:55", frecuencia: "Lunes a Viernes", empresa: "Coche 02" }
-    ],
-    ruta1: [
-        { salida: "06:00", llegada: "06:45", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
-        { salida: "08:00", llegada: "08:45", frecuencia: "Cada 1 hora", empresa: "Empresa Local" },
-        { salida: "14:00", llegada: "14:45", frecuencia: "Diario", empresa: "Empresa Local" }
-    ]
-};
+function calcularEstimado(llegada, ahora = new Date()) {
+    const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+    const minutosLlegada = horaAMinutos(llegada);
+    const diferencia = minutosLlegada - minutosActuales;
 
-// --- CARGA DIRECTA CON RUTAS RELATIVAS EXACTAS ---
+    if (diferencia < -5) return "Viaje finalizado";
+    if (diferencia >= -5 && diferencia <= 0) return "Llegando ahora";
+
+    if (diferencia > 60) {
+        const horas = Math.floor(diferencia / 60);
+        const mins = diferencia % 60;
+        return mins > 0 ? `${horas}h ${mins}min` : `${horas}h`;
+    }
+
+    return `${diferencia} min`;
+}
+
+// --- CARGA DE ARCHIVOS JSON DE CONFIGURACIÓN GEOGRÁFICA ---
 Promise.all([
     fetch('./js/rutasomnibus.json').then(res => {
         if (!res.ok) throw new Error("No se pudo cargar rutasomnibus.json");
@@ -70,7 +78,6 @@ Promise.all([
 ]).then(([dataRutas, dataParadas]) => {
     rutasData = dataRutas;
     paradasData = dataParadas;
-    console.log("¡Datos cargados con éxito!", { rutas: dataRutas, paradas: dataParadas });
 }).catch(error => {
     console.error("Error al traer los datos de rutas y paradas:", error);
 });
@@ -80,51 +87,68 @@ selectUbicacion.addEventListener("change", function() {
     const ubicacionSeleccionada = this.value; 
     
     tablaHorariosUrbanos.innerHTML = "";
-    mensajeUrbano.textContent = "";
+    mensajeUrbano.textContent = "Buscando viajes urbanos...";
     resultadosUrbanos.style.display = "none";
     mapasInicializados = {};
 
-    const lineasDisponibles = lineasPorUbicacion[ubicacionSeleccionada] || [];
-
-    if (lineasDisponibles.length === 0) {
-        mensajeUrbano.textContent = "No hay líneas urbanas registradas para esta zona";
+    if (!ubicacionSeleccionada) {
+        mensajeUrbano.textContent = "";
         return;
     }
 
-    resultadosUrbanos.style.display = "block";
-    let globalIndex = 0;
-    const ahora = new Date(); // misma hora de referencia para toda la tabla renderizada
+    // Petición AJAX al archivo PHP que consulta la base de datos
+    fetch('buscador/buscar_urbanos.php')
+        .then(res => {
+            if (!res.ok) throw new Error("Error en la respuesta del servidor");
+            return res.json();
+        })
+        .then(viajesUrbanos => {
+            mensajeUrbano.textContent = "";
 
-    lineasDisponibles.forEach(llaveRuta => {
-        const listaHorarios = horariosPorLinea[llaveRuta] || []; 
+            if (viajesUrbanos.error) {
+                mensajeUrbano.textContent = viajesUrbanos.error;
+                return;
+            }
 
-        listaHorarios.forEach(h => {
+            if (!viajesUrbanos || viajesUrbanos.length === 0) {
+                mensajeUrbano.textContent = "No hay viajes urbanos registrados en la base de datos.";
+                return;
+            }
 
-            const fila = document.createElement("tr");
-            fila.innerHTML = `
-                <td>${h.salida}</td>
-                <td>${h.llegada}</td>
-                <td>${estimado}</td>
-                <td>${h.frecuencia}</td>
-                <td>${h.empresa}</td>
-                <td>
-                    <button class="btn-mapa" data-index="${globalIndex}" data-ruta="${llaveRuta}">▼</button>
-                </td>
-            `;
-            tablaHorariosUrbanos.appendChild(fila);
+            resultadosUrbanos.style.display = "block";
+            const ahora = new Date(); // Tomamos la hora actual de referencia
 
-            const filaMapa = document.createElement("tr");
-            filaMapa.className = "fila-mapa";
-            filaMapa.innerHTML = `
-                <td colspan="5">
-                    <div id="mapa-urbano-${globalIndex}" class="map-container"></div>
-                </td>
-            `;
-            tablaHorariosUrbanos.appendChild(filaMapa);
-            
-            globalIndex++; 
+            // Recorrer los viajes devueltos por la base de datos e insertarlos en la tabla
+            viajesUrbanos.forEach((viaje, index) => {
+                const estimado = calcularEstimado(viaje.hora_llegada, ahora);
+                const frecuenciaTexto = viaje.frecuencia || 'Diario'; // Valor por defecto si la BD no lo trae
+
+                const fila = document.createElement("tr");
+                fila.innerHTML = `
+                    <td>${viaje.hora}</td>
+                    <td>${viaje.hora_llegada}</td>
+                    <td>${estimado}</td>
+                    <td>${frecuenciaTexto}</td>
+                    <td>
+                        <button class="btn-mapa" data-index="${index}" data-ruta="${viaje.ruta_key}">▼</button>
+                    </td>
+                `;
+                tablaHorariosUrbanos.appendChild(fila);
+
+                const filaMapa = document.createElement("tr");
+                filaMapa.className = "fila-mapa";
+                filaMapa.innerHTML = `
+                    <td colspan="5">
+                        <div id="mapa-urbano-${index}" class="map-container" style="display: none; height: 300px; width: 100%;"></div>
+                    </td>
+                `;
+                tablaHorariosUrbanos.appendChild(filaMapa);
+            });
+        })
+        .catch(error => {
+            mensajeUrbano.textContent = "Error de red al intentar conectar con el servidor.";
+            console.error("Fetch error:", error);
         });
-    });
 });
 
 // Escucha del click en la tabla de horarios urbanos para abrir/cerrar mapas
@@ -162,7 +186,7 @@ function inicializarMapaUrbanoFila(index, llaveRuta) {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    const datosDeRuta = rutasData[llaveRuta];
+    const datosDeRuta = rutasData[llaveRuta] || rutasData["urbano"];
     
     if (datosDeRuta && datosDeRuta.coordinates) {
         const coordenadasConvertidas = datosDeRuta.coordinates.map(coord => [coord[1], coord[0]]);
@@ -172,15 +196,14 @@ function inicializarMapaUrbanoFila(index, llaveRuta) {
             weight: 4
         }).addTo(map);
 
-        // Agregamos TODAS las paradas del paradas.json con sus respectivos pines de colores
         if (paradasData && paradasData.length > 0) {
             paradasData.forEach(parada => {
-                let iconoSeleccionado = pinInterurbano; // 🔵 Azul por defecto
+                let iconoSeleccionado = pinInterurbano; 
 
                 if (parada.tipo === "urbano") {
-                    iconoSeleccionado = pinUrbano;       // 🟢 Verde
+                    iconoSeleccionado = pinUrbano;       
                 } else if (parada.tipo === "ambos") {
-                    iconoSeleccionado = pinAmbos;       // 🟠 Naranja
+                    iconoSeleccionado = pinAmbos;       
                 }
 
                 let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
