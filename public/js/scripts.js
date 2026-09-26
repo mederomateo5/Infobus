@@ -114,6 +114,7 @@ form.addEventListener("submit", function (e) {
 
             viajesEncontrados.forEach((viaje, index) => {
                 const fila = document.createElement("tr");
+                fila.className = "text-center align-middle";
 
                 fila.innerHTML = `
                     <td>${viaje.origen}</td>
@@ -124,9 +125,10 @@ form.addEventListener("submit", function (e) {
                     <td>$${viaje.precio}</td>
                     <td>
                         <button
-                            class="btn-mapa"
+                            class="btn btn-sm btn-outline-primary border-0 btn-mapa fw-bold"
                             data-index="${index}"
-                            data-ruta="${viaje.ruta_key}">
+                            data-ruta="${viaje.ruta_key}"
+                            style="transition: transform 0.3s ease;">
                             ▼
                         </button>
                     </td>
@@ -136,12 +138,12 @@ form.addEventListener("submit", function (e) {
 
                 // Fila contenedora oculta para el mapa
                 const filaMapa = document.createElement("tr");
-                filaMapa.className = "fila-mapa";
+                filaMapa.className = "bg-white";
                 filaMapa.innerHTML = `
-                    <td colspan="7">
+                    <td colspan="7" class="p-0 border-bottom border-primary">
                         <div
                             id="mapa-${index}"
-                            class="map-container"
+                            class="rounded shadow-sm"
                             style="display: none; height: 300px; width: 100%;">
                         </div>
                     </td>
@@ -170,6 +172,12 @@ tbody.addEventListener("click", function (e) {
     const contenedorMapa = document.getElementById(`mapa-${index}`);
 
     btn.classList.toggle("abierto");
+
+    if (btn.classList.contains("abierto")) {
+        btn.style.transform = "rotate(180deg)";
+    } else {
+        btn.style.transform = "rotate(0deg)";
+    }
 
     // Mostrar u ocultar el mapa
     if (contenedorMapa.style.display === "block") {

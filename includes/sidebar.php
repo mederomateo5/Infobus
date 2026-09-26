@@ -96,6 +96,7 @@ $tipo_usuario = $_SESSION['user_tipo'] ?? '';
 
         <?php endif; ?>
 
+        <?php if ($tipo_usuario === 'administrador' || $tipo_usuario === 'compania'): ?>
 
         <!-- ========================================== -->
         <!-- 2. SECCIÓN COMPARTIDA (Admin y Compañía)   -->
@@ -151,6 +152,60 @@ $tipo_usuario = $_SESSION['user_tipo'] ?? '';
                 <span>Alta de Viajes</span>
             </a>
         </li>
+
+            <?php endif; ?>
+
+             <?php if ($tipo_usuario === 'usuario'): ?>
+
+                <li class="nav-item">
+            <a href="<?= BASE_URL ?>panel_usuario.php" 
+               class="nav-link <?= $pagina_actual == 'panel_usuario.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-chart-line me-3 fs-5" style="width: 20px;"></i>
+                <span>Inicio</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="<?= BASE_URL ?>usuario/favoritos.php" 
+               class="nav-link <?= $pagina_actual == 'favoritos.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-star me-3 fs-5" style="width: 20px;"></i>
+                <span>Mis favoritos</span>
+            </a>
+        </li>
+
+         <li class="nav-item">
+            <a href="<?= BASE_URL ?>usuario/informacion.php" 
+               class="nav-link <?= $pagina_actual == 'informacion.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-circle-info me-3 fs-5" style="width: 20px;"></i>
+                <span>Mi información</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="<?= BASE_URL ?>actualizar/actualizar_email_gui.php" 
+               class="nav-link <?= $pagina_actual == 'actualizar_email_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-envelope me-3 fs-5" style="width: 20px;"></i>
+                <span>Actualizar correo</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="<?= BASE_URL ?>actualizar/actualizar_contrasenia_gui.php" 
+               class="nav-link <?= $pagina_actual == 'actualizar_contrasenia_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-lock me-3 fs-5" style="width: 20px;"></i>
+                <span>Actualizar contraseña</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="<?= BASE_URL ?>actualizar/actualizar_telefono_gui.php" 
+               class="nav-link <?= $pagina_actual == 'actualizar_telefono_gui.php' ? 'active text-white' : 'text-dark' ?> d-flex align-items-center">
+                <i class="fa-solid fa-phone me-3 fs-5" style="width: 20px;"></i>
+                <span>Actualizar teléfono</span>
+            </a>
+        </li>
+
+        <?php endif; ?>
 
 
     <hr class="my-3 text-secondary opacity-25">

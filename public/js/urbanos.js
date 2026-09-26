@@ -124,22 +124,23 @@ selectUbicacion.addEventListener("change", function() {
                 const frecuenciaTexto = viaje.frecuencia || 'Diario'; // Valor por defecto si la BD no lo trae
 
                 const fila = document.createElement("tr");
+                fila.className = "text-center align-middle";
                 fila.innerHTML = `
                     <td>${viaje.hora}</td>
                     <td>${viaje.hora_llegada}</td>
                     <td>${estimado}</td>
                     <td>${frecuenciaTexto}</td>
-                    <td>
-                        <button class="btn-mapa" data-index="${index}" data-ruta="${viaje.ruta_key}">▼</button>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-primary border-0 btn-mapa fw-bold" data-index="${index}" data-ruta="${viaje.ruta_key}" style="transition: transform 0.3s ease;">▼</button>
                     </td>
                 `;
                 tablaHorariosUrbanos.appendChild(fila);
 
                 const filaMapa = document.createElement("tr");
-                filaMapa.className = "fila-mapa";
+                filaMapa.className = "bg-white";
                 filaMapa.innerHTML = `
-                    <td colspan="5">
-                        <div id="mapa-urbano-${index}" class="map-container" style="display: none; height: 300px; width: 100%;"></div>
+                    <td colspan="5" class="p-0 border-bottom border-primary">
+                        <div id="mapa-urbano-${index}" class="rounded shadow-sm" style="display: none; height: 300px; width: 100%;"></div>
                     </td>
                 `;
                 tablaHorariosUrbanos.appendChild(filaMapa);
@@ -161,6 +162,13 @@ tablaHorariosUrbanos.addEventListener("click", function(e) {
     const contenedorMapa = document.getElementById(`mapa-urbano-${index}`);
     
     btn.classList.toggle("abierto"); 
+    
+    // Rotación suave del botón con Bootstrap / estilos en línea
+    if (btn.classList.contains("abierto")) {
+        btn.style.transform = "rotate(180deg)";
+    } else {
+        btn.style.transform = "rotate(0deg)";
+    }
     
     if (contenedorMapa.style.display === "block") {
         contenedorMapa.style.display = "none"; 

@@ -22,6 +22,14 @@ try {
     $paradas = [];
 }
 
+// Obtener la lista de ómnibus junto con el nombre de su agencia para el selector dinámico
+try {
+    $stmtOmnibusList = $pdo->query("SELECT o.n_omnibus, c.nombre as agencia FROM omnibus o JOIN compania c ON o.compania_id = c.id ORDER BY o.n_omnibus ASC");
+    $omnibusList = $stmtOmnibusList->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $omnibusList = [];
+}
+
 // Capturar mensaje de notificación si existe
 $msg = $_GET['msg'] ?? '';
 ?>
@@ -64,13 +72,7 @@ $msg = $_GET['msg'] ?? '';
                         <form action="alta_viaje.php" method="POST" onsubmit="return validarViaje(this);">
                             <div class="row g-3">
 
-                                <!-- Número de Ómnibus -->
-                                <div class="col-12 col-md-6">
-                                    <label for="n_omnibus" class="form-label fw-semibold">Número de Ómnibus</label>
-                                    <input type="number" id="n_omnibus" name="n_omnibus" class="form-control" placeholder="Ej: 104" required min="1">
-                                </div>
-
-                                <!-- Agencia -->
+                                <!-- Agencia (Posicionada primero a la izquierda) -->
                                 <div class="col-12 col-md-6">
                                     <label for="agencia" class="form-label fw-semibold">Agencia</label>
                                     <select id="agencia" name="agencia" class="form-select" required>
@@ -79,6 +81,14 @@ $msg = $_GET['msg'] ?? '';
                                         <option value="TAB">TAB</option>
                                         <option value="TURIL">TURIL</option>
                                         <option value="URBANO">URBANO</option>
+                                    </select>
+                                </div>
+
+                                <!-- Número de Ómnibus (Selector dinámico a la derecha filtrado por agencia) -->
+                                <div class="col-12 col-md-6">
+                                    <label for="n_omnibus" class="form-label fw-semibold">Número de Ómnibus</label>
+                                    <select id="n_omnibus" name="n_omnibus" class="form-select" required>
+                                        <option value="" disabled selected>Seleccione una agencia primero...</option>
                                     </select>
                                 </div>
 
@@ -164,5 +174,36 @@ $msg = $_GET['msg'] ?? '';
     </div>
 
     <script src="<?= BASE_URL ?>js/validaciones.js"></script>
+    <script>
+        // Cargar los datos de ómnibus desde PHP para filtrado dinámico en frontend
+        const omnibusData = <?= json_encode($omnibusList) ?>;
+        const agenciaSelect = document.getElementById('agencia');
+        const omnibusSelect = document.getElementById('n_omnibus');
+
+        agenciaSelect.addEventListener('change', function() {
+            const agenciaSeleccionada = this.value;
+            
+            // Restablecer opciones
+            omnibusSelect.innerHTML = '<option value="" disabled selected>Seleccione el número de ómnibus...</option>';
+            
+            // Filtrar los ómnibus de la agencia seleccionada
+            const filtrados = omnibusData.filter(item => item.agencia === agenciaSeleccionada);
+            
+            if (filtrados.length === 0) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No hay ómnibus registrados para esta agencia';
+                option.disabled = true;
+                omnibusSelect.appendChild(option);
+            } else {
+                filtrados.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.n_omnibus;
+                    option.textContent = 'Ómnibus N° ' + item.n_omnibus;
+                    omnibusSelect.appendChild(option);
+                });
+            }
+        });
+    </script>
 </body>
 </html>

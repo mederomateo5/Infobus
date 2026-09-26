@@ -40,7 +40,7 @@ if (
 }
 
 try {
-    // Obtener el ID del ómnibus
+    // Obtener el ID del ómnibus correspondiente a la agencia y número seleccionado
     $stmtOmnibus = $pdo->prepare(
         "SELECT o.id, o.asientos FROM omnibus o
          JOIN compania c ON o.compania_id = c.id
@@ -55,9 +55,9 @@ try {
     }
 
     if ($asientos_disp > $omnibus['asientos']) {
-    header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('La cantidad de asientos disponibles no puede ser mayor a la cantidad de asientos.'));
-    exit();
-}
+        header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('La cantidad de asientos disponibles no puede ser mayor a la cantidad de asientos.'));
+        exit();
+    }
 
     $omnibusId = (int)$omnibus['id'];
     $yaSalio = 0; // Por defecto FALSE según esquema
