@@ -34,7 +34,7 @@ if (isset($_GET['msg'])) {
     <?php include '../includes/header.php'; ?>
 
     <!-- Contenedor Flexbox para alinear Sidebar + Contenido -->
-    <div class="d-flex">
+    <div class="d-flex flex-column flex-md-row min-vh-100">
 
         <!-- 1. Sidebar a la izquierda -->
         <?php include '../includes/sidebar.php'; ?>

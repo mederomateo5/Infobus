@@ -21,11 +21,6 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link text-dark fw-medium px-0" href="<?= BASE_URL ?>redirigir.php">
-                    Panel
-                </a>
-            </li>
 
         <li class="nav-item">
                 <a class="nav-link text-dark fw-medium px-0" href="<?= BASE_URL ?>paradas.php">

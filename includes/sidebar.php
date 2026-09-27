@@ -8,9 +8,18 @@ $pagina_actual = basename($_SERVER['PHP_SELF']);
 $tipo_usuario = $_SESSION['user_tipo'] ?? '';
 ?>
 
-<aside class="d-flex flex-column flex-shrink-0 p-3 bg-white border-end shadow-sm" 
-       style="width: 280px; min-height: 100vh;">
-    
+<aside class="sidebar-panel d-flex flex-column flex-shrink-0 p-3 bg-white border-end shadow-sm">
+
+    <!-- Botón para mostrar/ocultar el menú en celulares (solo visible en pantallas chicas) -->
+    <button class="btn btn-outline-secondary d-flex d-md-none align-items-center justify-content-between w-100 mb-2"
+            type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+            aria-expanded="false" aria-controls="sidebarMenu">
+        <span><i class="fa-solid fa-bars me-2"></i>Menú</span>
+        <i class="fa-solid fa-chevron-down"></i>
+    </button>
+
+    <div class="collapse d-md-block" id="sidebarMenu">
+
     <!-- Lista de Enlaces de Navegación -->
     <ul class="nav nav-pills flex-column mb-auto gap-1">
         
@@ -217,5 +226,7 @@ $tipo_usuario = $_SESSION['user_tipo'] ?? '';
             <span class="fw-medium text-danger">Cerrar Sesión</span>
         </a>
     </div>
-    
+
+    </div>
+
 </aside>

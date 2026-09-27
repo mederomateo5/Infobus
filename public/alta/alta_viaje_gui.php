@@ -45,7 +45,7 @@ $msg = $_GET['msg'] ?? '';
     <?php include '../../includes/header.php'; ?>
 
     <!-- Contenedor Flexbox para alinear Sidebar + Contenido sin tapar el fondo personalizado -->
-    <div class="d-flex">
+    <div class="d-flex flex-column flex-md-row min-vh-100">
 
         <!-- Sidebar lateral -->
         <?php include '../../includes/sidebar.php'; ?>

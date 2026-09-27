@@ -37,7 +37,7 @@ $companias = $pdo->query("SELECT id, nombre FROM compania ORDER BY nombre ASC")-
 <body>
     <?php include '../../includes/header.php'; ?>
 
-    <div class="d-flex">
+    <div class="d-flex flex-column flex-md-row min-vh-100">
         <?php include '../../includes/sidebar.php'; ?>
 
         <main class="flex-grow-1 p-4 overflow-auto">

@@ -1,0 +1,25 @@
+/* =====================================================================
+   responsive.css
+   Ajustes responsive adicionales para Infobus.
+   Se usa SOLO para casos que las utilidades de Bootstrap no cubren
+   (por ejemplo, un ancho fijo en px que dependía de un style inline).
+   No modifica colores, tipografías ni el diseño general del proyecto.
+   ===================================================================== */
+
+/* Sidebar del panel (includes/sidebar.php):
+   antes tenía "width: 280px; min-height: 100vh;" fijo inline, lo que
+   en celular (donde el layout pasa a columna) dejaba el menú angosto
+   y además ocupando toda la altura de la pantalla antes del contenido.
+   Ahora ocupa el 100% del ancho en pantallas chicas y recupera el
+   ancho/alto fijo original a partir del breakpoint md de Bootstrap. */
+.sidebar-panel {
+    width: 100%;
+    min-height: auto;
+}
+
+@media (min-width: 768px) {
+    .sidebar-panel {
+        width: 280px;
+        min-height: 100vh;
+    }
+}

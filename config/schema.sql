@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS recorre (
 
 
 -- ============================================================
---  6. Tabla de viajes
+--  6. Tabla de viajes (Modificada: Sin la columna fecha)
 -- ============================================================
 
 
@@ -161,7 +161,6 @@ CREATE TABLE IF NOT EXISTS viajes (
    destino_id INT UNSIGNED NOT NULL,
    precio DECIMAL(7,2) NOT NULL,
    ya_salio BOOLEAN NOT NULL DEFAULT FALSE,
-   fecha DATE NOT NULL,
    hora TIME NOT NULL,
    hora_llegada TIME NOT NULL,
    es_directo BOOLEAN NOT NULL DEFAULT FALSE,
@@ -173,7 +172,6 @@ CREATE TABLE IF NOT EXISTS viajes (
 
    INDEX idx_viajes_origen (origen_id),
    INDEX idx_viajes_destino (destino_id),
-   INDEX idx_viajes_fecha (fecha),
 
 
    CONSTRAINT fk_viajes_omnibus
@@ -253,7 +251,52 @@ CREATE TABLE IF NOT EXISTS viaje_dia (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ============================================================
+--  9. Tabla de viajes favoritos (Relación N:M entre users y viajes)
+-- ============================================================
+CREATE TABLE IF NOT EXISTS usuario_viaje_favorito (
+    user_id INT UNSIGNED NOT NULL,
+    viaje_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
+    PRIMARY KEY (user_id, viaje_id),
+
+    CONSTRAINT fk_usu_viaje_fav_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_usu_viaje_fav_viaje
+        FOREIGN KEY (viaje_id)
+        REFERENCES viajes(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- ============================================================
+--  10. Tabla de compañías favoritas (Relación N:M entre users y compania)
+-- ============================================================
+CREATE TABLE IF NOT EXISTS usuario_compania_favorita (
+    user_id INT UNSIGNED NOT NULL,
+    compania_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (user_id, compania_id),
+
+    CONSTRAINT fk_usu_comp_fav_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_usu_comp_fav_compania
+        FOREIGN KEY (compania_id)
+        REFERENCES compania(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- ============================================================
@@ -399,7 +442,7 @@ VALUES
 (2, 3, 2);
 
 -- ============================================================
---  Viajes
+--  Viajes (Modificado: Sin campos de fecha)
 -- ============================================================
 
 
@@ -410,7 +453,6 @@ INSERT INTO viajes
    destino_id,
    precio,
    ya_salio,
-   fecha,
    hora,
    hora_llegada,
    es_directo,
@@ -423,7 +465,6 @@ VALUES
    2,
    350.00,
    FALSE,
-   '2026-09-15',
    '10:30:00',
    '13:30:00',
    FALSE,
@@ -435,7 +476,6 @@ VALUES
    3,
    980.00,
    FALSE,
-   '2026-09-16',
    '08:00:00',
    '14:00:00',
    TRUE,
@@ -443,14 +483,19 @@ VALUES
 );
 
 -- ============================================================
---  Días correspondientes a cada viaje
+--  Días correspondientes a cada viaje (Ej: Viaje 1 Lunes a Viernes, Viaje 2 Fines de semana)
 -- ============================================================
 
 
 INSERT INTO viaje_dia
 (viaje_id, dia_id)
 VALUES
+-- El viaje 1 corre de Lunes a Viernes (ids 1 al 5)
+(1, 1),
 (1, 2),
+(1, 3),
 (1, 4),
-(2, 3),
-(2, 6);
+(1, 5),
+-- El viaje 2 corre Sábado y Domingo (ids 6 y 7)
+(2, 6),
+(2, 7);

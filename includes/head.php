@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <link rel="stylesheet" href="<?= BASE_URL ?>css/header.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/responsive.css">
+
+<!-- Bundle de JS de Bootstrap (misma versión que el CSS de arriba): faltaba y es necesario
+     para que funcionen componentes responsive de Bootstrap como el menú colapsable del sidebar -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
 <link rel="apple-touch-icon" sizes="180x180" href="<?= BASE_URL ?>img/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_URL ?>img/favicon/favicon-32x32.png">
