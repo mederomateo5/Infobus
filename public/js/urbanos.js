@@ -121,7 +121,7 @@ selectUbicacion.addEventListener("change", function() {
             // Recorrer los viajes devueltos por la base de datos e insertarlos en la tabla
             viajesUrbanos.forEach((viaje, index) => {
                 const estimado = calcularEstimado(viaje.hora_llegada, ahora);
-                const frecuenciaTexto = viaje.frecuencia || 'Diario'; // Valor por defecto si la BD no lo trae
+                const frecuenciaTexto = viaje.frecuencia || 'Diario'; // Días devueltos desde la BD
 
                 const fila = document.createElement("tr");
                 fila.className = "text-center align-middle";
@@ -163,7 +163,6 @@ tablaHorariosUrbanos.addEventListener("click", function(e) {
     
     btn.classList.toggle("abierto"); 
     
-    // Rotación suave del botón con Bootstrap / estilos en línea
     if (btn.classList.contains("abierto")) {
         btn.style.transform = "rotate(180deg)";
     } else {
