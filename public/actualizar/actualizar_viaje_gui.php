@@ -2,7 +2,6 @@
 require_once '../../config/config.php';
 session_start();
 
-// Verificar sesión y permisos
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
     die("Acceso denegado.");
 }
@@ -17,7 +16,6 @@ if (!$id || !ctype_digit((string)$id)) {
     exit();
 }
 
-// Obtener los datos del viaje con la agencia y número de ómnibus
 $stmt = $pdo->prepare("
     SELECT v.*, o.n_omnibus, c.nombre AS agencia_nombre
     FROM viajes v
@@ -33,12 +31,20 @@ if (!$viaje) {
     exit();
 }
 
-// Obtener todas las paradas para los select de origen y destino
+// Obtener los días asociados
+$stmtDiasAsignados = $pdo->prepare("SELECT dia_id FROM viaje_dia WHERE viaje_id = ?");
+$stmtDiasAsignados->execute([$id]);
+$diasAsignados = $stmtDiasAsignados->fetchAll(PDO::FETCH_COLUMN);
+
 try {
     $stmtParadas = $pdo->query("SELECT id, nombre FROM paradas ORDER BY nombre ASC");
     $paradas = $stmtParadas->fetchAll(PDO::FETCH_ASSOC);
+
+    $stmtDiasSemana = $pdo->query("SELECT id, nombre FROM dias_semana ORDER BY id ASC");
+    $diasSemana = $stmtDiasSemana->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $paradas = [];
+    $diasSemana = [];
 }
 ?>
 <!DOCTYPE html>
@@ -67,8 +73,7 @@ try {
 
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
-                        <form action="<?= BASE_URL ?>actualizar/actualizar_viaje.php" method="POST" onsubmit="return validarViaje(this);">
-                            <!-- ID oculto para enviar al procesador -->
+                        <form action="<?= BASE_URL ?>actualizar/actualizar_viaje.php" method="POST">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($viaje['id']) ?>">
 
                             <div class="row g-3">
@@ -123,17 +128,26 @@ try {
                                     <input type="number" step="0.01" name="precio" class="form-control" value="<?= htmlspecialchars($viaje['precio']) ?>" required min="0">
                                 </div>
 
-                                <div class="col-12 col-md-4">
-                                    <label class="form-label fw-semibold">Fecha</label>
-                                    <input type="date" name="fecha" class="form-control" value="<?= htmlspecialchars($viaje['fecha']) ?>" required>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Días de la semana</label>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <?php foreach ($diasSemana as $dia): ?>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="dias[]" value="<?= $dia['id'] ?>" id="dia_<?= $dia['id'] ?>" <?= in_array($dia['id'], $diasAsignados) ? 'checked' : '' ?>>
+                                                <label class="form-check-label" for="dia_<?= $dia['id'] ?>">
+                                                    <?= htmlspecialchars($dia['nombre']) ?>
+                                                </label>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
 
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-6">
                                     <label class="form-label fw-semibold">Hora de Salida</label>
                                     <input type="time" name="hora" class="form-control" value="<?= htmlspecialchars($viaje['hora']) ?>" required>
                                 </div>
 
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-6">
                                     <label class="form-label fw-semibold">Hora de Llegada</label>
                                     <input type="time" name="hora_llegada" class="form-control" value="<?= htmlspecialchars($viaje['hora_llegada']) ?>" required>
                                 </div>
@@ -169,7 +183,5 @@ try {
             </div>
         </main>
     </div>
-
-    <script src="<?= BASE_URL ?>js/validaciones.js"></script>
 </body>
 </html>

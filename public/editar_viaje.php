@@ -1,50 +1,62 @@
 <?php
 require_once '../config/config.php';
-    session_start();
+session_start();
 
-    // Verificar sesión y rol de administrador
-    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
-        die("Acceso denegado.");
-    }
+// Verificar sesión y rol de administrador
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
+    die("Acceso denegado.");
+}
 
-    require_once '../config/database.php';
+require_once '../config/database.php';
 
-    // Validar ID recibido por GET
-    $id = $_GET['id'] ?? null;
-    if (!$id || !ctype_digit((string)$id)) {
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('ID de viaje no válido.'));
+// Validar ID recibido por GET
+$id = $_GET['id'] ?? null;
+if (!$id || !ctype_digit((string)$id)) {
+    header('Location: ../public/panel_admin.php?msg=' . urlencode('ID de viaje no válido.'));
+    exit();
+}
+
+// Obtener los datos del viaje con detalles del ómnibus y compañía
+try {
+    $stmt = $pdo->prepare("SELECT v.id, v.origen_id, v.destino_id, v.precio, v.ya_salio, v.hora, v.hora_llegada, v.es_directo,
+                                  o.n_omnibus, o.asientos, v.asientos_disponibles, c.nombre AS agencia
+                           FROM viajes v
+                           JOIN omnibus o ON v.omnibus_id = o.id
+                           JOIN compania c ON o.compania_id = c.id
+                           WHERE v.id = ?");
+    $stmt->execute([$id]);
+    $viaje = $stmt->fetch();
+
+    if (!$viaje) {
+        header('Location: ../public/panel_admin.php?msg=' . urlencode('El viaje no existe.'));
         exit();
     }
 
-    // Obtener los datos del viaje con detalles del ómnibus y compañía
-    try {
-        $stmt = $pdo->prepare("SELECT v.id, v.origen, v.destino, v.precio, v.ya_salio, v.fecha, v.hora, v.hora_llegada,
-                                      o.n_omnibus, o.asientos, o.asientos_disponibles, c.nombre AS agencia
-                               FROM viajes v
-                               JOIN omnibus o ON v.omnibus_id = o.id
-                               JOIN compania c ON o.compania_id = c.id
-                               WHERE v.id = ?");
-        $stmt->execute([$id]);
-        $viaje = $stmt->fetch();
+    // Obtener los días asociados a este viaje
+    $stmtDias = $pdo->prepare("SELECT dia_id FROM viaje_dia WHERE viaje_id = ?");
+    $stmtDias->execute([$id]);
+    $diasAsignados = $stmtDias->fetchAll(PDO::FETCH_COLUMN);
 
-        if (!$viaje) {
-            header('Location: ../public/panel_admin.php?msg=' . urlencode('El viaje no existe.'));
-            exit();
-        }
-    } catch (PDOException $e) {
-        header('Location: ../public/panel_admin.php?msg=' . urlencode('Error al conectar con la base de datos.'));
-        exit();
-    }
+    // Obtener todas las paradas
+    $stmtParadas = $pdo->query("SELECT id, nombre FROM paradas ORDER BY nombre ASC");
+    $paradas = $stmtParadas->fetchAll(PDO::FETCH_ASSOC);
+
+    // Obtener todos los días de la semana
+    $stmtDiasSemana = $pdo->query("SELECT id, nombre FROM dias_semana ORDER BY id ASC");
+    $diasSemana = $stmtDiasSemana->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    header('Location: ../public/panel_admin.php?msg=' . urlencode('Error al conectar con la base de datos.'));
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <title>Editar Viaje</title>
     <?php include '../includes/head.php'; ?>
-    <!-- Reutilizamos tu CSS de administración -->
     <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
     <style>
-        /* Ajuste rápido para centrar el formulario de edición en pantalla */
         .contenedor-editar {
             max-width: 600px;
             margin: 40px auto;
@@ -62,27 +74,6 @@ require_once '../config/config.php';
         .btn-volver:hover {
             background-color: #d1d1d1;
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .contenedor-editar {
-                max-width: 100%;
-                margin: 20px auto;
-                padding: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .contenedor-editar {
-                margin: 10px auto;
-                padding: 10px;
-            }
-
-            .btn-volver {
-                width: 100%;
-                text-align: center;
-            }
-        }
     </style>
 </head>
 <body>
@@ -96,7 +87,6 @@ require_once '../config/config.php';
             <h1>Editar Viaje (ID: <?= htmlspecialchars($viaje['id']) ?>)</h1>
 
             <form action="<?= BASE_URL ?>actualizar/actualizar_viaje.php" method="POST">
-                <!-- ID Oculto para procesar la actualización en la BD -->
                 <input type="hidden" name="id" value="<?= htmlspecialchars($viaje['id']) ?>">
 
                 <div class="campo">
@@ -105,24 +95,30 @@ require_once '../config/config.php';
                 </div>
 
                 <div class="campo">
-                    <label>Asientos Totales</label>
-                    <!-- Nota: si cambias la capacidad total de asientos, es buena idea actualizar la disponibilidad -->
-                    <input type="number" name="asientos" value="<?= htmlspecialchars($viaje['asientos']) ?>" required min="1" readonly>
-                </div>
-
-                <div class="campo">
                     <label>Asientos Disponibles</label>
-                    <input type="number" name="asientos_disponibles" value="<?= htmlspecialchars($viaje['asientos_disponibles']) ?>" required min="0" readonly>
+                    <input type="number" name="asientos_disponibles" value="<?= htmlspecialchars($viaje['asientos_disponibles']) ?>" required min="0">
                 </div>
 
                 <div class="campo">
                     <label>Origen</label>
-                    <input type="text" name="origen" value="<?= htmlspecialchars($viaje['origen']) ?>" required>
+                    <select name="origen_id" required>
+                        <?php foreach ($paradas as $parada): ?>
+                            <option value="<?= $parada['id'] ?>" <?= ($viaje['origen_id'] == $parada['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($parada['nombre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
 
                 <div class="campo">
                     <label>Destino</label>
-                    <input type="text" name="destino" value="<?= htmlspecialchars($viaje['destino']) ?>" required>
+                    <select name="destino_id" required>
+                        <?php foreach ($paradas as $parada): ?>
+                            <option value="<?= $parada['id'] ?>" <?= ($viaje['destino_id'] == $parada['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($parada['nombre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
 
                 <div class="campo">
@@ -141,16 +137,15 @@ require_once '../config/config.php';
                 </div>
 
                 <div class="campo">
-                    <label>¿Ya salió?</label>
-                    <select name="ya_salio" required>
-                        <option value="0" <?= $viaje['ya_salio'] == 0 ? 'selected' : '' ?>>No</option>
-                        <option value="1" <?= $viaje['ya_salio'] == 1 ? 'selected' : '' ?>>Sí</option>
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label>Fecha</label>
-                    <input type="date" name="fecha" value="<?= htmlspecialchars($viaje['fecha']) ?>" required>
+                    <label>Días de la semana</label>
+                    <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 5px;">
+                        <?php foreach ($diasSemana as $dia): ?>
+                            <label>
+                                <input type="checkbox" name="dias[]" value="<?= $dia['id'] ?>" <?= in_array($dia['id'], $diasAsignados) ? 'checked' : '' ?>>
+                                <?= htmlspecialchars($dia['nombre']) ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
 
                 <div class="campo">
@@ -161,6 +156,19 @@ require_once '../config/config.php';
                 <div class="campo">
                     <label>Hora de Llegada</label>
                     <input type="time" name="hora_llegada" value="<?= htmlspecialchars($viaje['hora_llegada']) ?>" required>
+                </div>
+
+                <div class="campo">
+                    <label>¿Servicio directo?</label>
+                    <input type="checkbox" name="es_directo" value="1" <?= $viaje['es_directo'] == 1 ? 'checked' : '' ?>> Sí
+                </div>
+
+                <div class="campo">
+                    <label>¿Ya salió?</label>
+                    <select name="ya_salio" required>
+                        <option value="0" <?= $viaje['ya_salio'] == 0 ? 'selected' : '' ?>>No</option>
+                        <option value="1" <?= $viaje['ya_salio'] == 1 ? 'selected' : '' ?>>Sí</option>
+                    </select>
                 </div>
 
                 <button type="submit" class="btn">Guardar Cambios</button>

@@ -294,7 +294,7 @@ function actualizarSelects() {
         }
     }
 
-    // 3. Si hay un origen seleccionado, deshabilitarlo en el destino (opcional pero recomendado)
+    // 3. Si hay un origen seleccionado, deshabilitarlo en el destino
     if (origenSeleccionado) {
         const opcionEnDestino = Array.from(selectDestino.options).find(opt => opt.value === origenSeleccionado);
         if (opcionEnDestino) {

@@ -42,8 +42,8 @@ function mostrarResultados(datos) {
     const tdDirecto = document.createElement("td");
     tdDirecto.textContent = Number(viaje.es_directo) === 1 ? "Sí" : "No";
 
-    const tdFecha = document.createElement("td");
-    tdFecha.textContent = viaje.fecha ?? "-";
+    const tdDias = document.createElement("td");
+    tdDias.textContent = viaje.dias_semana ?? "Sin días asignados";
 
     const tdHora = document.createElement("td");
     tdHora.textContent = viaje.hora ?? "-";
@@ -98,7 +98,7 @@ function mostrarResultados(datos) {
     tr.appendChild(tdPrecio);
     tr.appendChild(tdAsientos);
     tr.appendChild(tdDirecto);
-    tr.appendChild(tdFecha);
+    tr.appendChild(tdDias);
     tr.appendChild(tdHora);
     tr.appendChild(tdHoraLlegada);
     tr.appendChild(tdEstado);
