@@ -132,31 +132,31 @@ VALUES
 -- ============================================================
 INSERT INTO viajes (id, omnibus_id, origen_id, destino_id, precio, ya_salio, hora, hora_llegada, es_directo, asientos_disponibles)
 VALUES
--- TURIL: Radial Rosario a Colonia (7:35 -> 8:20, Lunes a Viernes) [Radial Rosario = 50, Colonia = 47]
-(1, 2, 50, 47, 164.00, FALSE, '07:35:00', '08:20:00', FALSE, 40),
--- TURIL: Radial Rosario a Colonia (8:56 -> 9:40, Siempre activo) [Radial Rosario = 50, Colonia = 47]
-(2, 2, 50, 47, 164.00, FALSE, '08:56:00', '09:40:00', FALSE, 40),
--- TURIL: Radial Rosario a Colonia (14:41 -> 15:25, Lunes a Sábados) [Radial Rosario = 50, Colonia = 47]
-(3, 2, 50, 47, 164.00, FALSE, '14:41:00', '15:25:00', FALSE, 40),
--- TURIL: Radial Rosario a Colonia (23:29 -> 00:10, Viernes y Domingos) [Radial Rosario = 50, Colonia = 47]
-(4, 2, 50, 47, 164.00, FALSE, '23:29:00', '00:10:00', FALSE, 40),
+-- TURIL: Radial Rosario a Colonia (7:35 -> 8:20, Lunes a Viernes) [Radial Rosario = 48, Colonia = 45]
+(1, 2, 48, 45, 164.00, FALSE, '07:35:00', '08:20:00', FALSE, 40),
+-- TURIL: Radial Rosario a Colonia (8:56 -> 9:40, Siempre activo) [Radial Rosario = 48, Colonia = 45]
+(2, 2, 48, 45, 164.00, FALSE, '08:56:00', '09:40:00', FALSE, 40),
+-- TURIL: Radial Rosario a Colonia (14:41 -> 15:25, Lunes a Sábados) [Radial Rosario = 48, Colonia = 45]
+(3, 2, 48, 45, 164.00, FALSE, '14:41:00', '15:25:00', FALSE, 40),
+-- TURIL: Radial Rosario a Colonia (23:29 -> 00:10, Viernes y Domingos) [Radial Rosario = 48, Colonia = 45]
+(4, 2, 48, 45, 164.00, FALSE, '23:29:00', '00:10:00', FALSE, 40),
 
--- TURIL: Juan Lacaze a Colonia (7:20, Lunes a Viernes) [Juan Lacaze = 51, Colonia = 47]
-(5, 2, 51, 47, 164.00, FALSE, '07:20:00', '08:00:00', FALSE, 40),
--- TURIL: Juan Lacaze a Colonia (14:25, Lunes a Sábados) [Juan Lacaze = 51, Colonia = 47]
-(6, 2, 51, 47, 164.00, FALSE, '14:25:00', '15:05:00', FALSE, 40),
--- TURIL: Juan Lacaze a Colonia (23:15, Viernes y Domingos) [Juan Lacaze = 51, Colonia = 47]
-(7, 2, 51, 47, 164.00, FALSE, '23:15:00', '23:55:00', FALSE, 40),
+-- TURIL: Juan Lacaze a Colonia (7:20, Lunes a Viernes) [Juan Lacaze = 49, Colonia = 45]
+(5, 2, 49, 45, 164.00, FALSE, '07:20:00', '08:00:00', FALSE, 40),
+-- TURIL: Juan Lacaze a Colonia (14:25, Lunes a Sábados) [Juan Lacaze = 49, Colonia = 45]
+(6, 2, 49, 45, 164.00, FALSE, '14:25:00', '15:05:00', FALSE, 40),
+-- TURIL: Juan Lacaze a Colonia (23:15, Viernes y Domingos) [Juan Lacaze = 49, Colonia = 45]
+(7, 2, 49, 45, 164.00, FALSE, '23:15:00', '23:55:00', FALSE, 40),
 
--- TAB: Juan Lacaze a Colonia (04:45, Lunes a Viernes) [Juan Lacaze = 51, Colonia = 47]
-(8, 3, 51, 47, 150.00, FALSE, '04:45:00', '05:30:00', FALSE, 40),
--- TAB: Juan Lacaze a Colonia (06:15, Lunes a Viernes - Directo) [Juan Lacaze = 51, Colonia = 47]
-(9, 3, 51, 47, 150.00, FALSE, '06:15:00', '06:55:00', TRUE, 40),
--- TAB: Juan Lacaze a Colonia (14:00, Lunes a Viernes - Directo) [Juan Lacaze = 51, Colonia = 47]
-(10, 3, 51, 47, 150.00, FALSE, '14:00:00', '14:40:00', TRUE, 40),
+-- TAB: Juan Lacaze a Colonia (04:45, Lunes a Viernes) [Juan Lacaze = 49, Colonia = 45]
+(8, 3, 49, 45, 150.00, FALSE, '04:45:00', '05:30:00', FALSE, 40),
+-- TAB: Juan Lacaze a Colonia (06:15, Lunes a Viernes - Directo) [Juan Lacaze = 49, Colonia = 45]
+(9, 3, 49, 45, 150.00, FALSE, '06:15:00', '06:55:00', TRUE, 40),
+-- TAB: Juan Lacaze a Colonia (14:00, Lunes a Viernes - Directo) [Juan Lacaze = 49, Colonia = 45]
+(10, 3, 49, 45, 150.00, FALSE, '14:00:00', '14:40:00', TRUE, 40),
 
--- COT: Juan Lacaze a Montevideo (05:40, Menos Domingos) [Juan Lacaze = 51, Montevideo = 48]
-(11, 1, 51, 48, 164.00, FALSE, '05:40:00', '08:30:00', FALSE, 40);
+-- COT: Juan Lacaze a Montevideo (05:40, Menos Domingos) [Juan Lacaze = 49, Montevideo = 46]
+(11, 1, 49, 46, 164.00, FALSE, '05:40:00', '08:30:00', FALSE, 40);
 
 -- ============================================================
 --  7. Relación Viaje - Días de la semana
