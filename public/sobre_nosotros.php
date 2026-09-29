@@ -41,10 +41,10 @@
                 >
                 <h2 class="fs-4 mb-2 fw-bold text-dark">
                     Sebastián De León<br>
-                    <span class="fs-6 fw-normal text-muted">Líder del proyecto y Programador principal</span>
+                    <span class="fs-6 fw-normal text-muted">Recopilador de información / Administrador de base de datos</span>
                 </h2>
                 <p class="text-secondary mb-0 px-md-4">
-                    Sebastián se encarga de planificar, organizar y supervisar el cumplimiento de los plazos y tareas. Además, toma las decisiones clave, mantiene la comunicación entre todos los integrantes del grupo y lidera el desarrollo del sistema.
+                    Sebastián como recopilador de información y administrador de base de datos, se encarga de recabar información mediante técnicas de investigación y entrevistas, y de gestionar y mantener la base de datos del sistema, garantizando su correcto funcionamiento.
                 </p>
             </div>
 
