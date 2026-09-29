@@ -135,6 +135,7 @@ VALUES
 -- ============================================================
 INSERT INTO viajes (id, omnibus_id, origen_id, destino_id, precio, ya_salio, hora, hora_llegada, es_directo, asientos_disponibles)
 VALUES
+--Turil
 --Turil: Juan Lacaze a Colonia (Luneas a viernes)
 (1, 2, 26, 45, 164.00, FALSE, '7:20:00', '8:20:00', FALSE, 40),
 --Turil: Juan Lacaze a Colonia
@@ -155,7 +156,6 @@ VALUES
 (9, 2, 26, 45, 164.00, FALSE, '22:20:00', '23:20:00', FALSE, 40),
 --turil: Juan Lacaze a Colonia (Activo los viernes y domingos)
 (10, 2, 26, 45, 164.00, FALSE, '23:15:00', '00:15:00', FALSE, 40),
---Rosario a Colonia
 --turil: Rosario a Colonia (Activo los lunes y viernes)
 (11, 2, 48, 45, 164.00, FALSE, '7:35:00', '8:20:00', FALSE, 40),
 --turil: Rosario a Colonia
@@ -224,18 +224,190 @@ VALUES
 (42, 3, 42, 45, 164.00, FALSE, '11:45:00', '12:35:00', FALSE, 40),
 --tab:juan lacaze a colonia
 (43, 3, 42, 45, 164.00, FALSE, '14:00:00', '14:50:00', FALSE, 40),
---tab:colonial a juan lacaze (Activo los lunes y viernes)
+--tab:colonia a juan lacaze (Activo los lunes y viernes)
 (44, 3, 45, 42, 164.00, FALSE, '5:40:00', '6:30:00', FALSE, 40),
---tab:colonial a juan lacaze
+--tab:colonia a juan lacaze
 (45, 3, 45, 42, 164.00, FALSE, '7:40:00', '8:30:00', FALSE, 40),
---tab:colonial a juan lacaze
+--tab:colonia  a juan lacaze
 (46, 3, 45, 42, 164.00, FALSE, '10:20:00', '11:10:00', FALSE, 40),
---tab:colonial a juan lacaze
+--tab:colonia a juan lacaze
 (47, 3, 45, 42, 164.00, FALSE, '12:55:00', '13:45:00', FALSE, 40),
---tab:colonial a juan lacaze
+--tab:colonia  a juan lacaze
 (48, 3, 45, 42, 164.00, FALSE, '15:55:00', '16:45:00', FALSE, 40),
---tab:colonial a juan lacaze
+--tab:colonia a juan lacaze
 (49, 3, 45, 42, 164.00, FALSE, '18:30:00', '19:20:00', FALSE, 40),
+--tab:juan lacaze a rosario (Activo los lunes y viernes)
+(50, 3, 42, 48, 100.00, FALSE, '6:35:00', '7:05:00', FALSE, 40),
+--tab:juan lacaze a rosario
+(51, 3, 42, 48, 100.00, FALSE, '9:00:00', '9:30:00', FALSE, 40),
+--tab:juan lacaze a rosario (Activo los lunes a viernes)
+(52, 3, 42, 48, 100.00, FALSE, '12:30:00', '13:00:00', FALSE, 40),
+--tab:juan lacaze a rosario  (Activo los lunes y viernes)
+(53, 3, 42, 48, 100.00, FALSE, '14:00:00', '14:30:00', FALSE, 40),
+--tab:juan lacaze a rosario (Activo los lunes y viernes)
+(54, 3, 42, 48, 100.00, FALSE, '17:30:00', '18:00:00', FALSE, 40),
+--tab:juan lacaze a rosario (Activo los lunes y viernes)
+(55, 3, 42, 48, 100.00, FALSE, '18:50:00', '19:20:00', FALSE, 40),
+--tab:rosario a juan lacaze (Activo los lunes y viernes)
+(56, 3, 48, 42, 100.00, FALSE, '7:15:00', '7:45:00', FALSE, 40),
+--tab:rosario a juan lacaze
+(57, 3, 48, 42, 100.00, FALSE, '11:15:00', '11:45:00', FALSE, 40),
+--tab:rosario a juan lacaze (Activo los lunes y viernes)
+(58, 3, 48, 42, 100.00, FALSE, '13:15:00', '13:45:00', FALSE, 40),
+--tab:rosario a juan lacaze (Activo los lunes y viernes)
+(59, 3, 48, 42, 100.00, FALSE, '15:15:00', '15:45:00', FALSE, 40),
+--tab:rosario a juan lacaze (Activo los lunes y viernes)
+(60, 3, 48, 42, 100.00, FALSE, '18:10:00', '18:40:00', FALSE, 40),
+--tab:rosario a juan lacaze (Activo los lunes y viernes)
+(61, 3, 48, 42, 100.00, FALSE, '19:55:00', '20:25:00', FALSE, 40);
+--tab:rosario a colonia
+(62, 3, 48, 45, 164.00, FALSE, '21:10:00', '21:50:00', FALSE, 40),
+--tab:colonia a rosario
+(63, 3, 45, 48, 164.00, FALSE, '10:40:00', '11:25:00', FALSE, 40),
+
+--COT
+--cot:rosario a colonia (menos domingos)
+(64, 1, 48, 45, 164.00, FALSE, '6:40:00', '7:25:00', TRUE, 40),
+--cot:rosario a colonia
+(65, 1, 48, 45, 164.00, FALSE, '7:40:00', '8:25:00', TRUE, 40),
+--cot:rosario a colonia
+(66, 1, 48, 45, 164.00, FALSE, '9:35:00', '10:20:00', TRUE, 40),
+--cot:rosario a colonia
+(67, 1, 48, 45, 164.00, FALSE, '11:20:00', '12:05:00', TRUE, 40),
+--cot:rosario a colonia
+(68, 1, 48, 45, 164.00, FALSE, '13:20:00', '14:05:00', TRUE, 40),
+--cot:rosario a colonia
+(69, 1, 48, 45, 164.00, FALSE, '15:25:00', '16:10:00', TRUE, 40),
+--cot:rosario a colonia
+(70, 1, 48, 45, 164.00, FALSE, '17:20:00', '18:05:00', TRUE, 40),
+--cot:rosario a colonia
+(71, 1, 48, 45, 164.00, FALSE, '19:25:00', '20:10:00', TRUE, 40),
+--cot:rosario a colonia
+(72, 1, 48, 45, 164.00, FALSE, '21:00:00', '22:45:00', TRUE, 40),
+--cot:rosario a colonia
+(73, 1, 48, 45, 164.00, FALSE, '22:30:00', '23:15:00', TRUE, 40),
+--cot:rosario a colonia
+(74, 1, 48, 45, 164.00, FALSE, '23:30:00', '00:15:00', TRUE, 40),
+--cot:rosario a colonia
+(75, 1, 48, 45, 164.00, FALSE, '1:35:00', '2:20:00', TRUE, 40),
+--cot:colonia a rosario
+(76, 1, 45, 48, 164.00, FALSE, '5:30:00', '6:15:00', TRUE, 40),
+--cot:colonia a rosario
+(77, 1, 45, 48, 164.00, FALSE, '6:45:00', '7:30:00', TRUE, 40),
+--cot:colonia a rosario (lunes a sabados)
+(78, 1, 45, 48, 164.00, FALSE, '8:00:00', '8:45:00', TRUE, 40),
+--cot:colonia a rosario
+(79, 1, 45, 48, 164.00, FALSE, '9:15:00', '10:00:00', TRUE, 40),
+--cot:colonia a rosario
+(80, 1, 45, 48, 164.00, FALSE, '11:00:00', '11:45:00', TRUE, 40),
+--cot:colonia a rosario
+(81, 1, 45, 48, 164.00, FALSE, '13:00:00', '13:45:00', TRUE, 40),
+--cot:colonia a rosario
+(82, 1, 45, 48, 164.00, FALSE, '15:00:00', '15:45:00', TRUE, 40)
+--cot:colonia a rosario
+(83, 1, 45, 48, 164.00, FALSE, '16:00:00', '16:45:00', TRUE, 40),
+--cot:colonia a rosario
+(84, 1, 45, 48, 164.00, FALSE, '17:30:00', '18:15:00', TRUE, 40),
+--cot:colonia a rosario
+(85, 1, 45, 48, 164.00, FALSE, '19:00:00', '19:45:00', TRUE, 40),
+--cot:colonia a rosario
+(86, 1, 45, 48, 164.00, FALSE, '20:30:00', '21:15:00', TRUE, 40),
+--cot:colonia a rosario
+(87, 1, 45, 48, 164.00, FALSE, '22:00:00', '22:45:00', TRUE, 40),
+--cot:juan lacaze a colonia (menos domingos)
+(88, 1, 49, 45, 164.00, FALSE, '6:50:00', '7:40:00', TRUE, 40),
+--cot:juan lacaze a colonia
+(89, 1, 49, 45, 164.00, FALSE, '7:45:00', '8:35:00', TRUE, 40),
+--cot:juan lacaze a colonia
+(90, 1, 49, 45, 164.00, FALSE, '9:30:00', '10:20:00', TRUE, 40),
+--cot:juan lacaze a colonia
+(91, 1, 49, 45, 164.00, FALSE, '11:15:00', '12:05:00', TRUE, 40),
+--cot:juan lacaze a colonia
+(92, 1, 49, 45, 164.00, FALSE, '13:10:00', '14:00:00', TRUE, 40)
+--cot:juan lacaze a colonia
+(93, 1, 49, 45, 164.00, FALSE, '15:15:00', '16:05:00', TRUE, 40),
+--cot:juan lacaze a colonia
+(94, 1, 49, 45, 164.00, FALSE, '17:45:00', '18:35:00', TRUE, 40),
+--cot:juan lacaze a colonia
+(95, 1, 49, 45, 164.00, FALSE, '19:15:00', '20:05:00', TRUE, 40),
+--cot:juan lacaze a colonia
+(96, 1, 49, 45, 164.00, FALSE, '20:45:00', '22:45:00', TRUE, 40),
+--cot:juan lacaze a colonia
+(97, 1, 49, 45, 164.00, FALSE, '22:15:00', '23:05:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(98, 1, 45, 49, 164.00, FALSE, '5:30:00', '6:05:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(99, 1, 45, 49, 164.00, FALSE, '6:45:00', '7:20:00', TRUE, 40),
+--cot:colonia a juan lacaze (lunes a sabados)
+(100, 1, 45, 49, 164.00, FALSE, '8:00:00', '8:35:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(101, 1, 45, 49, 164.00, FALSE, '9:15:00', '9:50:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(102, 1, 45, 49, 164.00, FALSE, '11:00:00', '11:35:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(103, 1, 45, 49, 164.00, FALSE, '13:00:00', '13:35:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(104, 1, 45, 49, 164.00, FALSE, '15:00:00', '15:35:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(105, 1, 45, 49, 164.00, FALSE, '16:00:00', '16:35:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(106, 1, 45, 49, 164.00, FALSE, '17:30:00', '18:05:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(107, 1, 45, 49, 164.00, FALSE, '19:00:00', '19:35:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(108, 1, 45, 49, 164.00, FALSE, '20:30:00', '21:05:00', TRUE, 40),
+--cot:colonia a juan lacaze
+(109, 1, 45, 49, 164.00, FALSE, '22:00:00', '22:35:00', TRUE, 40),
+--cot:rosario a juan lacaze (menos domingos)
+(110, 1, 48, 49, 100.00, FALSE, '6:40:00', '7:05:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(111, 1, 48, 49, 100.00, FALSE, '7:40:00', '8:05:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(112, 1, 48, 49, 100.00, FALSE, '9:35:00', '10:00:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(113, 1, 48, 49, 100.00, FALSE, '11:20:00', '11:45:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(114, 1, 48, 49, 100.00, FALSE, '13:20:00', '13:45:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(115, 1, 48, 49, 100.00, FALSE, '15:25:00', '15:50:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(116, 1, 48, 49, 100.00, FALSE, '17:20:00', '17:45:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(117, 1, 48, 49, 100.00, FALSE, '19:25:00', '19:50:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(118, 1, 48, 49, 100.00, FALSE, '21:00:00', '21:25:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(119, 1, 48, 49, 100.00, FALSE, '22:30:00', '22:55:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(120, 1, 48, 49, 100.00, FALSE, '23:30:00', '23:55:00', TRUE, 40),
+--cot:rosario a juan lacaze
+(121, 1, 48, 49, 100.00, FALSE, '1:30:00', '1:55:00', TRUE, 40),
+--cot:juan lacaze a rosario (menos domingos)
+(122, 1, 49, 48, 100.00, FALSE, '5:40:00', '5:55:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(123, 1, 49, 48, 100.00, FALSE, '6:50:00', '7:15:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(124, 1, 49, 48, 100.00, FALSE, '8:15:00', '8:40:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(125, 1, 49, 48, 100.00, FALSE, '9:30:00', '9:55:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(126, 1, 49, 48, 100.00, FALSE, '11:15:00', '11:40:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(127, 1, 49, 48, 100.00, FALSE, '13:10:00', '13:35:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(128, 1, 49, 48, 100.00, FALSE, '15:10:00', '15:35:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(129, 1, 49, 48, 100.00, FALSE, '17:25:00', '17:50:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(130, 1, 49, 48, 100.00, FALSE, '19:25:00', '19:50:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(131, 1, 49, 48, 100.00, FALSE, '21:20:00', '21:45:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(132, 1, 49, 48, 100.00, FALSE, '22:45:00', '23:10:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(133, 1, 49, 48, 100.00, FALSE, '23:45:00', '00:10:00', TRUE, 40),
+--cot:juan lacaze a rosario
+(134, 1, 49, 48, 100.00, FALSE, '1:40:00', '2:05:00', TRUE, 40);
 
 
 -- ============================================================
