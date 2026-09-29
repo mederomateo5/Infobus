@@ -115,7 +115,10 @@ VALUES
 ('Radial de Juan Lacaze', -34.3623357, -57.4469652, 'interurbano'),
 ('Radial Rosario', -34.3375730,  -57.3398201, 'interurbano'), 
 ('Juan Lacaze', -34.4356982, -57.4385496, 'urbano/interurbano'),
-('UTU', -34.4373289, -57.4347900, 'urbano');
+('UTU', -34.4373289, -57.4347900, 'urbano'),
+('Esquina entre Dr.Rupero Borras y Ituzaingo0', -34.3163347, -57.3528040, 'interurbano'),
+('Parada 1, TATA 2', -34.3163347, -57.3528040, 'interurbano');
+
 
 -- ============================================================
 --  5. Ómnibus (Asignados a las compañías)
@@ -132,31 +135,108 @@ VALUES
 -- ============================================================
 INSERT INTO viajes (id, omnibus_id, origen_id, destino_id, precio, ya_salio, hora, hora_llegada, es_directo, asientos_disponibles)
 VALUES
--- TURIL: Radial Rosario a Colonia (7:35 -> 8:20, Lunes a Viernes) [Radial Rosario = 48, Colonia = 45]
-(1, 2, 48, 45, 164.00, FALSE, '07:35:00', '08:20:00', FALSE, 40),
--- TURIL: Radial Rosario a Colonia (8:56 -> 9:40, Siempre activo) [Radial Rosario = 48, Colonia = 45]
-(2, 2, 48, 45, 164.00, FALSE, '08:56:00', '09:40:00', FALSE, 40),
--- TURIL: Radial Rosario a Colonia (14:41 -> 15:25, Lunes a Sábados) [Radial Rosario = 48, Colonia = 45]
-(3, 2, 48, 45, 164.00, FALSE, '14:41:00', '15:25:00', FALSE, 40),
--- TURIL: Radial Rosario a Colonia (23:29 -> 00:10, Viernes y Domingos) [Radial Rosario = 48, Colonia = 45]
-(4, 2, 48, 45, 164.00, FALSE, '23:29:00', '00:10:00', FALSE, 40),
+--Turil: Juan Lacaze a Colonia (Luneas a viernes)
+(1, 2, 26, 45, 164.00, FALSE, '7:20:00', '8:20:00', FALSE, 40),
+--Turil: Juan Lacaze a Colonia
+(2, 2, 26, 45, 164.00, FALSE, '8:40:00', '9:40:00', FALSE, 40),
+--Turil: Juan Lacaze a Colonia
+(3, 2, 26, 45, 164.00, FALSE, '10:25:00', '11:25:00', FALSE, 40),
+--Turil: Juan Lacaze a Colonia
+(4, 2, 26, 45, 164.00, FALSE, '11:50:00', '12:50:00', FALSE, 40),
+--Turil: Juan Lacaze a Colonia (Luneas a sabados)
+(5, 2, 26, 45, 164.00, FALSE, '14:25:00', '15:25:00', FALSE, 40),
+--Turil: Juan Lacaze a Colonia
+(6, 2, 26, 45, 164.00, FALSE, '16:25:00', '17:25:00', FALSE, 40),
+--turil: Juan Lacaze a Colonia
+(7, 2, 26, 45, 164.00, FALSE, '18:25:00', '19:25:00', FALSE, 40),
+--turil: Juan Lacaze a Colonia
+(8, 2, 26, 45, 164.00, FALSE, '20:25:00', '21:25:00', FALSE, 40),
+--turil: Juan Lacaze a Colonia
+(9, 2, 26, 45, 164.00, FALSE, '22:20:00', '23:20:00', FALSE, 40),
+--turil: Juan Lacaze a Colonia (Activo los viernes y domingos)
+(10, 2, 26, 45, 164.00, FALSE, '23:15:00', '00:15:00', FALSE, 40),
+--Rosario a Colonia
+--turil: Rosario a Colonia (Activo los lunes y viernes)
+(11, 2, 48, 45, 164.00, FALSE, '7:35:00', '8:20:00', FALSE, 40),
+--turil: Rosario a Colonia
+(12, 2, 48, 45, 164.00, FALSE, '8:56:00', '9:40:00', FALSE, 40),
+--turil: Rosario a Colonia
+(13, 2, 48, 45, 164.00, FALSE, '10:38:00', '11:25:00', FALSE, 40),
+--turil: Rosario a Colonia (luneas a sabados)
+(14, 2, 48, 45, 164.00, FALSE, '14:41:00', '15:25:00', FALSE, 40),
+--turil: Rosario a Colonia
+(15, 2, 48, 45, 164.00, FALSE, '16:41:00', '17:25:00', FALSE, 40),
+--turil:rosario a Colonia
+(16, 2, 48, 45, 164.00, FALSE, '18:41:00', '19:05:00', FALSE, 40),
+--turil: Rosario a Colonia
+(17, 2, 48, 45, 164.00, FALSE, '20:42:00', '21:25:00', FALSE, 40),
+--turil: Rosario a Colonia
+(18, 2, 48, 45, 164.00, FALSE, '22:35:00', '23:15:00', FALSE, 40),
+--turil: Rosario a Colonia (Activo los viernes y domingos)
+(19, 2, 48, 45, 164.00, FALSE, '23:29:00', '00:10:00', FALSE, 40),
+--turil: colonia a rosario (Activo los lunes y viernes)
+(20, 2, 45, 48, 164.00, FALSE, '5:00:00', '5:47:00', FALSE, 40),
+--turil: colonia a rosario
+(21, 2, 45, 48, 164.00, FALSE, '6:00:00', '6:47:00', FALSE, 40),
+--turil: colonia a rosario
+(22, 2, 45, 48, 164.00, FALSE, '8:30:00', '9:17:00', FALSE, 40),
+--turil: colonia a rosario
+(23, 2, 45, 48, 164.00, FALSE, '10:30:00', '11:17:00', FALSE, 40),
+--turil: colonia a rosario (activo los lunes a sabados)
+(24, 2, 45, 48, 164.00, FALSE, '12:00:00', '12:47:00', FALSE, 40),
+--turil: colonia a rosario
+(25, 2, 45, 48, 164.00, FALSE, '14:00:00', '14:47:00', FALSE, 40),
+--turil: colonia a rosario
+(26, 2, 45, 48, 164.00, FALSE, '16:30:00', '17:17:00', FALSE, 40),
+--turil: colonia a rosario
+(27, 2, 45, 48, 164.00, FALSE, '18:00:00', '18:47:00', FALSE, 40),
+--turil: colonia a rosario
+(28, 2, 45, 48, 164.00, FALSE, '20:00:00', '20:49:00', FALSE, 40),
+--turil: colonia a rosario (Activo los viernes y domingos)
+(29, 2, 45, 48, 164.00, FALSE, '21:15:00', '22:00:00', FALSE, 40),
+--turil: colonia a juan lacaze (Activo los lunes y viernes)
+(30, 2, 45, 49, 164.00, FALSE, '5:00:00', '5:35:00', FALSE, 40),
+--turil: colonia a juan lacaze
+(31, 2, 45, 49, 164.00, FALSE, '6:00:00', '6:35:00', FALSE, 40),
+--turil: colonia a juan lacaze
+(32, 2, 45, 49, 164.00, FALSE, '8:30:00', '9:05:00', FALSE, 40),
+--turil: colonia a juan lacaze
+(33, 2, 45, 49, 164.00, FALSE, '10:30:00', '11:05:00', FALSE, 40),
+--turil: colonia a juan lacaze (activo los lunes a sabados)
+(34, 2, 45, 49, 164.00, FALSE, '12:00:00', '12:35:00', FALSE, 40),
+--turil: colonia a juan lacaze
+(35, 2, 45, 49, 164.00, FALSE, '14:00:00', '14:35:00', FALSE, 40),
+--turil: colonia a juan lacaze
+(36, 2, 45, 49, 164.00, FALSE, '16:30:00', '17:05:00', FALSE, 40),
+--turil: colonia a juan lacaze
+(37, 2, 45, 49, 164.00, FALSE, '18:00:00', '18:35:00', FALSE, 40),
+--turil: colonia a juan lacaze
+(38, 2, 45, 49, 164.00, FALSE, '20:00:00', '20:35:00', FALSE, 40),
 
--- TURIL: Juan Lacaze a Colonia (7:20, Lunes a Viernes) [Juan Lacaze = 49, Colonia = 45]
-(5, 2, 49, 45, 164.00, FALSE, '07:20:00', '08:00:00', FALSE, 40),
--- TURIL: Juan Lacaze a Colonia (14:25, Lunes a Sábados) [Juan Lacaze = 49, Colonia = 45]
-(6, 2, 49, 45, 164.00, FALSE, '14:25:00', '15:05:00', FALSE, 40),
--- TURIL: Juan Lacaze a Colonia (23:15, Viernes y Domingos) [Juan Lacaze = 49, Colonia = 45]
-(7, 2, 49, 45, 164.00, FALSE, '23:15:00', '23:55:00', FALSE, 40),
+--TAB
+--Tab:juan lacaze a colonia (Activo los lunes y viernes)
+(39, 3, 42, 45, 164.00, FALSE, '4:45:00', '5:35:00', FALSE, 40),
+--Tab:juan lacaze a colonia
+(40, 3, 42, 45, 164.00, FALSE, '6:15:00', '7:05:00', FALSE, 40),
+--tab:juan lacaze a colonia
+(41, 3, 42, 45, 164.00, FALSE, '8:40:00', '9:30:00', FALSE, 40),
+--tab:juan lacaze a colonia
+(42, 3, 42, 45, 164.00, FALSE, '11:45:00', '12:35:00', FALSE, 40),
+--tab:juan lacaze a colonia
+(43, 3, 42, 45, 164.00, FALSE, '14:00:00', '14:50:00', FALSE, 40),
+--tab:colonial a juan lacaze (Activo los lunes y viernes)
+(44, 3, 45, 42, 164.00, FALSE, '5:40:00', '6:30:00', FALSE, 40),
+--tab:colonial a juan lacaze
+(45, 3, 45, 42, 164.00, FALSE, '7:40:00', '8:30:00', FALSE, 40),
+--tab:colonial a juan lacaze
+(46, 3, 45, 42, 164.00, FALSE, '10:20:00', '11:10:00', FALSE, 40),
+--tab:colonial a juan lacaze
+(47, 3, 45, 42, 164.00, FALSE, '12:55:00', '13:45:00', FALSE, 40),
+--tab:colonial a juan lacaze
+(48, 3, 45, 42, 164.00, FALSE, '15:55:00', '16:45:00', FALSE, 40),
+--tab:colonial a juan lacaze
+(49, 3, 45, 42, 164.00, FALSE, '18:30:00', '19:20:00', FALSE, 40),
 
--- TAB: Juan Lacaze a Colonia (04:45, Lunes a Viernes) [Juan Lacaze = 49, Colonia = 45]
-(8, 3, 49, 45, 150.00, FALSE, '04:45:00', '05:30:00', FALSE, 40),
--- TAB: Juan Lacaze a Colonia (06:15, Lunes a Viernes - Directo) [Juan Lacaze = 49, Colonia = 45]
-(9, 3, 49, 45, 150.00, FALSE, '06:15:00', '06:55:00', TRUE, 40),
--- TAB: Juan Lacaze a Colonia (14:00, Lunes a Viernes - Directo) [Juan Lacaze = 49, Colonia = 45]
-(10, 3, 49, 45, 150.00, FALSE, '14:00:00', '14:40:00', TRUE, 40),
-
--- COT: Juan Lacaze a Montevideo (05:40, Menos Domingos) [Juan Lacaze = 49, Montevideo = 46]
-(11, 1, 49, 46, 164.00, FALSE, '05:40:00', '08:30:00', FALSE, 40);
 
 -- ============================================================
 --  7. Relación Viaje - Días de la semana
