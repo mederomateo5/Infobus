@@ -78,6 +78,7 @@ background-image:
 
     <!-- JS de Leaflet y Script específico de Urbanos -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.js"></script>
     <script src="<?= BASE_URL ?>js/urbanos.js"></script>
 </body>
 </html>

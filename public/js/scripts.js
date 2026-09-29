@@ -33,28 +33,6 @@ function crearPinColor(colorHex) {
 const pinOrigenRojo = crearPinColor("#dc3545");
 
 // ============================================================
-// Cargar configuraciones y paradas
-// ============================================================
-
-Promise.all([
-    fetch("js/rutasomnibus.json").then((res) => {
-        if (!res.ok) throw new Error("No se pudo cargar rutasomnibus.json");
-        return res.json();
-    }),
-    fetch("obtener_paradas.php").then((res) => {
-        if (!res.ok) throw new Error("No se pudieron cargar las paradas");
-        return res.json();
-    }),
-])
-    .then(([dataRutas, dataParadas]) => {
-        rutasData = dataRutas;
-        paradasData = dataParadas;
-    })
-    .catch((error) => {
-        console.error("Error cargando configuraciones geográficas:", error);
-    });
-
-// ============================================================
 // Búsqueda de viajes
 // ============================================================
 

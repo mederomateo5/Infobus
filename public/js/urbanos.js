@@ -65,22 +65,6 @@ function calcularEstimado(llegada, ahora = new Date()) {
     return `${diferencia} min`;
 }
 
-// --- CARGA DE ARCHIVOS JSON DE CONFIGURACIÓN GEOGRÁFICA ---
-Promise.all([
-    fetch('./js/rutasomnibus.json').then(res => {
-        if (!res.ok) throw new Error("No se pudo cargar rutasomnibus.json");
-        return res.json();
-    }),
-    fetch('../data/paradas.json').then(res => {
-        if (!res.ok) throw new Error("No se pudo cargar paradas.json");
-        return res.json();
-    })
-]).then(([dataRutas, dataParadas]) => {
-    rutasData = dataRutas;
-    paradasData = dataParadas;
-}).catch(error => {
-    console.error("Error al traer los datos de rutas y paradas:", error);
-});
 
 // Escucha del cambio en el select de ubicación
 selectUbicacion.addEventListener("change", function() {
@@ -185,6 +169,7 @@ tablaHorariosUrbanos.addEventListener("click", function(e) {
 });
 
 // Función para inicializar el mapa de una fila urbana específica y pintar todas las paradas
+// Función para inicializar el mapa de una fila urbana específica y pintar la ruta animada y paradas
 function inicializarMapaUrbanoFila(index, llaveRuta) {
     const idContenedor = `mapa-urbano-${index}`;
     const map = L.map(idContenedor).setView([-34.42, -57.44], 13);
@@ -193,39 +178,65 @@ function inicializarMapaUrbanoFila(index, llaveRuta) {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    const datosDeRuta = rutasData[llaveRuta] || rutasData["urbano"];
-    
-    if (datosDeRuta && datosDeRuta.coordinates) {
-        const coordenadasConvertidas = datosDeRuta.coordinates.map(coord => [coord[1], coord[0]]);
-        
-        const lineaRuta = L.polyline(coordenadasConvertidas, {
-            color: datosDeRuta.color || '#3469b2',
-            weight: 4
-        }).addTo(map);
+    // Cargar el archivo GeoJSON mediante fetch (asegúrate de que la ruta al archivo sea correcta)
+    fetch('../public/js/recorrido_urbano.geojson') 
+        .then(response => {
+            if (!response.ok) throw new Error("No se pudo cargar el archivo GeoJSON");
+            return response.json();
+        })
+        .then(geojsonData => {
+            
+            let ultimaCapaRuta = null;
 
-        if (paradasData && paradasData.length > 0) {
-            paradasData.forEach(parada => {
-                let iconoSeleccionado = pinInterurbano; 
+            // Recorrer las geometrías del GeoJSON y aplicar el efecto Ant Path
+            geojsonData.features.forEach(feature => {
+                if (feature.geometry.type === "LineString") {
+                    // Invertir coordenadas de [lng, lat] a [lat, lng] para Leaflet
+                    const coords = feature.geometry.coordinates.map(c => [c[1], c[0]]);
+                    
+                    // Crear la línea con efecto animado de flujo
+                    const rutaAnimada = L.polyline.antPath(coords, {
+                        color: '#3469b2',      // Color principal de la línea
+                        weight: 5,             // Grosor de la línea
+                        opacity: 0.85,
+                        pulseColor: '#ffffff', // Color de los destellos en movimiento
+                        delay: 800,            // Velocidad de la animación
+                        dashArray: [10, 20]
+                    }).addTo(map);
 
-                if (parada.tipo === "urbano") {
-                    iconoSeleccionado = pinUrbano;       
-                } else if (parada.tipo === "ambos") {
-                    iconoSeleccionado = pinAmbos;       
+                    ultimaCapaRuta = rutaAnimada;
                 }
-
-                let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
-
-                L.marker([parada.lat, parada.lng], { icon: iconoSeleccionado })
-                    .addTo(map)
-                    .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}<br>Línea: ${datosDeRuta.nombre || 'Urbano'}`);
             });
-        }
 
-        map.fitBounds(lineaRuta.getBounds());
+            // Ajustar el zoom automáticamente al tamaño de la ruta si existe
+            if (ultimaCapaRuta) {
+                map.fitBounds(ultimaCapaRuta.getBounds());
+            }
+        })
+        .catch(error => console.error("Error al cargar el archivo GeoJSON:", error));
+
+    // Pintar las paradas correspondientes
+    if (paradasData && paradasData.length > 0) {
+        paradasData.forEach(parada => {
+            let iconoSeleccionado = pinInterurbano; 
+
+            if (parada.tipo === "urbano") {
+                iconoSeleccionado = pinUrbano;       
+            } else if (parada.tipo === "ambos") {
+                iconoSeleccionado = pinAmbos;       
+            }
+
+            let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
+
+            L.marker([parada.lat, parada.lng], { icon: iconoSeleccionado })
+                .addTo(map)
+                .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}`);
+        });
     }
 
     mapasInicializados[index] = map;
 
+    // Forzar redibujado correcto del mapa al desplegarse
     setTimeout(() => {
         map.invalidateSize();
     }, 150);

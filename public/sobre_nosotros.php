@@ -30,21 +30,21 @@
 
         <div class="row justify-content-center g-5">
 
-            <!-- Sebastián -->
+             <!-- Mateo -->
             <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
                     src="../public/img/Placeholder_Person.jpg"
-                    alt="Sebastian De León"
+                    alt="Mateo Medero"
                     class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
                     height="85"
                 >
                 <h2 class="fs-4 mb-2 fw-bold text-dark">
-                    Sebastián De León<br>
-                    <span class="fs-6 fw-normal text-muted">Recopilador de información / Administrador de base de datos</span>
+                    Mateo Medero<br>
+                    <span class="fs-6 fw-normal text-muted">Líder del proyecto y Programador principal</span>
                 </h2>
                 <p class="text-secondary mb-0 px-md-4">
-                    Sebastián como recopilador de información y administrador de base de datos, se encarga de recabar información mediante técnicas de investigación y entrevistas, y de gestionar y mantener la base de datos del sistema, garantizando su correcto funcionamiento.
+                    Mateo se encarga de planificar, organizar y supervisar el cumplimiento de los plazos y tareas. Además, toma las decisiones clave, mantiene la comunicación entre todos los integrantes del grupo y lidera el desarrollo del sistema.
                 </p>
             </div>
 
@@ -66,6 +66,24 @@
                 </p>
             </div>
 
+            <!-- Sebastián -->
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+                <img
+                    src="../public/img/Placeholder_Person.jpg"
+                    alt="Sebastian De León"
+                    class="rounded-circle shadow-sm mb-3 object-fit-cover"
+                    width="85"
+                    height="85"
+                >
+                <h2 class="fs-4 mb-2 fw-bold text-dark">
+                    Sebastián De León<br>
+                    <span class="fs-6 fw-normal text-muted">Recopilador de información / Administrador de base de datos</span>
+                </h2>
+                <p class="text-secondary mb-0 px-md-4">
+                    Sebastián como recopilador de información y administrador de base de datos, se encarga de recabar información mediante técnicas de investigación y entrevistas, y de gestionar y mantener la base de datos del sistema, garantizando su correcto funcionamiento.
+                </p>
+            </div>
+
             <!-- Thiago -->
             <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
@@ -84,23 +102,7 @@
                 </p>
             </div>
 
-            <!-- Mateo -->
-            <div class="col-12 col-md-10 col-lg-8 text-center">
-                <img
-                    src="../public/img/Placeholder_Person.jpg"
-                    alt="Mateo Medero"
-                    class="rounded-circle shadow-sm mb-3 object-fit-cover"
-                    width="85"
-                    height="85"
-                >
-                <h2 class="fs-4 mb-2 fw-bold text-dark">
-                    Mateo Medero<br>
-                    <span class="fs-6 fw-normal text-muted">Líder del proyecto y Programador principal</span>
-                </h2>
-                <p class="text-secondary mb-0 px-md-4">
-                    Mateo se encarga de planificar, organizar y supervisar el cumplimiento de los plazos y tareas. Además, toma las decisiones clave, mantiene la comunicación entre todos los integrantes del grupo y lidera el desarrollo del sistema.
-                </p>
-            </div>
+
 
             <!-- Marcelo -->
             <div class="col-12 col-md-10 col-lg-8 text-center">
