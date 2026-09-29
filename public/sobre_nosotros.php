@@ -3,153 +3,122 @@
 <html lang="es">
 
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros</title>
-
-    <link rel="stylesheet" href="<?= BASE_URL ?>css/sobre_nosotros.css">
-
     <?php include '../includes/head.php'; ?>
-
-
-
 </head>
 
-<body>
+<style>
+    body {
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            url("../public/img/fondo_aereo.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+</style>
+
+<body class="bg-secondary-subtle">
 
     <?php include '../includes/header.php'; ?>
 
+    <!-- Contenedor principal con diseño fluido, bordes redondeados y espaciado adaptativo -->
+    <main class="container bg-white rounded-4 shadow-sm p-4 p-md-5 my-5">
 
-    <main class="container bg-light rounded-5 p-4 p-md-5 my-4">
-
-        <div class="row justify-content-center">
-
+        <div class="row justify-content-center g-5">
 
             <!-- Sebastián -->
-            <div class="col-12 col-md-10 col-lg-8 text-center my-3">
-
+            <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
                     src="../public/img/Placeholder_Person.jpg"
                     alt="Sebastian De León"
-                    class="rounded shadow-sm mb-3"
+                    class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
                     height="85"
                 >
-
-                <h2 class="fs-4 mb-2">
-                    Sebastian De León<br>
-                    Tester
+                <h2 class="fs-4 mb-2 fw-bold text-dark">
+                    Sebastián De León<br>
+                    <span class="fs-6 fw-normal text-muted">Líder del proyecto y Programador principal</span>
                 </h2>
-
-                <p class="mb-0">
-                    Como tester (QA), se encarga de detectar y corregir errores, realizar pruebas de
-                    usabilidad, reportar fallos y validar que el producto final cumpla con los criterios
-                    definidos. También verifica que el sistema funcione correctamente en distintos
-                    dispositivos.
+                <p class="text-secondary mb-0 px-md-4">
+                    Sebastián se encarga de planificar, organizar y supervisar el cumplimiento de los plazos y tareas. Además, toma las decisiones clave, mantiene la comunicación entre todos los integrantes del grupo y lidera el desarrollo del sistema.
                 </p>
-
             </div>
 
-
             <!-- Alejo -->
-            <div class="col-12 col-md-10 col-lg-8 text-center my-3">
-
+            <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
                     src="../public/img/Placeholder_Person.jpg"
                     alt="Alejo Medina"
-                    class="rounded shadow-sm mb-3"
+                    class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
                     height="85"
                 >
-
-                <h2 class="fs-4 mb-2">
+                <h2 class="fs-4 mb-2 fw-bold text-dark">
                     Alejo Medina<br>
-                    Documentación
+                    <span class="fs-6 fw-normal text-muted">Líder de documentación y Programador Secundario</span>
                 </h2>
-
-                <p class="mb-0">
-                    Responsable de la documentación y las entrevistas, realiza informes técnicos, actas,
-                    normas y diagramas. Además, se encarga de mantener un registro claro del proyecto y
-                    recabar información mediante técnicas de investigación y entrevistas.
+                <p class="text-secondary mb-0 px-md-4">
+                    Alejo realiza informes técnicos, actas, normas y diagramas, manteniendo un registro claro del proyecto. Además, colabora en el desarrollo del sistema como apoyo al programador principal.
                 </p>
-
             </div>
 
-
             <!-- Thiago -->
-            <div class="col-12 col-md-10 col-lg-8 text-center my-3">
-
+            <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
                     src="../public/img/Placeholder_Person.jpg"
                     alt="Thiago Rodriguez"
-                    class="rounded shadow-sm mb-3"
+                    class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
                     height="85"
                 >
-
-                <h2 class="fs-4 mb-2">
+                <h2 class="fs-4 mb-2 fw-bold text-dark">
                     Thiago Rodriguez<br>
-                    Desarrollador Front-end
+                    <span class="fs-6 fw-normal text-muted">Administrador de sistemas y Ayudante de documentación</span>
                 </h2>
-
-                <p class="mb-0">
-                    Como desarrollador Front-end, se encarga de desarrollar el diseño visual y la
-                    experiencia del usuario. Define la apariencia de la interfaz y colabora con el
-                    desarrollador Back-end para garantizar que el diseño sea funcional y efectivo en
-                    distintas plataformas.
+                <p class="text-secondary mb-0 px-md-4">
+                    Thiago colabora en el mantenimiento y soporte técnico de los sistemas, y además asiste en la elaboración de informes, actas y registros del proyecto.
                 </p>
-
             </div>
 
-
             <!-- Mateo -->
-            <div class="col-12 col-md-10 col-lg-8 text-center my-3">
-
+            <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
                     src="../public/img/Placeholder_Person.jpg"
                     alt="Mateo Medero"
-                    class="rounded shadow-sm mb-3"
+                    class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
                     height="85"
                 >
-
-                <h2 class="fs-4 mb-2">
+                <h2 class="fs-4 mb-2 fw-bold text-dark">
                     Mateo Medero<br>
-                    Project Manager
+                    <span class="fs-6 fw-normal text-muted">Líder del proyecto y Programador principal</span>
                 </h2>
-
-                <p class="mb-0">
-                    Coordinador general o Project Manager, se encarga de planificar, organizar y supervisar
-                    el cumplimiento de los plazos y tareas. Además, toma las decisiones clave y mantiene
-                    la comunicación entre todos los integrantes del grupo.
+                <p class="text-secondary mb-0 px-md-4">
+                    Mateo se encarga de planificar, organizar y supervisar el cumplimiento de los plazos y tareas. Además, toma las decisiones clave, mantiene la comunicación entre todos los integrantes del grupo y lidera el desarrollo del sistema.
                 </p>
-
             </div>
 
-
             <!-- Marcelo -->
-            <div class="col-12 col-md-10 col-lg-8 text-center my-3">
-
+            <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
                     src="../public/img/Placeholder_Person.jpg"
                     alt="Marcelo Méndez"
-                    class="rounded shadow-sm mb-3"
+                    class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
                     height="85"
                 >
-
-                <h2 class="fs-4 mb-2">
+                <h2 class="fs-4 mb-2 fw-bold text-dark">
                     Marcelo Méndez<br>
-                    Desarrollador Back-end
+                    <span class="fs-6 fw-normal text-muted">Administrador de sistemas y Soporte IT</span>
                 </h2>
-
-                <p class="mb-0">
-                    Como desarrollador Back-end, se ocupa de desarrollar las funcionalidades del sistema,
-                    como el login, además de gestionar la lógica del sistema y la base de datos. También
-                    debe garantizar el correcto funcionamiento del sistema.
+                <p class="text-secondary mb-0 px-md-4">
+                    Marcelo se ocupa de la configuración, el mantenimiento y el correcto funcionamiento de los sistemas y equipos utilizados en el proyecto, brindando soporte técnico ante cualquier inconveniente.
                 </p>
-
             </div>
-
 
         </div>
 

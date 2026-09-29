@@ -3,13 +3,13 @@ require_once '../config/config.php';
 // Incluir la conexión a la base de datos
 require_once '../config/database.php';
 
-// Obtener orígenes disponibles en la base de datos
+// Obtener orígenes disponibles en la base de datos (excluyendo el ómnibus urbano ID 4)
 try {
     $stmt_origenes = $pdo->query("
         SELECT DISTINCT p.nombre 
         FROM viajes v 
         JOIN paradas p ON v.origen_id = p.id 
-        WHERE v.ya_salio = 0 
+        WHERE v.ya_salio = 0 AND v.omnibus_id != 4
         ORDER BY p.nombre ASC
     ");
     $origenes = $stmt_origenes->fetchAll(PDO::FETCH_COLUMN);
@@ -17,13 +17,13 @@ try {
     $origenes = [];
 }
 
-// Obtener destinos disponibles en la base de datos
+// Obtener destinos disponibles en la base de datos (excluyendo el ómnibus urbano ID 4)
 try {
     $stmt_destinos = $pdo->query("
         SELECT DISTINCT p.nombre 
         FROM viajes v 
         JOIN paradas p ON v.destino_id = p.id 
-        WHERE v.ya_salio = 0 
+        WHERE v.ya_salio = 0 AND v.omnibus_id != 4
         ORDER BY p.nombre ASC
     ");
     $destinos = $stmt_destinos->fetchAll(PDO::FETCH_COLUMN);
@@ -33,33 +33,34 @@ try {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Inicio - Interurbanos</title>
-    
+
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <?php include '../includes/head.php'; ?>
 </head>
 
-<style> 
-body {
-    background-image:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url("../public/img/fondo.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
+<style>
+    body {
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            url("../public/img/fondo.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
 </style>
 
 <body class="bg-light">
     <?php include '../includes/header.php'; ?>
 
     <div class="container py-4" style="max-width: 1100px;">
-        
+
         <!-- Botón para ir a la página de urbanos -->
         <div class="d-flex justify-content-end mb-3">
             <a href="urbanos.php" class="btn btn-primary fw-semibold">Ir a Ómnibus Urbanos &rarr;</a>
@@ -127,9 +128,9 @@ body {
                                 <th>Asientos Disp.</th>
                                 <th>Agencia</th>
                                 <th>Precio</th>
+                                <th>Marcar como Favorito</th>
                                 <th>Ruta</th>
                             </tr>
-                        </thead>
                         <tbody id="tablaHorarios"></tbody>
                     </table>
                 </div>
@@ -163,4 +164,5 @@ body {
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="<?= BASE_URL ?>js/scripts.js"></script>
 </body>
+
 </html>
