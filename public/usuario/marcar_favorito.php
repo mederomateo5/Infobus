@@ -1,12 +1,22 @@
 <?php
-session_start();
 require_once '../../config/config.php';
-require_once '../../config/database.php';
+session_start();
 
 header('Content-Type: application/json; charset=utf-8');
 
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode([
+        'success' => false, 
+        'redirect' => BASE_URL . 'login.php',
+        'mensaje' => 'Debe iniciar sesión para marcar favoritos.'
+    ]);
+    exit();
+}
 
-$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
+$user_id = $_SESSION['user_id'];
+
+require_once '../../config/database.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 $viaje_id = isset($data['viaje_id']) ? intval($data['viaje_id']) : 0;

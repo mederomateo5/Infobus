@@ -172,62 +172,61 @@ tablaHorariosUrbanos.addEventListener("click", function(e) {
 // Función para inicializar el mapa de una fila urbana específica y pintar la ruta animada y paradas
 function inicializarMapaUrbanoFila(index, llaveRuta) {
     const idContenedor = `mapa-urbano-${index}`;
-    const map = L.map(idContenedor).setView([-34.42, -57.44], 13);
+    
+    const uruguayBounds = L.latLngBounds(
+        [-35.85, -58.5], 
+        [-30.05, -53.0]  
+    );
+
+    const map = L.map(idContenedor, {
+        center: [-34.42, -57.44],
+        zoom: 13,
+        minZoom: 7,
+        maxBounds: uruguayBounds,
+        maxBoundsViscosity: 1.0
+    });
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Cargar el archivo GeoJSON mediante fetch (asegúrate de que la ruta al archivo sea correcta)
+    // Resto del código de urbanos...
     fetch('../public/js/recorrido_urbano.geojson') 
         .then(response => {
             if (!response.ok) throw new Error("No se pudo cargar el archivo GeoJSON");
             return response.json();
         })
         .then(geojsonData => {
-            
             let ultimaCapaRuta = null;
-
-            // Recorrer las geometrías del GeoJSON y aplicar el efecto Ant Path
             geojsonData.features.forEach(feature => {
                 if (feature.geometry.type === "LineString") {
-                    // Invertir coordenadas de [lng, lat] a [lat, lng] para Leaflet
                     const coords = feature.geometry.coordinates.map(c => [c[1], c[0]]);
-                    
-                    // Crear la línea con efecto animado de flujo
                     const rutaAnimada = L.polyline.antPath(coords, {
-                        color: '#3469b2',      // Color principal de la línea
-                        weight: 5,             // Grosor de la línea
+                        color: '#3469b2',
+                        weight: 5,
                         opacity: 0.85,
-                        pulseColor: '#ffffff', // Color de los destellos en movimiento
-                        delay: 800,            // Velocidad de la animación
+                        pulseColor: '#ffffff',
+                        delay: 800,
                         dashArray: [10, 20]
                     }).addTo(map);
-
                     ultimaCapaRuta = rutaAnimada;
                 }
             });
-
-            // Ajustar el zoom automáticamente al tamaño de la ruta si existe
             if (ultimaCapaRuta) {
                 map.fitBounds(ultimaCapaRuta.getBounds());
             }
         })
         .catch(error => console.error("Error al cargar el archivo GeoJSON:", error));
 
-    // Pintar las paradas correspondientes
     if (paradasData && paradasData.length > 0) {
         paradasData.forEach(parada => {
             let iconoSeleccionado = pinInterurbano; 
-
             if (parada.tipo === "urbano") {
                 iconoSeleccionado = pinUrbano;       
             } else if (parada.tipo === "ambos") {
                 iconoSeleccionado = pinAmbos;       
             }
-
             let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
-
             L.marker([parada.lat, parada.lng], { icon: iconoSeleccionado })
                 .addTo(map)
                 .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}`);
@@ -236,7 +235,6 @@ function inicializarMapaUrbanoFila(index, llaveRuta) {
 
     mapasInicializados[index] = map;
 
-    // Forzar redibujado correcto del mapa al desplegarse
     setTimeout(() => {
         map.invalidateSize();
     }, 150);

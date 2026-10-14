@@ -297,3 +297,29 @@ CREATE TABLE IF NOT EXISTS usuario_compania_favorita (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ============================================================
+--  11. Tabla de viajes visitados
+-- ============================================================
+CREATE TABLE viaje_visita (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    viaje_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NULL,
+    fecha_visita TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id),
+
+    INDEX idx_viaje_visita_viaje_fecha (viaje_id, fecha_visita),
+
+    CONSTRAINT fk_viaje_visita_viaje
+        FOREIGN KEY (viaje_id)
+        REFERENCES viajes(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_viaje_visita_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

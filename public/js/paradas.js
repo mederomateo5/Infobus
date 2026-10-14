@@ -1,8 +1,20 @@
 // Busca el botón "btnUbicacion" en el HTML
 const btnUbicacion = document.getElementById("btnUbicacion");
 
-// Crea el mapa dentro del elemento HTML con id="mapa" (centrado por defecto en la zona de pruebas)
-const mapa = L.map("mapa").setView([-34.4188, -57.4523], 13);
+// Límites geográficos aproximados de Uruguay para evitar hacer zoom out excesivo
+const uruguayBounds = L.latLngBounds(
+    [-35.85, -58.5], // Esquina suroeste (lat, lng)
+    [-30.05, -53.0]  // Esquina noreste (lat, lng)
+);
+
+// Crea el mapa dentro del elemento HTML con id="mapa" aplicando las restricciones de Uruguay
+const mapa = L.map("mapa", {
+    center: [-34.4188, -57.4523],
+    zoom: 13,
+    minZoom: 7,                  // Evita que se aleje más allá del nivel 7
+    maxBounds: uruguayBounds,    // Restringe el mapa a los límites de Uruguay
+    maxBoundsViscosity: 1.0      // Hace que los bordes sean estrictos (no permite arrastrar fuera)
+});
 
 // Agrega las teselas de OpenStreetMap
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {

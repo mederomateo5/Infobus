@@ -112,13 +112,32 @@ VALUES
 (44, 'Colonia', -34.4723142, -57.8425525, 'interurbano'),
 (45, 'Montevideo', -34.8936262, -56.1675478, 'interurbano'),
 (46, 'Radial de Juan Lacaze', -34.3623357, -57.4469652, 'interurbano'),
-(47, 'Radial Rosario', -34.3375730,  -57.3398201, 'interurbano'),
+(47, 'Radial de Rosario', -34.3375730,  -57.3398201, 'interurbano'),
 (48, 'Juan Lacaze', -34.4356982, -57.4385496, 'urbano/interurbano'),
 (49, 'UTU', -34.4373289, -57.4347900, 'urbano'),
 (50, 'Esquina entre Dr.Rupero Borras y Ituzaingo', -34.3163347, -57.3528040, 'interurbano'),
 (51, 'Parada 1, TATA 2', -34.3163347, -57.3528040, 'interurbano'),
 (52, 'UTU 2', -34.4374918, -57.4350921, 'urbano'),
-(53, 'Rosario', -34.3097590, -57.3510177, 'interurbano');
+(53, 'Rosario', -34.3097590, -57.3510177, 'interurbano'),
+(54, 'Radial de Santa Ana', -34.4029818, -57.6176081, 'interurbano'),
+(55, 'Riachuelo', -34.4264876, -57.7173534, 'interurbano'),
+(56, 'Bernardi', -34.4501597, -57.7988716, 'interurbano'),
+(57, 'General', -34.4554768, -57.8162754, 'interurbano'),
+(58, 'Dos Avenidas', -34.4626036, -57.8381928, 'interurbano'),
+(59, 'Frugoni (hola)', -34.4632575, -57.8335822, 'interurbano'), --condicional tmb reportar parada formulario con tipo
+(60, 'Coronel Arroyo (chau)', -34.4657386, -57.8407094, 'interurbano'), -- condicional en el codigo que haga que si el origen=colonia, use esta y si no la otra
+(61, 'Coronel Arroyo (hola)', -34.4655833, -57.8383567, 'interurbano'),
+(62, 'Frugoni (chau)', -34.4633168, -57.8323442, 'interurbano'),
+(63, 'Sarandi', -34.4625132, -57.8303608, 'interurbano'),
+(64, 'Nogales', -34.4600474, -57.8235084, 'interurbano'),
+(65, 'Entrada de Calabrés', -34.4528804, -57.8071400, 'interurbano'),
+(66, 'Radial de Artilleros', -34.3951239, -57.5828184, 'interurbano'),
+(67, 'Radial de Tarariras', -34.3872496, -57.5538276, 'interurbano'),
+(68, 'Minuano', -34.3683555, -57.4706893, 'interurbano'),
+(69, 'Hospital', -34.4578701, -57.8296169, 'interurbano'), --tab 
+(70, 'Esquina Asamblea de la Florida ', -34.4555366, -57.8341558, 'interurbano'),
+(71, 'Parada, El Dorado', -34.4539492, -57.8392417, 'interurbano'),
+(72, 'Parada, Intendencia', -34.4586751, -57.8389731, 'interurbano'); --tab fin
 
 
 -- ============================================================
@@ -387,6 +406,28 @@ VALUES
 (63, 1), (63, 2), (63, 3), (63, 4), (63, 5), (63, 6), (63, 7),
 -- Viaje 64 (Menos domingos)
 (64, 1), (64, 2), (64, 3), (64, 4), (64, 5), (64, 6),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- Viajes 65 al 77 (Todos los días)
 (65, 1), (65, 2), (65, 3), (65, 4), (65, 5), (65, 6), (65, 7),
 (66, 1), (66, 2), (66, 3), (66, 4), (66, 5), (66, 6), (66, 7),
