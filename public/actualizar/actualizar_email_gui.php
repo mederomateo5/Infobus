@@ -1,10 +1,10 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 // Verificar sesión de usuario
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../../public/login.php');
+    header('Location: ../auth/login.php');
     exit();
 }
 
@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['usuari
     die("Acceso denegado.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 $userId = $_SESSION['user_id'];
 $msg = $_GET['msg'] ?? '';
@@ -32,17 +32,17 @@ if (!$usuario) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Correo Electrónico</title>
-    <?php include '../../includes/head.php'; ?>
-    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
+    <?php include '../../private/includes/head.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/panel_admin.css">
 </head>
 <body>
-    <?php include '../../includes/header.php'; ?>
+    <?php include '../../private/includes/header.php'; ?>
 
     <!-- Contenedor Flexbox Responsivo -->
     <div class="d-flex flex-column flex-md-row min-vh-100">
 
         <!-- Sidebar Lateral -->
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Área Principal de Contenido -->
         <main class="flex-grow-1 p-4 overflow-auto">

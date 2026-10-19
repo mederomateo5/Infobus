@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 // Verificar sesión y permisos
@@ -7,13 +7,13 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION[
     die("Acceso denegado.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 $msg = $_GET['msg'] ?? '';
 $id = $_GET['id'] ?? null;
 
 if (!$id || !ctype_digit((string)$id)) {
-    header('Location: ../vparadas.php?msg=' . urlencode('ID de parada no válido.'));
+    header('Location: ../gestion/ver_paradas.php?msg=' . urlencode('ID de parada no válido.'));
     exit();
 }
 
@@ -23,7 +23,7 @@ $stmt->execute([$id]);
 $parada = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$parada) {
-    header('Location: ../vparadas.php?msg=' . urlencode('Parada no encontrada.'));
+    header('Location: ../gestion/ver_paradas.php?msg=' . urlencode('Parada no encontrada.'));
     exit();
 }
 ?>
@@ -31,14 +31,14 @@ if (!$parada) {
 <html lang="es">
 <head>
     <title>Editar Parada</title>
-    <?php include '../../includes/head.php'; ?>
-    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
+    <?php include '../../private/includes/head.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/panel_admin.css">
 </head>
 <body>
-    <?php include '../../includes/header.php'; ?>
+    <?php include '../../private/includes/header.php'; ?>
 
     <div class="d-flex flex-column flex-md-row min-vh-100">
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include '../../private/includes/sidebar.php'; ?>
 
         <main class="flex-grow-1 p-4 overflow-hidden">
             <div class="container-fluid">
@@ -77,7 +77,7 @@ if (!$parada) {
                                     <button type="submit" class="btn btn-primary px-4 py-2">
                                         Guardar cambios
                                     </button>
-                                    <a href="../vparadas.php" class="btn btn-secondary px-4 py-2">Cancelar</a>
+                                    <a href="../gestion/ver_paradas.php" class="btn btn-secondary px-4 py-2">Cancelar</a>
                                 </div>
                             </div>
                         </form>

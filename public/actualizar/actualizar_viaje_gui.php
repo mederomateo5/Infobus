@@ -1,18 +1,18 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
     die("Acceso denegado.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 $msg = $_GET['msg'] ?? '';
 $id = $_GET['id'] ?? null;
 
 if (!$id || !ctype_digit((string)$id)) {
-    header('Location: ../viajes.php?msg=' . urlencode('ID de viaje no válido.'));
+    header('Location: ../gestion/ver_viajes.php?msg=' . urlencode('ID de viaje no válido.'));
     exit();
 }
 
@@ -27,7 +27,7 @@ $stmt->execute([$id]);
 $viaje = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$viaje) {
-    header('Location: ../viajes.php?msg=' . urlencode('Viaje no encontrado.'));
+    header('Location: ../gestion/ver_viajes.php?msg=' . urlencode('Viaje no encontrado.'));
     exit();
 }
 
@@ -51,14 +51,14 @@ try {
 <html lang="es">
 <head>
     <title>Editar Viaje</title>
-    <?php include '../../includes/head.php'; ?>
-    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
+    <?php include '../../private/includes/head.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/panel_admin.css">
 </head>
 <body>
-    <?php include '../../includes/header.php'; ?>
+    <?php include '../../private/includes/header.php'; ?>
 
     <div class="d-flex flex-column flex-md-row min-vh-100">
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include '../../private/includes/sidebar.php'; ?>
 
         <main class="flex-grow-1 p-4 overflow-auto">
             <div class="container-fluid">
@@ -174,7 +174,7 @@ try {
                                     <button type="submit" class="btn btn-primary px-4 py-2">
                                         Guardar cambios
                                     </button>
-                                    <a href="../viajes.php" class="btn btn-secondary px-4 py-2">Cancelar</a>
+                                    <a href="../gestion/ver_viajes.php" class="btn btn-secondary px-4 py-2">Cancelar</a>
                                 </div>
                             </div>
                         </form>

@@ -1,15 +1,15 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
     die("Acceso denegado.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../panel_admin.php');
+    header('Location: ../paneles/panel_admin.php');
     exit();
 }
 
@@ -53,7 +53,7 @@ try {
         $update->execute([$nombre, $apellido, $email, $telefono, $tipo, $id]);
     }
 
-    header('Location: ../usuarios.php?msg=' . urlencode('Usuario actualizado correctamente.'));
+    header('Location: ../gestion/ver_usuarios.php?msg=' . urlencode('Usuario actualizado correctamente.'));
     exit();
 
 } catch (PDOException $e) {

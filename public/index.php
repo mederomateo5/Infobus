@@ -1,7 +1,7 @@
 <?php
-require_once '../config/config.php';
+require_once '../private/config/config.php';
 // Incluir la conexión a la base de datos
-require_once '../config/database.php';
+require_once '../private/config/database.php';
 
 // Obtener orígenes disponibles en la base de datos (excluyendo el ómnibus urbano ID 4)
 try {
@@ -74,14 +74,14 @@ try {
 
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <?php include '../includes/head.php'; ?>
+    <?php include '../private/includes/head.php'; ?>
 </head>
 
 <style>
     body {
         background-image:
             linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-            url("../public/img/fondo.jpg");
+            url("assets/img/fondo.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -90,7 +90,7 @@ try {
 </style>
 
 <body class="bg-light">
-    <?php include '../includes/header.php'; ?>
+    <?php include '../private/includes/header.php'; ?>
 
     <div class="container py-4" style="max-width: 1100px;">
 
@@ -294,9 +294,9 @@ try {
 
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="<?= BASE_URL ?>js/index/utils.js"></script>
-    <script src="<?= BASE_URL ?>js/index/mapas.js"></script>
-    <script src="<?= BASE_URL ?>js/index/buscador.js"></script>
-    <script src="<?= BASE_URL ?>js/index/interacciones.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/index/utils.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/index/mapas.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/index/buscador.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/index/interacciones.js"></script>
 </body>
 </html>

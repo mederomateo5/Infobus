@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 // Configurar la respuesta como JSON
 header('Content-Type: application/json; charset=utf-8');
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 // Obtener ID del usuario logueado (para verificar favoritos)
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;

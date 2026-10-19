@@ -1,15 +1,15 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['compania', 'administrador'])) {
     die("Acceso denegado. Esta página es exclusiva para compañías o administradores.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../alta/alta_ruta_gui.php');
+    header('Location: alta_ruta_gui.php');
     exit();
 }
 
@@ -18,7 +18,7 @@ $parada_id  = filter_input(INPUT_POST, 'parada_id', FILTER_VALIDATE_INT);
 $orden      = filter_input(INPUT_POST, 'orden', FILTER_VALIDATE_INT);
 
 if (!$omnibus_id || !$parada_id || !$orden) {
-    header('Location: ../alta/alta_ruta_gui.php?msg=' . urlencode('Todos los campos son obligatorios.'));
+    header('Location: alta_ruta_gui.php?msg=' . urlencode('Todos los campos son obligatorios.'));
     exit();
 }
 
@@ -27,18 +27,18 @@ try {
     $chkOrden = $pdo->prepare("SELECT omnibus_id FROM recorre WHERE omnibus_id = ? AND orden = ?");
     $chkOrden->execute([$omnibus_id, $orden]);
     if ($chkOrden->fetch()) {
-        header('Location: ../alta/alta_ruta_gui.php?msg=' . urlencode('Ese ómnibus ya tiene una parada asignada en esa posición/orden.'));
+        header('Location: alta_ruta_gui.php?msg=' . urlencode('Ese ómnibus ya tiene una parada asignada en esa posición/orden.'));
         exit();
     }
 
     $stmt = $pdo->prepare("INSERT INTO recorre (omnibus_id, parada_id, orden) VALUES (?, ?, ?)");
     $stmt->execute([$omnibus_id, $parada_id, $orden]);
 
-    header('Location: ../alta/alta_ruta_gui.php?msg=' . urlencode('Parada añadida al recorrido correctamente.'));
+    header('Location: alta_ruta_gui.php?msg=' . urlencode('Parada añadida al recorrido correctamente.'));
     exit();
 
 } catch (PDOException $e) {
-    header('Location: ../alta/alta_ruta_gui.php?msg=' . urlencode('Error: La parada ya existe en este recorrido.'));
+    header('Location: alta_ruta_gui.php?msg=' . urlencode('Error: La parada ya existe en este recorrido.'));
     exit();
 }
 ?>

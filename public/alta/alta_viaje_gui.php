@@ -1,9 +1,9 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../login.php');
+    header('Location: ../auth/login.php');
     exit();
 }
 
@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['compan
     die("Acceso denegado. Esta página es exclusiva para compañías o administradores.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 try {
     $stmtParadas = $pdo->query("SELECT id, nombre FROM paradas ORDER BY nombre ASC");
@@ -37,14 +37,14 @@ $msg = $_GET['msg'] ?? '';
 <html lang="es">
 <head>
     <title>Alta de Viajes</title>
-    <?php include '../../includes/head.php'; ?>
-    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
+    <?php include '../../private/includes/head.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/panel_admin.css">
 </head>
 <body>
-    <?php include '../../includes/header.php'; ?>
+    <?php include '../../private/includes/header.php'; ?>
 
     <div class="d-flex flex-column flex-md-row min-vh-100">
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include '../../private/includes/sidebar.php'; ?>
 
         <main class="flex-grow-1 p-4 overflow-auto">
             <div id="alta" class="container-fluid">

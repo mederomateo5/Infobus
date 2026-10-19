@@ -1,15 +1,15 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
     die("Acceso denegado.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../vcompania.php');
+    header('Location: ../gestion/ver_companias.php');
     exit();
 }
 
@@ -42,7 +42,7 @@ try {
         $update->execute([$nombre, $email, $telefono, $id]);
     }
 
-    header('Location: ../vcompania.php?msg=' . urlencode('Compañía actualizada con éxito.'));
+    header('Location: ../gestion/ver_companias.php?msg=' . urlencode('Compañía actualizada con éxito.'));
     exit();
 
 } catch (PDOException $e) {

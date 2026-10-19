@@ -1,11 +1,11 @@
-<?php require_once '../config/config.php'; ?>
+<?php require_once '../private/config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urbanos</title>
-    <?php include '../includes/head.php'; ?>
+    <?php include '../private/includes/head.php'; ?>
 
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -15,7 +15,7 @@
 body {
 background-image:
         linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url("../public/img/fondo.jpg");
+        url("assets/img/fondo.jpg");
     background-repeat:no-repeat;
     background-size:cover;
     background-position:center;
@@ -24,12 +24,12 @@ background-image:
 </style>
 
 <body class="bg-light">
-    <?php include '../includes/header.php'; ?>
+    <?php include '../private/includes/header.php'; ?>
 
     <div class="container py-4" style="max-width: 1100px;">
         <!-- Botón para regresar al Index -->
         <div class="d-flex justify-content-start mb-3">
-            <a href="../public/index.php" class="btn btn-primary fw-semibold">&larr; Volver a Interurbanos</a>
+            <a href="index.php" class="btn btn-primary fw-semibold">&larr; Volver a Interurbanos</a>
         </div>
 
         <div class="card shadow-sm border-0 mb-4">
@@ -79,6 +79,6 @@ background-image:
     <!-- JS de Leaflet y Script específico de Urbanos -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.js"></script>
-    <script src="<?= BASE_URL ?>js/urbanos.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/urbanos.js"></script>
 </body>
 </html>

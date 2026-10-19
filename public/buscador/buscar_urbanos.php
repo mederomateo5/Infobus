@@ -1,8 +1,8 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 // Configurar la respuesta como JSON
 header('Content-Type: application/json; charset=utf-8');
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 try {
     // Consulta SQL adaptada para traer los días de la semana desde 'viaje_dia' en lugar de la columna 'fecha'

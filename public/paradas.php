@@ -1,22 +1,22 @@
-<?php require_once '../config/config.php'; ?>
+<?php require_once '../private/config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ver paradas</title>
-    <?php include '../includes/head.php'; ?>
+    <?php include '../private/includes/head.php'; ?>
 
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body class="bg-light">
-    <?php include '../includes/header.php'; ?>
+    <?php include '../private/includes/header.php'; ?>
 
     <div class="container py-4" style="max-width: 1100px;">
         <!-- Botón para regresar -->
         <div class="d-flex justify-content-start mb-3">
-            <a href="../public/index.php" class="btn btn-primary fw-semibold">&larr; Volver a Interurbanos</a>
+            <a href="index.php" class="btn btn-primary fw-semibold">&larr; Volver a Interurbanos</a>
         </div>
 
         <!-- Tarjeta principal que contiene el título, el botón y el mapa -->
@@ -60,6 +60,6 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="<?= BASE_URL ?>js/paradas.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/mapa_paradas.js"></script>
 </body>
 </html>

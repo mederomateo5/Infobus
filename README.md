@@ -145,7 +145,7 @@ Luego importar el archivo SQL del proyecto, si se encuentra disponible en el rep
 Modificar la configuración de conexión a la base de datos en:
 
 ```text
-config/database.php
+private/config/database.php
 ```
 
 Ejemplo:

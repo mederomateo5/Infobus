@@ -1,4 +1,4 @@
-<?php require_once '../config/config.php'; ?>
+<?php require_once '../private/config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,14 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros</title>
-    <?php include '../includes/head.php'; ?>
+    <?php include '../private/includes/head.php'; ?>
 </head>
 
 <style>
     body {
         background-image:
             linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-            url("../public/img/fondo_aereo.jpg");
+            url("assets/img/fondo_aereo.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -23,7 +23,7 @@
 
 <body class="bg-secondary-subtle">
 
-    <?php include '../includes/header.php'; ?>
+    <?php include '../private/includes/header.php'; ?>
 
     <!-- Contenedor principal con diseño fluido, bordes redondeados y espaciado adaptativo -->
     <main class="container bg-white rounded-4 shadow-sm p-4 p-md-5 my-5">
@@ -33,7 +33,7 @@
              <!-- Mateo -->
             <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
-                    src="../public/img/Placeholder_Person.jpg"
+                    src="assets/img/Placeholder_Person.jpg"
                     alt="Mateo Medero"
                     class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
@@ -51,7 +51,7 @@
             <!-- Alejo -->
             <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
-                    src="../public/img/Placeholder_Person.jpg"
+                    src="assets/img/Placeholder_Person.jpg"
                     alt="Alejo Medina"
                     class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
@@ -69,7 +69,7 @@
             <!-- Sebastián -->
             <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
-                    src="../public/img/Placeholder_Person.jpg"
+                    src="assets/img/Placeholder_Person.jpg"
                     alt="Sebastian De León"
                     class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
@@ -87,7 +87,7 @@
             <!-- Thiago -->
             <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
-                    src="../public/img/Placeholder_Person.jpg"
+                    src="assets/img/Placeholder_Person.jpg"
                     alt="Thiago Rodriguez"
                     class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"
@@ -107,7 +107,7 @@
             <!-- Marcelo -->
             <div class="col-12 col-md-10 col-lg-8 text-center">
                 <img
-                    src="../public/img/Placeholder_Person.jpg"
+                    src="assets/img/Placeholder_Person.jpg"
                     alt="Marcelo Méndez"
                     class="rounded-circle shadow-sm mb-3 object-fit-cover"
                     width="85"

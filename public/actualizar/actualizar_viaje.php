@@ -1,15 +1,15 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
     die("Acceso denegado.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../viajes.php');
+    header('Location: ../gestion/ver_viajes.php');
     exit();
 }
 
@@ -97,7 +97,7 @@ try {
     }
 
     $pdo->commit();
-    header('Location: ../viajes.php?msg=' . urlencode('Viaje actualizado correctamente.'));
+    header('Location: ../gestion/ver_viajes.php?msg=' . urlencode('Viaje actualizado correctamente.'));
     exit();
 
 } catch (PDOException $e) {

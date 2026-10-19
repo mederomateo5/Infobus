@@ -1,15 +1,15 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['compania', 'administrador'])) {
     die("Acceso denegado. Esta página es exclusiva para compañías o administradores.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../alta/alta_viaje_gui.php');
+    header('Location: alta_viaje_gui.php');
     exit();
 }
 
@@ -31,7 +31,7 @@ if (
     $precio === false || !in_array($agencia, $agenciasValidas) ||
     $hora === '' || $hora_llegada === '' || empty($dias)
 ) {
-    header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('Faltan datos, días o se ingresaron valores inválidos.'));
+    header('Location: alta_viaje_gui.php?msg=' . urlencode('Faltan datos, días o se ingresaron valores inválidos.'));
     exit();
 }
 
@@ -48,13 +48,13 @@ try {
 
     if (!$omnibus) {
         $pdo->rollBack();
-        header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
+        header('Location: alta_viaje_gui.php?msg=' . urlencode('No se encontró el ómnibus con el número y agencia especificados.'));
         exit();
     }
 
     if ($asientos_disp > $omnibus['asientos']) {
         $pdo->rollBack();
-        header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('La cantidad de asientos disponibles no puede ser mayor a la cantidad de asientos.'));
+        header('Location: alta_viaje_gui.php?msg=' . urlencode('La cantidad de asientos disponibles no puede ser mayor a la cantidad de asientos.'));
         exit();
     }
 
@@ -88,14 +88,14 @@ try {
     }
 
     $pdo->commit();
-    header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('Viaje registrado correctamente.'));
+    header('Location: alta_viaje_gui.php?msg=' . urlencode('Viaje registrado correctamente.'));
     exit();
 
 } catch (PDOException $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
-    header('Location: ../alta/alta_viaje_gui.php?msg=' . urlencode('Error en la base de datos al dar de alta el viaje.'));
+    header('Location: alta_viaje_gui.php?msg=' . urlencode('Error en la base de datos al dar de alta el viaje.'));
     exit();
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
     session_start();
 
     // Verificar sesión y que sea administrador
@@ -7,24 +7,24 @@ require_once '../../config/config.php';
         die("Acceso denegado.");
     }
 
-    require_once '../../config/database.php';
+    require_once '../../private/config/database.php';
 
     // Solo aceptar POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: ../usuarios.php');
+        header('Location: ../gestion/ver_usuarios.php');
         exit();
     }
 
     $id = $_POST['id'] ?? null;
 
     if (!$id || !ctype_digit((string)$id)) {
-        header('Location: ../usuarios.php?msg=' . urlencode('Usuario inválido.'));
+        header('Location: ../gestion/ver_usuarios.php?msg=' . urlencode('Usuario inválido.'));
         exit();
     }
 
     // No permitir que el administrador se elimine a sí mismo
     if ((int)$id === (int)$_SESSION['user_id']) {
-        header('Location: ../usuarios.php?msg=' . urlencode('No podés darte de baja a vos mismo.'));
+        header('Location: ../gestion/ver_usuarios.php?msg=' . urlencode('No podés darte de baja a vos mismo.'));
         exit();
     }
 
@@ -33,12 +33,12 @@ require_once '../../config/config.php';
         $eliminar = $pdo->prepare("DELETE FROM users WHERE id = ?");
         $eliminar->execute([$id]);
 
-        header('Location: ../usuarios.php?msg=' . urlencode('Usuario dado de baja correctamente.'));
+        header('Location: ../gestion/ver_usuarios.php?msg=' . urlencode('Usuario dado de baja correctamente.'));
         exit();
 
     } catch (PDOException $e) {
         // En caso de error, redirigimos con un mensaje de error
-        header('Location: ../usuarios.php?msg=' . urlencode('Error al dar de baja el usuario.'));
+        header('Location: ../gestion/ver_usuarios.php?msg=' . urlencode('Error al dar de baja el usuario.'));
         exit();
     }  
 ?>

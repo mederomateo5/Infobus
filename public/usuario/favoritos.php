@@ -1,10 +1,10 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 // Verificar sesión y permisos de usuario
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../../public/login.php');
+    header('Location: ../auth/login.php');
     exit();
 }
 
@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['usuari
     die("Acceso denegado. Esta página es exclusiva para usuarios.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 $user_id = $_SESSION['user_id'];$favoritos = [];
 
@@ -52,17 +52,17 @@ try {
     <title>Mis Viajes Favoritos</title>
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <?php include '../../includes/head.php'; ?>
-    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
+    <?php include '../../private/includes/head.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/panel_admin.css">
 </head>
 <body>
-    <?php include '../../includes/header.php'; ?>
+    <?php include '../../private/includes/header.php'; ?>
 
     <!-- Contenedor Flexbox Responsivo de Alto Completo -->
     <div class="d-flex flex-column flex-md-row min-vh-100">
 
         <!-- Sidebar Lateral -->
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Área Principal de Contenido -->
         <main class="flex-grow-1 p-4 overflow-auto bg-light">
@@ -160,7 +160,7 @@ try {
         let mapasInicializados = {};
 
         // Cargar paradas para los mapas al igual que en el index
-        fetch('../obtener_paradas.php')
+        fetch('../api/obtener_paradas.php')
             .then(res => res.json())
             .then(data => { paradasData = data; })
             .catch(err => console.error("Error cargando paradas:", err));

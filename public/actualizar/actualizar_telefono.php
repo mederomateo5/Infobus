@@ -1,14 +1,14 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 // Verificar sesión de usuario
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../../public/login.php');
+    header('Location: ../auth/login.php');
     exit();
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: actualizar_telefono_gui.php');

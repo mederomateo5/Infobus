@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 // Verificar sesión y permisos de administrador
@@ -7,11 +7,11 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION[
     die("Acceso denegado.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 // Solo aceptar peticiones por método POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../vparadas.php');
+    header('Location: ../gestion/ver_paradas.php');
     exit();
 }
 
@@ -47,7 +47,7 @@ try {
     $update = $pdo->prepare("UPDATE paradas SET nombre = ?, latitud = ?, longitud = ? WHERE id = ?");
     $update->execute([$nombre, $latitud, $longitud, $id]);
 
-    header('Location: ../vparadas.php?msg=' . urlencode('Parada actualizada correctamente.'));
+    header('Location: ../gestion/ver_paradas.php?msg=' . urlencode('Parada actualizada correctamente.'));
     exit();
 
 } catch (PDOException $e) {

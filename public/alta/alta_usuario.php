@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
     session_start();
 
     // Verificar sesión y que sea administrador
@@ -7,11 +7,11 @@ require_once '../../config/config.php';
         die("Acceso denegado.");
     }
 
-    require_once '../../config/database.php';
+    require_once '../../private/config/database.php';
 
     // Solo aceptar POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: ../alta/alta_usuario_gui.php');
+        header('Location: alta_usuario_gui.php');
         exit();
     }
 
@@ -28,13 +28,13 @@ require_once '../../config/config.php';
 
     // Validar que no falten datos obligatorios y que el tipo de usuario sea válido
     if ($nombre === '' || $apellido === '' || $email === '' || $telefono === '' || $password === '' || !in_array($tipo, $tiposValidos)) {
-        header('Location: ../alta/alta_usuario_gui.php?msg=' . urlencode('Faltan datos o el tipo de usuario no es válido.'));
+        header('Location: alta_usuario_gui.php?msg=' . urlencode('Faltan datos o el tipo de usuario no es válido.'));
         exit();
     }
 
     // Validar que la contraseña tenga al menos 6 caracteres
     if (strlen($password) < 6) {
-        header('Location: ../alta/alta_usuario_gui.php?msg=' . urlencode('La contraseña debe tener al menos 6 caracteres.'));
+        header('Location: alta_usuario_gui.php?msg=' . urlencode('La contraseña debe tener al menos 6 caracteres.'));
         exit();
     }
 
@@ -44,7 +44,7 @@ require_once '../../config/config.php';
         $verificar->execute([$email]);
 
         if ($verificar->fetch()) {
-            header('Location: ../alta/alta_usuario_gui.php?msg=' . urlencode('Ya existe un usuario con ese email.'));
+            header('Location: alta_usuario_gui.php?msg=' . urlencode('Ya existe un usuario con ese email.'));
             exit();
         }
 
@@ -59,12 +59,12 @@ require_once '../../config/config.php';
         $insertar->execute([$nombre, $apellido, $email, $telefono, $passwordHash, $tipo]);
 
         // Redirigir al panel de administrador con un mensaje de éxito
-        header('Location: ../alta/alta_usuario_gui.php?msg=' . urlencode('Usuario dado de alta correctamente.'));
+        header('Location: alta_usuario_gui.php?msg=' . urlencode('Usuario dado de alta correctamente.'));
         exit();
 
     } catch (PDOException $e) {
         // En caso de error, redirigimos con un mensaje de error
-        header('Location: ../alta/alta_usuario_gui.php?msg=' . urlencode('Error al dar de alta el usuario.'));
+        header('Location: alta_usuario_gui.php?msg=' . urlencode('Error al dar de alta el usuario.'));
         exit();
     }
 ?>

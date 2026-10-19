@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 header('Content-Type: application/json; charset=utf-8');
@@ -8,7 +8,7 @@ header('Content-Type: application/json; charset=utf-8');
 if (!isset($_SESSION['user_id'])) {
     echo json_encode([
         'success' => false, 
-        'redirect' => BASE_URL . 'login.php',
+        'redirect' => BASE_URL . 'auth/login.php',
         'mensaje' => 'Debe iniciar sesión para marcar favoritos.'
     ]);
     exit();
@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 $viaje_id = isset($data['viaje_id']) ? intval($data['viaje_id']) : 0;

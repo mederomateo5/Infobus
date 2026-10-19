@@ -1,10 +1,10 @@
 <?php
-require_once '../../config/config.php';
+require_once '../../private/config/config.php';
 session_start();
 
 // Verificar sesión y permisos de administrador
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../login.php');
+    header('Location: ../auth/login.php');
     exit();
 }
 
@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador'
     die("Acceso denegado. Esta página es exclusiva para administradores.");
 }
 
-require_once '../../config/database.php';
+require_once '../../private/config/database.php';
 $msg = $_GET['msg'] ?? '';
 ?>
 <!DOCTYPE html>
@@ -20,17 +20,17 @@ $msg = $_GET['msg'] ?? '';
 <head>
     <title>Alta de Usuarios</title>
     <!-- Incluimos el header que contiene el CSS de Bootstrap -->
-    <?php include '../../includes/head.php'; ?>
-    <link rel="stylesheet" href="<?= BASE_URL ?>css/panel_admin.css">
+    <?php include '../../private/includes/head.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/panel_admin.css">
 </head>
 <body>
-    <?php include '../../includes/header.php'; ?>
+    <?php include '../../private/includes/header.php'; ?>
 
     <!-- Contenedor Flexbox para alinear Sidebar + Contenido sin tapar el fondo personalizado -->
     <div class="d-flex flex-column flex-md-row min-vh-100">
 
         <!-- Sidebar lateral -->
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Zona principal del formulario -->
         <main class="flex-grow-1 p-4 overflow-auto">
@@ -114,6 +114,6 @@ $msg = $_GET['msg'] ?? '';
 
     </div>
 
-    <script src="<?= BASE_URL ?>js/validaciones.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/validaciones.js"></script>
 </body>
 </html>
