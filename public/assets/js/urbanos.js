@@ -190,48 +190,68 @@ function inicializarMapaUrbanoFila(index, llaveRuta) {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Resto del código de urbanos...
-    fetch('assets/data/recorrido_urbano.geojson') 
+    // 1. Petición AJAX a tu base de datos para obtener las paradas ordenadas por 'orden'
+    fetch(`buscador/obtener_recorrido_ruta.php?ruta=${llaveRuta}`)
         .then(response => {
-            if (!response.ok) throw new Error("No se pudo cargar el archivo GeoJSON");
+            if (!response.ok) throw new Error("No se pudieron cargar las paradas desde la base de datos");
             return response.json();
         })
-        .then(geojsonData => {
-            let ultimaCapaRuta = null;
-            geojsonData.features.forEach(feature => {
-                if (feature.geometry.type === "LineString") {
-                    const coords = feature.geometry.coordinates.map(c => [c[1], c[0]]);
-                    const rutaAnimada = L.polyline.antPath(coords, {
-                        color: '#3469b2',
-                        weight: 5,
-                        opacity: 0.85,
-                        pulseColor: '#ffffff',
-                        delay: 800,
-                        dashArray: [10, 20]
-                    }).addTo(map);
-                    ultimaCapaRuta = rutaAnimada;
-                }
-            });
-            if (ultimaCapaRuta) {
-                map.fitBounds(ultimaCapaRuta.getBounds());
+        .then(paradas => {
+            if (!paradas || paradas.length === 0) {
+                console.warn("No hay paradas registradas para esta ruta.");
+                return;
             }
-        })
-        .catch(error => console.error("Error al cargar el archivo GeoJSON:", error));
 
-    if (paradasData && paradasData.length > 0) {
-        paradasData.forEach(parada => {
-            let iconoSeleccionado = pinInterurbano; 
-            if (parada.tipo === "urbano") {
-                iconoSeleccionado = pinUrbano;       
-            } else if (parada.tipo === "ambos") {
-                iconoSeleccionado = pinAmbos;       
-            }
-            let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
-            L.marker([parada.lat, parada.lng], { icon: iconoSeleccionado })
-                .addTo(map)
-                .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}`);
-        });
-    }
+            // 2. Extraer y formatear coordenadas en "longitud,latitud" requeridas por OSRM
+            const coordenadasString = paradas.map(p => `${p.longitud},${p.latitud}`).join(';');
+
+            // 3. Consultar al motor de ruteo OSRM para que calcule el trazado exacto por las calles
+            const urlOSRM = `https://router.project-osrm.org/route/v1/driving/${coordenadasString}?overview=full&geometries=geojson`;
+
+            return fetch(urlOSRM)
+                .then(res => res.json())
+                .then(dataRoute => {
+                    let ultimaCapaRuta = null;
+
+                    if (dataRoute.routes && dataRoute.routes.length > 0) {
+                        // Invertir coordenadas a [lat, lng] para que Leaflet pueda renderizarlas
+                        const coordsRuta = dataRoute.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+
+                        // Dibujar la línea animada con Leaflet Ant Path siguiendo las calles reales
+                        const rutaAnimada = L.polyline.antPath(coordsRuta, {
+                            color: '#3469b2',
+                            weight: 5,
+                            opacity: 0.85,
+                            pulseColor: '#ffffff',
+                            delay: 800,
+                            dashArray: [10, 20]
+                        }).addTo(map);
+
+                        ultimaCapaRuta = rutaAnimada;
+                    }
+
+                    if (ultimaCapaRuta) {
+                        map.fitBounds(ultimaCapaRuta.getBounds());
+                    }
+
+                    // 4. Pintar los pines de cada parada encima de la ruta respetando sus colores y orden
+                    paradas.forEach(parada => {
+                        let iconoSeleccionado = pinInterurbano; 
+                        if (parada.tipo === "urbano") {
+                            iconoSeleccionado = pinUrbano;       
+                        } else if (parada.tipo === "ambos") {
+                            iconoSeleccionado = pinAmbos;       
+                        }
+                        let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
+                        
+                        // Nota: La base de datos devuelve 'latitud' y 'longitud'
+                        L.marker([parada.latitud, parada.longitud], { icon: iconoSeleccionado })
+                            .addTo(map)
+                            .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}<br>Orden: ${parada.orden}`);
+                    });
+                });
+        })
+        .catch(error => console.error("Error al cargar la ruta dinámica desde la BD:", error));
 
     mapasInicializados[index] = map;
 

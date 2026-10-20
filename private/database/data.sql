@@ -124,21 +124,21 @@ VALUES
 (56, 'Bernardi', -34.4501597, -57.7988716, 'interurbano'),
 (57, 'General', -34.4554768, -57.8162754, 'interurbano'),
 (58, 'Dos Avenidas', -34.4626036, -57.8381928, 'interurbano'),
-(59, 'Frugoni (hola)', -34.4632575, -57.8335822, 'interurbano'), --condicional tmb reportar parada formulario con tipo
-(60, 'Coronel Arroyo (chau)', -34.4657386, -57.8407094, 'interurbano'), -- condicional en el codigo que haga que si el origen=colonia, use esta y si no la otra
-(61, 'Coronel Arroyo (hola)', -34.4655833, -57.8383567, 'interurbano'),
-(62, 'Frugoni (chau)', -34.4633168, -57.8323442, 'interurbano'),
+(59, 'Frugoni', -34.4632575, -57.8335822, 'interurbano'),
+(60, 'Coronel Arroyo', -34.4657386, -57.8407094, 'interurbano'), 
+(61, 'Coronel Arroyo 2', -34.4655833, -57.8383567, 'interurbano'),
+(62, 'Frugoni 2', -34.4633168, -57.8323442, 'interurbano'),
 (63, 'Sarandi', -34.4625132, -57.8303608, 'interurbano'),
 (64, 'Nogales', -34.4600474, -57.8235084, 'interurbano'),
 (65, 'Entrada de Calabrés', -34.4528804, -57.8071400, 'interurbano'),
 (66, 'Radial de Artilleros', -34.3951239, -57.5828184, 'interurbano'),
 (67, 'Radial de Tarariras', -34.3872496, -57.5538276, 'interurbano'),
 (68, 'Minuano', -34.3683555, -57.4706893, 'interurbano'),
-(69, 'Hospital', -34.4578701, -57.8296169, 'interurbano'), --tab 
+(69, 'Hospital', -34.4578701, -57.8296169, 'interurbano'),
 (70, 'Esquina Asamblea de la Florida ', -34.4555366, -57.8341558, 'interurbano'),
 (71, 'Parada, El Dorado', -34.4539492, -57.8392417, 'interurbano'),
-(72, 'Parada, Intendencia', -34.4586751, -57.8389731, 'interurbano'); --tab fin
-
+(72, 'Parada, Intendencia', -34.4586751, -57.8389731, 'interurbano'); 
+--72 tab fin, 62 FRUGONI ES SALIENDO DE COLONIA, 61 ES ENTRANDO A COLONIA Y 60 ENTRANDO, 59 frugoni cuando colonia es destino, 69 EXCLUSIVO DE TAB.
 
 -- ============================================================
 --  5. Ómnibus (Asignados a las compañías)
@@ -518,3 +518,35 @@ VALUES
 (140, 1), (140, 2), (140, 3), (140, 4), (140, 5), (140, 6),
 (141, 1), (141, 2), (141, 3), (141, 4), (141, 5), (141, 6),
 (142, 1), (142, 2), (142, 3), (142, 4), (142, 5), (142, 6);
+
+-- ============================================================
+--  8. Relación Ómnibus - Paradas (Recorrido Urbano para omnibus_id = 4)
+-- ============================================================
+INSERT INTO recorre (omnibus_id, parada_id, orden) VALUES
+(4, 50, 1),  -- UTU
+(4, 21, 2),  -- Parada 1, TATA
+(4, 20, 3),  -- Parada entre calle Simón Betarte y Don Bosco, Kiosco
+(4, 19, 4),  -- Parada 27, Calle Don Bosco
+(4, 18, 5),  -- Parada 2, Esquina de Carlos Gardel y Don Bosco
+(4, 17, 6),  -- Parada 26, Estatua Las Manos
+(4, 16, 7),  -- Parada 25, Estatua La Embarazada
+(4, 15, 8),  -- Parada 5, Esquina de Salto y Av Gral Artigas
+(4, 14, 9),  -- Parada Los Simpson
+(4, 12, 10), -- Parada 6, Ruta 54, Ancap
+(4, 11, 11), -- Parada 7, Ruta 54, Liceo n°1
+(4, 8, 12),  -- Parada 8, Ruta 54
+(4, 7, 13),  -- Parada 9, Ruta 54
+(4, 6, 14),  -- Parada 12, Ruta 54
+(4, 5, 15),  -- Parada 1, Ruta 54
+(4, 4, 16),  -- En la Ruta 54, cerca del Destacamento de Bomberos
+(4, 3, 17),  -- Entre la calle Juana de Ibarbourou y Julio Rodriguez
+(4, 2, 18),  -- Entre la Calle.4 y Calle.1
+(4, 1, 19),  -- Entre la Plaza de Palos y el minimercado Los Amigos
+(4, 29, 20), -- Esquina entre Calle 33 y Jaime Roca
+(4, 30, 21), -- Entre la plaza y Calle Jaime Roca
+(4, 31, 22), -- Esquina entre Calle 48 y Mario Echeverría
+(4, 32, 23), -- Esquina entre Calle 48 y 44
+(4, 33, 24), -- Esquina entre Calle 48 y 46
+(4, 34, 25), -- Esquina entre Calle 46 y 47
+(4, 35, 26), -- Esquina entre Calle 44 y 47
+(4, 36, 27); -- Esquina entre Calle 47 y Mario Echeverría
