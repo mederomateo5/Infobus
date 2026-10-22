@@ -46,9 +46,9 @@ $msg = $_GET['msg'] ?? '';
     <div class="d-flex flex-column flex-md-row min-vh-100">
         <?php include '../../private/includes/sidebar.php'; ?>
 
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
             <div id="alta" class="container-fluid">
-                <h1 class="h3 mb-4 text-dark fw-bold">Dar de alta un viaje</h1>
+                <h1 class="h3 mb-4 text-body fw-bold">Dar de alta un viaje</h1>
 
                 <?php if ($msg !== ''): ?>
                     <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -57,7 +57,7 @@ $msg = $_GET['msg'] ?? '';
                     </div>
                 <?php endif; ?>
 
-                <div class="card shadow-sm border-0 bg-white rounded-3">
+                <div class="card shadow-sm border-0 bg-body rounded-3">
                     <div class="card-body p-4">
                         <form action="alta_viaje.php" method="POST">
                             <div class="row g-3">

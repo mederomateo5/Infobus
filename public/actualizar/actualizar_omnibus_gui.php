@@ -40,9 +40,9 @@ $companias = $pdo->query("SELECT id, nombre FROM compania ORDER BY nombre ASC")-
     <div class="d-flex flex-column flex-md-row min-vh-100">
         <?php include '../../private/includes/sidebar.php'; ?>
 
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
             <div class="container-fluid">
-                <h1 class="h3 mb-4 text-white fw-bold">Editar Ómnibus #<?= htmlspecialchars($omnibus['id']) ?></h1>
+                <h1 class="h3 mb-4 text-body fw-bold">Editar Ómnibus #<?= htmlspecialchars($omnibus['id']) ?></h1>
 
                 <?php if ($msg !== ''): ?>
                     <div class="alert alert-info alert-dismissible fade show" role="alert">

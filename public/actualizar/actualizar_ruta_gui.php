@@ -46,9 +46,9 @@ if (!$recorrido) {
     <div class="d-flex flex-column flex-md-row min-vh-100">
         <?php include '../../private/includes/sidebar.php'; ?>
 
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
             <div class="container-fluid">
-                <h1 class="h3 mb-4 text-white fw-bold">Modificar Secuencia del Recorrido</h1>
+                <h1 class="h3 mb-4 text-body fw-bold">Modificar Secuencia del Recorrido</h1>
 
                 <?php if ($msg !== ''): ?>
                     <div class="alert alert-info alert-dismissible fade show" role="alert">

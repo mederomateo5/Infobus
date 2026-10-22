@@ -33,11 +33,11 @@ $msg = $_GET['msg'] ?? '';
         <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Zona principal del formulario -->
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
 
             <div id="alta" class="container-fluid">
 
-                <h1 class="h3 mb-4 text-dark fw-bold">Dar de alta un usuario</h1>
+                <h1 class="h3 mb-4 text-body fw-bold">Dar de alta un usuario</h1>
 
                  <!-- Alerta de mensaje (éxito o error) -->
                 <?php if ($msg !== ''): ?>
@@ -49,7 +49,7 @@ $msg = $_GET['msg'] ?? '';
 
                 
                 <!-- Tarjeta contenedora con grilla adaptable de Bootstrap -->
-                <div class="card shadow-sm border-0 bg-white rounded-3">
+                <div class="card shadow-sm border-0 bg-body rounded-3">
                     <div class="card-body p-4">
 
                         <form action="alta_usuario.php" method="POST">

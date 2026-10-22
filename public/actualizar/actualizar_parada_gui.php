@@ -42,7 +42,7 @@ if (!$parada) {
 
         <main class="flex-grow-1 p-4 overflow-hidden">
             <div class="container-fluid">
-                <h1 class="h3 mb-4 text-white fw-bold">Editar Parada #<?= htmlspecialchars($parada['id']) ?></h1>
+                <h1 class="h3 mb-4 text-body fw-bold">Editar Parada #<?= htmlspecialchars($parada['id']) ?></h1>
 
                 <?php if ($msg !== ''): ?>
                     <div class="alert alert-info alert-dismissible fade show" role="alert">

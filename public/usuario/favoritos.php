@@ -8,9 +8,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['usuario'])) {
-    die("Acceso denegado. Esta página es exclusiva para usuarios.");
-}
 
 require_once '../../private/config/database.php';
 
@@ -65,13 +62,13 @@ try {
         <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Área Principal de Contenido -->
-        <main class="flex-grow-1 p-4 overflow-auto bg-light">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body bg-body">
 
             <div class="container-fluid" style="max-width: 1100px;">
 
                 <!-- Encabezado de Bienvenida -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 text-dark fw-bold m-0">Mis Viajes Favoritos</h1>
+                    <h1 class="h3 text-body fw-bold m-0">Mis Viajes Favoritos</h1>
                     <span class="badge bg-primary fs-6 px-3 py-2">
                         <i class="fa-solid fa-user me-1"></i> Usuario
                     </span>
@@ -91,7 +88,7 @@ try {
                         <?php } else { ?>
                             <div class="table-responsive">
                                 <table class="table table-hover align-middle text-center">
-                                    <thead class="table-primary">
+                                    <thead>
                                         <tr>
                                             <th>Origen</th>
                                             <th>Destino</th>
@@ -129,7 +126,7 @@ try {
                                                 </td>
                                             </tr>
                                             <!-- Fila para el mapa desplegable -->
-                                            <tr class="bg-white">
+                                            <tr class="bg-body">
                                                 <td colspan="8" class="p-0 border-bottom border-primary">
                                                     <div
                                                         id="mapa-<?= $index ?>"

@@ -34,15 +34,15 @@ if (isset($_GET['msg'])) {
     <div class="d-flex flex-column flex-md-row min-vh-100">
         <?php include '../../private/includes/sidebar.php'; ?>
 
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="h3 text-dark fw-bold m-0">Viajes Registrados</h1>
+                <h1 class="h3 text-body fw-bold m-0">Viajes Registrados</h1>
                 <a href="<?= BASE_URL ?>alta/alta_viaje_gui.php" class="btn btn-primary d-inline-flex align-items-center gap-2 shadow-sm">
                     <i class="fa-solid fa-plus"></i> Nuevo Viaje
                 </a>
             </div>
 
-            <div class="card shadow-sm border-0 bg-white rounded-3">
+            <div class="card shadow-sm border-0 bg-body rounded-3">
                 <div class="card-body p-4">
                     <div class="row g-2 mb-4 align-items-center">
                         <div class="col-12 col-md-5 col-lg-4">
@@ -62,7 +62,7 @@ if (isset($_GET['msg'])) {
 
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
-                            <thead class="table-primary">
+                            <thead>
                                 <tr>
                                     <th scope="col" class="py-3 px-3">ID</th>
                                     <th scope="col" class="py-3">Ómnibus</th>

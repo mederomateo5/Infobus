@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 </style>
 
-<body class="bg-light">
+<body class="bg-body">
     <?php include '../private/includes/header.php'; ?>
 
     <div class="container py-4" style="max-width: 1100px;">
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-body p-4">
-                <h1 class="h3 mb-3 text-dark fw-bold text-center">Sugerir Nueva Parada</h1>
+                <h1 class="h3 mb-3 text-body fw-bold text-center">Sugerir Nueva Parada</h1>
                 <p class="text-secondary text-center mb-4">Hacé clic en el mapa para ubicar el punto exacto de la parada que querés proponer.</p>
 
                 <?php if ($mensajeExito): ?>

@@ -26,7 +26,7 @@
     <?php include '../private/includes/header.php'; ?>
 
     <!-- Contenedor principal con diseño fluido, bordes redondeados y espaciado adaptativo -->
-    <main class="container bg-white rounded-4 shadow-sm p-4 p-md-5 my-5">
+    <main class="container bg-body rounded-4 shadow-sm p-4 p-md-5 my-5">
 
         <div class="row justify-content-center g-5">
 
@@ -39,7 +39,7 @@
                     width="85"
                     height="85"
                 >
-                <h2 class="fs-4 mb-2 fw-bold text-dark">
+                <h2 class="fs-4 mb-2 fw-bold text-body">
                     Mateo Medero<br>
                     <span class="fs-6 fw-normal text-muted">Líder del proyecto y Programador principal</span>
                 </h2>
@@ -57,7 +57,7 @@
                     width="85"
                     height="85"
                 >
-                <h2 class="fs-4 mb-2 fw-bold text-dark">
+                <h2 class="fs-4 mb-2 fw-bold text-body">
                     Alejo Medina<br>
                     <span class="fs-6 fw-normal text-muted">Líder de documentación y Programador Secundario</span>
                 </h2>
@@ -75,7 +75,7 @@
                     width="85"
                     height="85"
                 >
-                <h2 class="fs-4 mb-2 fw-bold text-dark">
+                <h2 class="fs-4 mb-2 fw-bold text-body">
                     Sebastián De León<br>
                     <span class="fs-6 fw-normal text-muted">Recopilador de información / Administrador de base de datos</span>
                 </h2>
@@ -93,7 +93,7 @@
                     width="85"
                     height="85"
                 >
-                <h2 class="fs-4 mb-2 fw-bold text-dark">
+                <h2 class="fs-4 mb-2 fw-bold text-body">
                     Thiago Rodriguez<br>
                     <span class="fs-6 fw-normal text-muted">Administrador de sistemas y Ayudante de documentación</span>
                 </h2>
@@ -113,7 +113,7 @@
                     width="85"
                     height="85"
                 >
-                <h2 class="fs-4 mb-2 fw-bold text-dark">
+                <h2 class="fs-4 mb-2 fw-bold text-body">
                     Marcelo Méndez<br>
                     <span class="fs-6 fw-normal text-muted">Administrador de sistemas y Soporte IT</span>
                 </h2>

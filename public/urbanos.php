@@ -23,7 +23,7 @@ background-image:
 }
 </style>
 
-<body class="bg-light">
+<body class="bg-body">
     <?php include '../private/includes/header.php'; ?>
 
     <div class="container py-4" style="max-width: 1100px;">
@@ -34,7 +34,7 @@ background-image:
 
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-body p-4">
-                <h1 class="h3 mb-4 text-dark fw-bold text-center">Ómnibus Urbanos</h1>
+                <h1 class="h3 mb-4 text-body fw-bold text-center">Ómnibus Urbanos</h1>
 
                 <form id="formUbicacion">
                     <div class="mb-3">
@@ -59,7 +59,7 @@ background-image:
                 <h2 class="h4 mb-3 text-primary fw-bold">Líneas y Horarios Disponibles</h2>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
-                        <thead class="table-primary text-center">
+                        <thead>
                             <tr class="text-center">
                                 <th>Salida</th>
                                 <th>Llegada</th>

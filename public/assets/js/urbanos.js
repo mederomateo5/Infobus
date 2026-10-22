@@ -121,7 +121,7 @@ selectUbicacion.addEventListener("change", function() {
                 tablaHorariosUrbanos.appendChild(fila);
 
                 const filaMapa = document.createElement("tr");
-                filaMapa.className = "bg-white";
+                filaMapa.className = "bg-body";
                 filaMapa.innerHTML = `
                     <td colspan="5" class="p-0 border-bottom border-primary">
                         <div id="mapa-urbano-${index}" class="rounded shadow-sm" style="display: none; height: 300px; width: 100%;"></div>

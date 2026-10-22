@@ -35,7 +35,7 @@ if (!$usuario) {
     <?php include '../../private/includes/head.php'; ?>
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/panel_admin.css">
 </head>
-<body>
+<body class="bg-body">
     <?php include '../../private/includes/header.php'; ?>
 
     <!-- Contenedor Flexbox Responsivo -->
@@ -45,12 +45,12 @@ if (!$usuario) {
         <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Área Principal de Contenido -->
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
             <div class="container-fluid">
 
                 <!-- Encabezado -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 text-dark fw-bold m-0">Actualizar Contraseña</h1>
+                    <h1 class="h3 text-body fw-bold m-0">Actualizar Contraseña</h1>
                     <span class="badge bg-primary fs-6 px-3 py-2">
                         <i class="fa-solid fa-user me-1"></i> <?= ucfirst(htmlspecialchars($usuario['tipo'])) ?>
                     </span>
@@ -65,23 +65,18 @@ if (!$usuario) {
                 <?php endif; ?>
 
                 <!-- Formulario de Cambio de Contraseña -->
-                <div class="card shadow-sm border-0">
+                <div class="card shadow-sm border-0 bg-body">
                     <div class="card-body p-4">
                         <form action="actualizar_contrasenia.php" method="POST">
-                            
-                            <div class="mb-3">
-                                <label for="password_actual" class="form-label fw-semibold">Contraseña Actual</label>
-                                <input type="password" name="password_actual" id="password_actual" class="form-control" required placeholder="Introduce tu contraseña actual">
-                            </div>
 
                             <div class="mb-3">
-                                <label for="nuevo_password" class="form-label fw-semibold">Nueva Contraseña</label>
+                                <label for="nuevo_password" class="form-label fw-semibold text-body">Nueva Contraseña</label>
                                 <input type="password" name="nuevo_password" id="nuevo_password" class="form-control" required minlength="8" placeholder="Mínimo 8 caracteres, una mayúscula y un símbolo">
                                 <div class="form-text">Debe tener al menos 8 caracteres, una letra mayúscula y un símbolo especial.</div>
                             </div>
 
                             <div class="mb-4">
-                                <label for="confirmar_password" class="form-label fw-semibold">Confirmar Nueva Contraseña</label>
+                                <label for="confirmar_password" class="form-label fw-semibold text-body">Confirmar Nueva Contraseña</label>
                                 <input type="password" name="confirmar_password" id="confirmar_password" class="form-control" required minlength="8" placeholder="Repite la nueva contraseña">
                             </div>
 

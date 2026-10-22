@@ -16,12 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $userId            = $_SESSION['user_id'];
-$passwordActual    = $_POST['password_actual']    ?? '';
 $nuevoPassword     = $_POST['nuevo_password']     ?? '';
 $confirmarPassword = $_POST['confirmar_password'] ?? '';
 
 // 1. Validar que los campos no estén vacíos
-if ($passwordActual === '' || $nuevoPassword === '' || $confirmarPassword === '') {
+if ($nuevoPassword === '' || $confirmarPassword === '') {
     header('Location: actualizar_contrasenia_gui.php?msg=' . urlencode('Todos los campos son obligatorios.'));
     exit();
 }
@@ -50,7 +49,7 @@ if (!empty($errors)) {
 }
 
 try {
-    // 4. Obtener la contraseña actual en la base de datos para verificarla
+    // 4. Obtener la contraseña actual en la base de datos para comparar que no sea idéntica
     $stmt = $pdo->prepare("SELECT password FROM users WHERE id = ?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -60,19 +59,13 @@ try {
         exit();
     }
 
-    // 5. Verificar que la contraseña actual ingresada sea correcta
-    if (!password_verify($passwordActual, $user['password'])) {
-        header('Location: actualizar_contrasenia_gui.php?msg=' . urlencode('La contraseña actual es incorrecta.'));
-        exit();
-    }
-
-    // 6. Validar que la nueva contraseña sea distinta a la anterior
+    // 5. Validar que la nueva contraseña sea distinta a la anterior
     if (password_verify($nuevoPassword, $user['password'])) {
         header('Location: actualizar_contrasenia_gui.php?msg=' . urlencode('La nueva contraseña no puede ser igual a la actual.'));
         exit();
     }
 
-    // 7. Generar el nuevo hash y actualizar en la base de datos
+    // 6. Generar el nuevo hash y actualizar en la base de datos
     $nuevoPasswordHash = password_hash($nuevoPassword, PASSWORD_DEFAULT);
     
     $update = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");

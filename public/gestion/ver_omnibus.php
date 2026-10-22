@@ -41,20 +41,20 @@ if (isset($_GET['msg'])) {
         <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- 2. Contenido principal a la derecha -->
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
 
             <div id="omnibus" class="container-fluid">
                 
                 <!-- Encabezado (Texto oscuro para fondo claro) -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 text-dark fw-bold m-0">Ómnibus Registrados</h1>
+                    <h1 class="h3 text-body fw-bold m-0">Ómnibus Registrados</h1>
                     <a href="<?= BASE_URL ?>alta/alta_omnibus_gui.php" class="btn btn-primary d-inline-flex align-items-center gap-2 shadow-sm">
                         <i class="fa-solid fa-plus"></i> Nuevo Ómnibus
                     </a>
                 </div>
 
                 <!-- Tarjeta contenedora para Búsqueda y Tabla -->
-                <div class="card shadow-sm border-0 bg-white rounded-3">
+                <div class="card shadow-sm border-0 bg-body rounded-3">
                     <div class="card-body p-4">
                         
                         <!-- Barra de Búsqueda -->
@@ -77,7 +77,7 @@ if (isset($_GET['msg'])) {
                         <!-- Tabla con encabezado suave -->
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
-                                <thead class="table-primary">
+                                <thead>
                                     <tr>
                                         <th scope="col" class="py-3 px-3">ID</th>
                                         <th scope="col" class="py-3">Compañía</th>

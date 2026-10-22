@@ -89,7 +89,7 @@ try {
     }
 </style>
 
-<body class="bg-light">
+<body class="bg-body">
     <?php include '../private/includes/header.php'; ?>
 
     <div class="container py-4" style="max-width: 1100px;">
@@ -102,7 +102,7 @@ try {
         <!-- Tarjeta del Formulario de Búsqueda -->
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-body p-4">
-                <h1 class="h3 mb-4 text-dark fw-bold text-center">Encuentra tu próximo viaje Interurbano</h1>
+                <h1 class="h3 mb-4 text-body fw-bold text-center">Encuentra tu próximo viaje Interurbano</h1>
 
                 <form id="formBusqueda">
                     <div class="row g-3">
@@ -141,6 +141,7 @@ try {
                         </div>
                     </div>
                 </form>
+                <p class="text-muted small mb-4 mt-3 text-center">Los resultados por defecto solo muestran los viajes disponibles.</p>
             </div>
         </div>
 
@@ -152,13 +153,13 @@ try {
             
             <!-- Icono y panel de filtros en la esquina superior derecha -->
             <div class="position-absolute top-0 end-0 p-3" style="z-index: 10;">
-                <button class="btn btn-light border shadow-sm rounded-circle" id="btnToggleFiltros" title="Filtrar resultados" style="width: 40px; height: 40px;">
+                <button class="btn btn-body border shadow-sm rounded-circle" id="btnToggleFiltros" title="Filtrar resultados" style="width: 40px; height: 40px;">
                     <i class="fa-solid fa-filter text-primary"></i>
                 </button>
 
                 <!-- Mini panel desplegable -->
-                <div id="panelFiltros" class="card shadow border p-3 position-absolute end-0 mt-2" style="display: none; width: 280px; z-index: 20; background: #ffffff;">
-                    <h6 class="fw-bold text-dark mb-3 border-bottom pb-2">Filtrar Viajes</h6>
+                <div id="panelFiltros" class="card shadow border bg-body p-3 position-absolute end-0 mt-2" style="display: none; width: 280px; z-index: 20">
+                    <h6 class="fw-bold text-body mb-3 border-bottom pb-2">Filtrar Viajes</h6>
                     
                     <!-- Filtro por Agencia -->
                     <div class="mb-2">
@@ -202,7 +203,7 @@ try {
                 <h2 class="h4 mb-3 text-primary fw-bold">Viajes encontrados</h2>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle text-center">
-                        <thead class="table-primary">
+                        <thead>
                             <tr>
                                 <th>Salida</th>
                                 <th>Llegada</th>
@@ -224,7 +225,7 @@ try {
        <?php if (!empty($top_viajes)) { ?>
         <div class="card shadow-sm border-0 text-center mb-4">
             <div class="card-body p-4">
-                <h2 class="h4 fw-bold mb-1 text-dark">
+                <h2 class="h4 fw-bold mb-1 text-body">
                     <i class="fa-solid fa-trophy text-warning me-2"></i>Top 3 Viajes Más Concurridos
                 </h2>
                 <p class="text-muted small mb-4">Los destinos y horarios preferidos por los pasajeros</p>
@@ -237,7 +238,7 @@ try {
                             
                             // Definir medalla / trofeo según el puesto
                             if ($index === 0) {
-                                $badgeTrofeo = '<span class="badge bg-warning text-dark px-3 py-2 fw-bold fs-6 shadow-sm">🥇 1.° Puesto</span>';
+                                $badgeTrofeo = '<span class="badge bg-warning text-body px-3 py-2 fw-bold fs-6 shadow-sm">🥇 1.° Puesto</span>';
                             } elseif ($index === 1) {
                                 $badgeTrofeo = '<span class="badge bg-secondary px-3 py-2 fw-bold fs-6 shadow-sm">🥈 2.° Puesto</span>';
                             } else {
@@ -245,7 +246,8 @@ try {
                             }
                         ?>
                             <div class="carousel-item <?= $claseActiva ?>">
-                                <div class="card bg-white border shadow-sm mx-auto p-4 rounded-4" style="max-width: 480px;">
+                                <!-- Cambiado bg-body por bg-body y border por border-secondary-subtle para adaptarse -->
+                                <div class="card bg-body border shadow-sm mx-auto p-4 rounded-4" style="max-width: 480px;">
                                     <div class="mb-3">
                                         <?= $badgeTrofeo ?>
                                     </div>
@@ -254,7 +256,8 @@ try {
                                         <?= htmlspecialchars($tv['origen_nombre']) ?> &rarr; <?= htmlspecialchars($tv['destino_nombre']) ?>
                                     </h3>
 
-                                    <div class="row text-start g-2 my-2 bg-light p-3 rounded-3 border">
+                                    <!-- Cambiado bg-body por bg-body-secondary para que cambie de color en modo oscuro -->
+                                    <div class="row text-start g-2 my-2 bg-body-secondary p-3 rounded-3 border">
                                         <div class="col-6"><strong>Salida:</strong> <?= htmlspecialchars($tv['hora']) ?></div>
                                         <div class="col-6"><strong>Llegada:</strong> <?= htmlspecialchars($tv['hora_llegada']) ?></div>
                                         <div class="col-6"><strong>Agencia:</strong> <?= htmlspecialchars($tv['agencia']) ?></div>
@@ -274,13 +277,13 @@ try {
                         <?php } ?>
                     </div>
 
-                    <!-- Botones de navegación (Flechas) -->
+                    <!-- Botones de navegación (Flechas) adaptados -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselTopViajes" data-bs-slide="prev" style="width: 5%;">
-                        <span class="carousel-control-prev-icon bg-dark rounded-circle p-2 shadow" aria-hidden="true"></span>
+                        <span class="carousel-control-prev-icon bg-body-secondary rounded-circle p-2 shadow" aria-hidden="true"></span>
                         <span class="visually-hidden">Anterior</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselTopViajes" data-bs-slide="next" style="width: 5%;">
-                        <span class="carousel-control-next-icon bg-dark rounded-circle p-2 shadow" aria-hidden="true"></span>
+                        <span class="carousel-control-next-icon bg-body-secondary rounded-circle p-2 shadow" aria-hidden="true"></span>
                         <span class="visually-hidden">Siguiente</span>
                     </button>
                 </div>

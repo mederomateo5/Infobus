@@ -45,12 +45,12 @@ if (!$usuario) {
         <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Área Principal de Contenido -->
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
             <div class="container-fluid">
 
                 <!-- Encabezado -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 text-dark fw-bold m-0">Actualizar Correo Electrónico</h1>
+                    <h1 class="h3 text-body fw-bold m-0">Actualizar Correo Electrónico</h1>
                     <span class="badge bg-primary fs-6 px-3 py-2">
                         <i class="fa-solid fa-user me-1"></i> <?= ucfirst(htmlspecialchars($usuario['tipo'])) ?>
                     </span>

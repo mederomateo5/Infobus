@@ -21,9 +21,10 @@
         background-position: center;
         background-attachment: fixed;
     }
+
 </style>
 
-<body class="bg-light">
+<body class="bg-body">
     <?php include '../private/includes/header.php'; ?>
 
     <div class="container py-4" style="max-width: 1100px;">
@@ -35,7 +36,7 @@
         <!-- Tarjeta principal que contiene el título, el botón y el mapa -->
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-body p-4 text-center">
-                <h1 class="h3 mb-4 text-dark fw-bold">Paradas Cercanas</h1>
+                <h1 class="h3 mb-4 text-body fw-bold">Paradas Cercanas</h1>
                 
                 <!-- Botón y su etiqueta centrados -->
                 <div class="d-flex flex-column align-items-center mb-4">
@@ -62,7 +63,7 @@
                 <h2 class="h4 mb-3 text-primary fw-bold">Paradas Disponibles</h2>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
-                        <thead class="table-primary">
+                        <thead>
                             <tr>
                                 <th>Parada</th>
                                 <th>Distancia</th>

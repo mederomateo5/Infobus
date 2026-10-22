@@ -8,9 +8,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_SESSION['user_tipo']) || !in_array($_SESSION['user_tipo'], ['usuario'])) {
-    die("Acceso denegado. Esta página es exclusiva para usuarios.");
-}
 
 require_once '../../private/config/database.php';
 ?>
@@ -32,13 +29,13 @@ require_once '../../private/config/database.php';
         <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Área Principal de Contenido -->
-        <main class="flex-grow-1 p-4 overflow-auto">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
 
             <div class="container-fluid">
 
                 <!-- Encabezado de Bienvenida -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 text-dark fw-bold m-0">Panel de Control</h1>
+                    <h1 class="h3 text-body fw-bold m-0">Panel de Control</h1>
                     <span class="badge bg-primary fs-6 px-3 py-2">
                         <i class="fa-solid fa-user me-1"></i> Usuario
                     </span>

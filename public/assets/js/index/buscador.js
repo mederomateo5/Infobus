@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
             tbody.appendChild(fila);
 
             const filaMapa = document.createElement("tr");
-            filaMapa.className = "bg-white";
+            filaMapa.className = "bg-body";
             filaMapa.innerHTML = `
                 <td colspan="9" class="p-0 border-bottom border-primary">
                     <div
