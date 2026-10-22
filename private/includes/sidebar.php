@@ -47,6 +47,22 @@ $tipo_usuario = $_SESSION['user_tipo'] ?? '';
                 <span>Inicio</span>
             </a>
         </li>
+
+        <?php endif; ?>
+
+        <?php if ($tipo_usuario === 'administrador' || $tipo_usuario === 'compania'): ?>
+
+        <li class="nav-item">
+            <a href="<?= BASE_URL ?>paneles/panel_usuario.php" 
+               class="nav-link <?= $pagina_actual == 'panel_usuario.php' ? 'active text-body' : 'text-body' ?> d-flex align-items-center">
+                <i class="fa-solid fa-user me-3 fs-5" style="width: 20px;"></i>
+                <span>Mi usuario</span>
+            </a>
+        </li>
+         
+        <?php endif; ?>
+
+         <?php if ($tipo_usuario === 'administrador'): ?>
             
             <!-- Ver Usuarios -->
             <li class="nav-item">
@@ -102,15 +118,6 @@ $tipo_usuario = $_SESSION['user_tipo'] ?? '';
             </a>
         </li>
 
-        <li class="nav-item">
-            <a href="<?= BASE_URL ?>paneles/panel_usuario.php" 
-               class="nav-link <?= $pagina_actual == 'panel_usuario.php' ? 'active text-body' : 'text-body' ?> d-flex align-items-center">
-                <i class="fa-solid fa-map-pin me-3 fs-5" style="width: 20px;"></i>
-                <span>Mi usuario</span>
-            </a>
-        </li>
-
-
         <?php endif; ?>
 
         <?php if ($tipo_usuario === 'administrador' || $tipo_usuario === 'compania'): ?>
@@ -118,7 +125,7 @@ $tipo_usuario = $_SESSION['user_tipo'] ?? '';
         <!-- ========================================== -->
         <!-- 2. SECCIÓN COMPARTIDA (Admin y Compañía)   -->
         <!-- ========================================== -->
-
+        
         <!-- Ómnibus -->
         <li class="nav-item">
             <a href="<?= BASE_URL ?>gestion/ver_omnibus.php" 
