@@ -126,5 +126,14 @@
             $stmt->execute(['email' => strtolower(trim($email))]);
             return (int) $stmt->fetchColumn() > 0;
         }
+
+        /* Busca y devuelve un usuario por su email */
+    public function getByEmail(string $email): array|false {
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM users WHERE email = :email LIMIT 1'
+        );
+        $stmt->execute(['email' => strtolower(trim($email))]);
+        return $stmt->fetch();
+    }
     }
 ?>

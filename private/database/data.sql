@@ -13,10 +13,42 @@ INSERT INTO users
 (nombre, apellido, email, telefono, password, tipo)
 VALUES
 (
-   'Administrador',
-   'Sistema',
-   'admin@omnibus.com',
-   '099000001',
+   'Mateo',
+   'Medero',
+   'mederomateo5@gmail.com',
+   '098323545',
+   '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
+   'administrador'
+),
+(
+   'Sebastian',
+   'De Leon',
+   'sebasdeleon731@gmail.com',
+   '099096405',
+   '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
+   'administrador'
+),
+(
+   'Thiago',
+   'Rodriguez',
+   'thiagounomas2@gmail.com',
+   '092450434',
+   '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
+   'administrador'
+),
+(
+   'Mateo',
+   'Medero',
+   'marcelo201gh@gmail.com',
+   '097971142',
+   '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
+   'administrador'
+),
+(
+   'Mateo',
+   'Medero',
+   'alejomedina305@gmail.com',
+   '098375249',
    '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
    'administrador'
 ),
@@ -79,14 +111,14 @@ VALUES
 (11, 'Parada 7, Ruta 54, Liceo n°1', -34.4244520, -57.4460720, 'urbano/interurbano'),
 (12, 'Parada 6, Ruta 54, Ancap', -34.4276030, -57.4444200, 'urbano/interurbano'),
 (13, 'Parada Los Simpson', -34.4298680, -57.4433680, 'urbano/interurbano'),
-(14, 'Parada 5, Esquina de Salto y Av Gral Artigas', -34.4296380, -57.4431970, 'urbano/interurbano'),
+(14, 'Parada 5, Esquina de Salto y Av Gral Artigas', -34.4298479, -57.4432977, 'urbano/interurbano'),
 (15, 'Parada 25, Estatua La Embarazada', -34.4315670, -57.4416410, 'urbano/interurbano'),
 (16, 'Parada 26, Estatua Las Manos', -34.4315050, -57.4393240, 'urbano/interurbano'),
 (17, 'Parada 2, Esquina de Carlos Gardel y Don Bosco', -34.4328240, -57.4351820, 'urbano/interurbano'),
 (18, 'Parada 27, Calle Don Bosco', -34.4327710, -57.4354180, 'urbano/interurbano'),
 (19, 'Parada entre Calle Simón Betarte y Don Bosco, Kiosco', -34.4361240, -57.4354180, 'urbano/interurbano'),
 (20, 'Parada 1, TATA', -34.4365310, -57.4354080, 'urbano/interurbano'),
-(21, 'Parada 29, Esquina del banco viejo', -34.4349560, -57.4376820, 'urbano/interurbano'),
+(21, 'Parada 29, Esquina del banco viejo', -34.4347827, -57.4383255, 'urbano/interurbano'),
 (22, 'Esquina Club Uruguay', -34.4311690, -57.4361480, 'urbano/interurbano'),
 (23, 'Juan Lacaze (COT)', -34.4347350, -57.4401660, 'interurbano'),
 (24, 'Juan Lacaze (TAB)', -34.4349030, -57.4401340, 'interurbano'),
@@ -95,7 +127,7 @@ VALUES
 (27, 'Parada 16, Ruta 54, 18 de Mayo', -34.4100250, -57.4474670, 'urbano/interurbano'),
 (28, 'Esquina entre Calle 33 y Jaime Roca', -34.4200890, -57.4554760, 'urbano'),
 (29, 'Entre la plaza y Calle Jaime Roca', -34.4201020, -57.4569670, 'urbano'),
-(30, 'Esquina entre Calle 48 y Mario Echeverría', -34.4177700, -57.4572090, 'urbano'),
+(30, 'Esquina entre Calle 48 y Mario Echeverría', -34.4174974, -57.4573323, 'urbano'),
 (31, 'Esquina entre Calle 48 y 44', -34.4161590, -57.4571870, 'urbano'),
 (32, 'Esquina entre Calle 48 y 46', -34.4143450, -57.4571870, 'urbano'),
 (33, 'Esquina entre Calle 46 y 47', -34.4143180, -57.4552990, 'urbano'),
@@ -137,9 +169,20 @@ VALUES
 (69, 'Hospital', -34.4578701, -57.8296169, 'interurbano'),
 (70, 'Esquina Asamblea de la Florida ', -34.4555366, -57.8341558, 'interurbano'),
 (71, 'Parada, El Dorado', -34.4539492, -57.8392417, 'interurbano'),
-(72, 'Parada, Intendencia', -34.4586751, -57.8389731, 'interurbano'); 
---72 tab fin, 62 FRUGONI ES SALIENDO DE COLONIA, 61 ES ENTRANDO A COLONIA Y 60 ENTRANDO, 59 frugoni cuando colonia es destino, 69 EXCLUSIVO DE TAB.
+(72, 'Parada, Intendencia', -34.4586751, -57.8389731, 'interurbano'),
+(73, '[Paso] Esquina de Ibes y doctor Luis', -34.4224764, -57.4515330, 'urbano'),
+(75, '[Paso] Esquina primero de Mayo y Juana Ibarborou', -34.4065646, -57.4498739, 'urbano'),
+(76, '[Paso] Esquina primero de Mayo y Ruta 54', -34.4065458, -57.4472869, 'urbano'),
+(77, '[Paso] Cruce Ruta 54, junto a Parada 21',                 -34.4224940, -57.4472360, 'urbano'),
+(78, '[Paso] Esquina norte de Ibes (giro hacia Jaime Roca)',    -34.4200300, -57.4516000, 'urbano'),
+(79, '[Paso] Giro al norte desde Jaime Roca',                   -34.4197897, -57.4574879, 'urbano'),
+(80, '[Paso] Giro al norte, calle al oeste de Calle 48',        -34.4198210, -57.4576810, 'urbano'),
+(81, '[Paso] Giro al este hacia Calle 48 y Mario Echeverría',   -34.4184533, -57.4577186, 'urbano'),
+(83, '[Paso] Retorno, esquina de giro al sureste',              -34.4347530, -57.4402680, 'urbano'),
+(84, '[Paso] Retorno, esquina de giro al noreste hacia TATA',   -34.4370800, -57.4360380, 'urbano');
 
+
+-- 72 tab fin, 62 FRUGONI ES SALIENDO DE COLONIA, 61 ES ENTRANDO A COLONIA Y 60 ENTRANDO, 59 frugoni cuando colonia es destino, 69 EXCLUSIVO DE TAB.
 -- ============================================================
 --  5. Ómnibus (Asignados a las compañías)
 -- ============================================================
@@ -406,28 +449,6 @@ VALUES
 (63, 1), (63, 2), (63, 3), (63, 4), (63, 5), (63, 6), (63, 7),
 -- Viaje 64 (Menos domingos)
 (64, 1), (64, 2), (64, 3), (64, 4), (64, 5), (64, 6),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- Viajes 65 al 77 (Todos los días)
 (65, 1), (65, 2), (65, 3), (65, 4), (65, 5), (65, 6), (65, 7),
 (66, 1), (66, 2), (66, 3), (66, 4), (66, 5), (66, 6), (66, 7),
@@ -523,30 +544,29 @@ VALUES
 --  8. Relación Ómnibus - Paradas (Recorrido Urbano para omnibus_id = 4)
 -- ============================================================
 INSERT INTO recorre (omnibus_id, parada_id, orden) VALUES
-(4, 50, 1),  -- UTU
-(4, 21, 2),  -- Parada 1, TATA
-(4, 20, 3),  -- Parada entre calle Simón Betarte y Don Bosco, Kiosco
-(4, 19, 4),  -- Parada 27, Calle Don Bosco
-(4, 18, 5),  -- Parada 2, Esquina de Carlos Gardel y Don Bosco
-(4, 17, 6),  -- Parada 26, Estatua Las Manos
-(4, 16, 7),  -- Parada 25, Estatua La Embarazada
-(4, 15, 8),  -- Parada 5, Esquina de Salto y Av Gral Artigas
-(4, 14, 9),  -- Parada Los Simpson
-(4, 12, 10), -- Parada 6, Ruta 54, Ancap
-(4, 11, 11), -- Parada 7, Ruta 54, Liceo n°1
-(4, 8, 12),  -- Parada 8, Ruta 54
-(4, 7, 13),  -- Parada 9, Ruta 54
-(4, 6, 14),  -- Parada 12, Ruta 54
-(4, 5, 15),  -- Parada 1, Ruta 54
-(4, 4, 16),  -- En la Ruta 54, cerca del Destacamento de Bomberos
-(4, 3, 17),  -- Entre la calle Juana de Ibarbourou y Julio Rodriguez
-(4, 2, 18),  -- Entre la Calle.4 y Calle.1
-(4, 1, 19),  -- Entre la Plaza de Palos y el minimercado Los Amigos
-(4, 29, 20), -- Esquina entre Calle 33 y Jaime Roca
-(4, 30, 21), -- Entre la plaza y Calle Jaime Roca
-(4, 31, 22), -- Esquina entre Calle 48 y Mario Echeverría
-(4, 32, 23), -- Esquina entre Calle 48 y 44
-(4, 33, 24), -- Esquina entre Calle 48 y 46
-(4, 34, 25), -- Esquina entre Calle 46 y 47
-(4, 35, 26), -- Esquina entre Calle 44 y 47
-(4, 36, 27); -- Esquina entre Calle 47 y Mario Echeverría
+(4, 19, 1),   -- Parada entre Calle Simón Betarte y Don Bosco, Kiosco
+(4, 21, 2),   -- Parada 29, Esquina del banco viejo
+(4, 14, 3),   -- Parada 5, Esquina de Salto y Av Gral Artigas
+(4, 12, 4),   -- Parada 6, Ruta 54, Ancap
+(4, 11, 5),   -- Parada 7, Ruta 54, Liceo n°1
+(4, 77, 6),   -- [Paso] Cruce Ruta 54, junto a Parada 21
+(4, 73, 7),   -- [Paso] Esquina de Ibes y doctor Luis
+(4, 78, 8),   -- [Paso] Esquina norte de Ibes (giro hacia Jaime Roca)
+(4, 28, 9),   -- Esquina entre Calle 33 y Jaime Roca
+(4, 29, 10),  -- Entre la plaza y Calle Jaime Roca
+(4, 79, 11),  -- [Paso] Giro al norte desde Jaime Roca
+(4, 80, 12),  -- [Paso] Giro al norte, calle al oeste de Calle 48
+(4, 81, 13),  -- [Paso] Giro al este hacia Calle 48 y Mario Echeverría
+(4, 30, 14),  -- Esquina entre Calle 48 y Mario Echeverría
+(4, 31, 15),  -- Esquina entre Calle 48 y 44
+(4, 32, 16),  -- Esquina entre Calle 48 y 46
+(4, 33, 17),  -- Esquina entre Calle 46 y 47
+(4, 34, 18),  -- Esquina entre Calle 44 y 47
+(4, 35, 19),  -- Esquina entre Calle 47 y Mario Echeverría
+(4, 1, 20),   -- Entre la Plaza de Palos y el minimercado Los Amigos
+(4, 2, 21),   -- Entre la Calle 4 y Calle 1
+(4, 3, 23),   -- Entre la Calle Juana de Ibarbourou y Julio Rodriguez
+(4, 75, 24),  -- [Paso] Esquina primero de Mayo y Juana Ibarborou
+(4, 76, 25),  -- [Paso] Esquina primero de Mayo y Ruta 54
+(4, 83, 27), -- Retorno 1
+(4, 84, 28); -- Retorno 2

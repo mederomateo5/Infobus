@@ -1,0 +1,72 @@
+<?php
+require_once '../../private/config/config.php';
+require_once '../../private/config/database.php';
+require_once '../../private/src/User.php';
+require_once '../../private/src/DosFactores.php';
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    header('Location: redirigir.php');
+    exit();
+}
+
+$error   = '';
+$userObj = new User($pdo);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+
+    if (empty($email)) {
+        $error = 'Por favor, ingresá tu correo electrónico.';
+    } else {
+        $user = $userObj->getByEmail($email);
+
+        if ($user) {
+            // Reutilizamos el sistema de 2FA para enviar el código de acceso
+            if (DosFactores::iniciar($user)) {
+                header('Location: verificar_codigo.php');
+                exit();
+            } else {
+                $error = 'No pudimos enviar el código a tu correo. Probá de nuevo en unos minutos.';
+            }
+        } else {
+            $error = 'No encontramos ninguna cuenta asociada a ese correo.';
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Recuperar contraseña</title>
+    <?php include '../../private/includes/head.php'; ?>
+</head>
+<body class="bg-light">
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card shadow-sm p-4">
+        <h4 class="mb-2">Recuperar contraseña</h4>
+        <p class="text-muted">Te enviaremos un código para que puedas entrar a tu cuenta sin contraseña y puedas cambiarla mediante el panel de usuario.</p>
+
+        <?php if ($error): ?>
+          <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
+
+        <form method="POST">
+          <div class="mb-3">
+            <label for="email" class="form-label fw-bold">Correo electrónico</label>
+            <input type="email" id="email" name="email" required autofocus
+                   class="form-control" placeholder="tu@email.com"
+                   value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Enviar código</button>
+        </form>
+
+        <a href="login.php" class="d-block text-center mt-3">Volver a iniciar sesión</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

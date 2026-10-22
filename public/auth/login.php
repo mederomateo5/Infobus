@@ -232,6 +232,11 @@ ini_set('display_errors', 1);
 
                             </div>
 
+                            <!-- Enlace Olvidé mi contraseña -->
+                            <div class="mb-3">
+                                <a href="recuperar.php" class="text-decoration-underline text-secondary small">Olvidé mi contraseña</a>
+                            </div>
+
 
                             <button
                                 type="submit"
@@ -577,7 +582,7 @@ ini_set('display_errors', 1);
         // Tabs
         function switchTab(tab) {
             // Ocultar todas las secciones y quitar la clase activa de todos los botones
-            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.form-section').forEach(s => s.classList.permv?.('active') || s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('tab-' + tab).classList.add('active');
             event.currentTarget.classList.add('active');

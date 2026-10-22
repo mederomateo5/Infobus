@@ -234,21 +234,27 @@ function inicializarMapaUrbanoFila(index, llaveRuta) {
                         map.fitBounds(ultimaCapaRuta.getBounds());
                     }
 
-                    // 4. Pintar los pines de cada parada encima de la ruta respetando sus colores y orden
-                    paradas.forEach(parada => {
-                        let iconoSeleccionado = pinInterurbano; 
-                        if (parada.tipo === "urbano") {
-                            iconoSeleccionado = pinUrbano;       
-                        } else if (parada.tipo === "ambos") {
-                            iconoSeleccionado = pinAmbos;       
-                        }
-                        let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
-                        
-                        // Nota: La base de datos devuelve 'latitud' y 'longitud'
-                        L.marker([parada.latitud, parada.longitud], { icon: iconoSeleccionado })
-                            .addTo(map)
-                            .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}<br>Orden: ${parada.orden}`);
-                    });
+                    // 4. Pintar los pines de las paradas encima de la ruta
+paradas.forEach(parada => {
+    // SI EL NOMBRE EMPIEZA CON [Paso], OSRM lo usa para trazar la calle, 
+    // pero NO dibujamos el pin visual en el mapa para no confundir al usuario.
+    if (parada.nombre.startsWith("[Paso]")) {
+        return; 
+    }
+
+    let iconoSeleccionado = pinInterurbano; 
+    if (parada.tipo === "urbano") {
+        iconoSeleccionado = pinUrbano;       
+    } else if (parada.tipo === "ambos") {
+        iconoSeleccionado = pinAmbos;       
+    }
+    
+    let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
+    
+    L.marker([parada.latitud, parada.longitud], { icon: iconoSeleccionado })
+        .addTo(map)
+        .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}<br>Orden: ${parada.orden}`);
+});
                 });
         })
         .catch(error => console.error("Error al cargar la ruta dinámica desde la BD:", error));

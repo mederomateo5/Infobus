@@ -122,9 +122,8 @@ CREATE TABLE IF NOT EXISTS recorre (
    parada_id INT UNSIGNED NOT NULL,
    orden INT UNSIGNED NOT NULL,
 
-
-   PRIMARY KEY (omnibus_id, parada_id),
-
+   -- La clave primaria ahora es la combinación del ómnibus y el orden del recorrido
+   PRIMARY KEY (omnibus_id, orden),
 
    CONSTRAINT fk_recorre_omnibus
        FOREIGN KEY (omnibus_id)
@@ -132,20 +131,13 @@ CREATE TABLE IF NOT EXISTS recorre (
        ON UPDATE CASCADE
        ON DELETE CASCADE,
 
-
    CONSTRAINT fk_recorre_parada
        FOREIGN KEY (parada_id)
        REFERENCES paradas(id)
        ON UPDATE CASCADE
-       ON DELETE CASCADE,
-
-
-   CONSTRAINT uq_recorre_orden
-       UNIQUE (omnibus_id, orden)
-
+       ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 
 
 

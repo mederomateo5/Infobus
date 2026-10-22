@@ -47,8 +47,14 @@
 
                 <!-- Mapa ABAJO del botón, ocupando el 100% del ancho -->
                 <div id="mapa" class="rounded shadow-sm" style="width: 100%; height: 450px; z-index: 1;"></div>
+                        <div class="text-center mb-4">
+            <a href="sugerir_parada.php" class="text-decoration-underline text-secondary fw-semibold">¿No encuentras tu parada? Envíanos tu parada para agregarla</a>
+        </div>
             </div>
         </div>
+
+        <!-- Enlace para sugerir parada -->
+
 
         <!-- Tabla de resultados (Oculta al principio) -->
         <div class="card shadow-sm border-0 mb-4" id="resultadosParadas" style="display:none;">
