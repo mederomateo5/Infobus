@@ -29,7 +29,7 @@
 
     <div class="container py-4" style="max-width: 1100px;">
         <!-- Botón para regresar -->
-        <div class="d-flex justify-content-start mb-3">
+        <div class="d-flex justify-content-start py-4 mt-4 mt-md-0">
             <a href="index.php" class="btn btn-primary fw-semibold">&larr; Volver a Interurbanos</a>
         </div>
 

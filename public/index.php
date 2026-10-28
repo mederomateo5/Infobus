@@ -92,7 +92,7 @@ try {
 <body class="bg-body">
     <?php include '../private/includes/header.php'; ?>
 
-    <div class="container py-4" style="max-width: 1100px;">
+    <div class="container py-4 mt-4 mt-md-0" style="max-width: 1100px;">
 
         <!-- Botón para ir a la página de urbanos -->
         <div class="d-flex justify-content-end mb-3">

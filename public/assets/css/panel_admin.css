@@ -3,3 +3,25 @@ body {
   background-color: #f4f6f9;
   padding-top: 75px; /* para que el header no tape */
 }
+
+@media (max-width: 767.98px) {
+    .sidebar-panel {
+        height: auto !important;
+        max-height: none !important;
+        position: static !important;
+        overflow: visible !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Deja lugar para el navbar fijo, que en celular ocupa dos filas */
+    .sidebar-panel {
+        margin-top: 110px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body {
+        background-color: var(--bs-body-bg);
+    }
+}

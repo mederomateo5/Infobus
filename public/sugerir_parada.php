@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container py-4" style="max-width: 1100px;">
         <!-- Botón para regresar -->
         <div class="d-flex justify-content-start mb-3">
-            <a href="paradas.php" class="btn btn-primary fw-semibold">&larr; Volver a Paradas</a>
+            <a href="paradas.php" class="btn btn-primary fw-semibold py-4 mt-4 mt-md-0">&larr; Volver a Paradas</a>
         </div>
 
         <div class="card shadow-sm border-0 mb-4">

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../includes/head.php';
 
 // Detecta la página actual para marcar el enlace activo automáticamente
 $pagina_actual = basename($_SERVER['PHP_SELF']);
@@ -19,6 +20,12 @@ $tipo_usuario = $_SESSION['user_tipo'] ?? '';
     </button>
 
     <div class="collapse d-md-block" id="sidebarMenu">
+
+        <!-- Cerrar sesión siempre visible en celulares -->
+        <a href="<?= BASE_URL ?>auth/logout.php"
+            class="btn btn-outline-danger d-flex d-md-none align-items-center justify-content-center w-100 mb-2">
+            <i class="fa-solid fa-right-from-bracket me-2"></i>Cerrar Sesión
+        </a>
 
         <!-- Lista de Enlaces de Navegación -->
         <ul class="nav nav-pills flex-column mb-auto gap-1">
@@ -231,16 +238,17 @@ $tipo_usuario = $_SESSION['user_tipo'] ?? '';
 
             <?php endif; ?>
 
+        </ul>
+        
+        <hr class="my-3 text-secondary opacity-25">
 
-            <hr class="my-3 text-secondary opacity-25">
-
-            <!-- Cerrar sesión -->
-            <div class="dropdown">
-                <a href="<?= BASE_URL ?>auth/logout.php" class="d-flex align-items-center text-body text-decoration-none px-2 py-1 rounded hover-bg">
-                    <i class="fa-solid fa-right-from-bracket me-3 text-danger fs-5" style="width: 20px;"></i>
-                    <span class="fw-medium text-danger">Cerrar Sesión</span>
-                </a>
-            </div>
+        <!-- Cerrar sesión -->
+        <div class="dropdown">
+            <a href="<?= BASE_URL ?>auth/logout.php" class="d-flex align-items-center text-body text-decoration-none px-2 py-1 rounded hover-bg">
+                <i class="fa-solid fa-right-from-bracket me-3 text-danger fs-5" style="width: 20px;"></i>
+                <span class="fw-medium text-danger">Cerrar Sesión</span>
+            </a>
+        </div>
 
     </div>
 
