@@ -1,7 +1,34 @@
-//Logica de leaflet
+// Logica de Leaflet para Interurbanos (index.php)
 
 let mapasInicializados = {};
-let paradasData = [];
+
+// --- FUNCIÓN PARA CREAR PINES DE COLORES CON CSS ---
+function crearPinColor(colorHex) {
+    return L.divIcon({
+        className: 'custom-pin',
+        html: `<div style="
+            background-color: ${colorHex};
+            width: 20px;
+            height: 20px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -10px 0 0 -10px;
+            position: absolute;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+        "></div>`,
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -30]
+    });
+}
+
+// Definición de colores para los pines de las paradas
+const pinUrbano = crearPinColor("#28a745");       // 🟢 Urbano
+const pinInterurbano = crearPinColor("#007bff");  // 🔵 Interurbano
+const pinAmbos = crearPinColor("#ffc107");        // 🟠 Ambos
 
 function inicializarMapaTabla(index, rutaKey, nombreOrigen, nombreDestino) {
     const idContenedor = `mapa-${index}`;
@@ -23,81 +50,81 @@ function inicializarMapaTabla(index, rutaKey, nombreOrigen, nombreDestino) {
         attribution: "© OpenStreetMap contributors",
     }).addTo(map);
 
-    let paradaOrigenObj = paradasData.find(
-        (p) => p.nombre.toLowerCase() === nombreOrigen.toLowerCase(),
-    );
-    let paradaDestinoObj = paradasData.find(
-        (p) => p.nombre.toLowerCase() === nombreDestino.toLowerCase(),
-    );
+    // Petición AJAX para obtener el recorrido completo desde la BD utilizando la ruta_key del ómnibus
+    fetch(`buscador/obtener_recorrido_ruta.php?ruta=${rutaKey}`)
+        .then(response => {
+            if (!response.ok) throw new Error("No se pudieron cargar las paradas desde la base de datos");
+            return response.json();
+        })
+        .then(paradas => {
+            if (!paradas || paradas.length === 0) {
+                console.warn("No hay paradas registradas para esta ruta.");
+                return;
+            }
 
-    if (paradaOrigenObj && paradaDestinoObj) {
-        const lng1 = parseFloat(paradaOrigenObj.lng);
-        const lat1 = parseFloat(paradaOrigenObj.lat);
-        const lng2 = parseFloat(paradaDestinoObj.lng);
-        const lat2 = parseFloat(paradaDestinoObj.lat);
+            // Extraer coordenadas en formato "longitud,latitud" requeridas por OSRM
+            const coordenadasString = paradas.map(p => `${p.longitud},${p.latitud}`).join(';');
+            const urlOSRM = `https://router.project-osrm.org/route/v1/driving/${coordenadasString}?overview=full&geometries=geojson`;
 
-        const urlOSRM = `https://router.project-osrm.org/route/v1/driving/${lng1},${lat1};${lng2},${lat2}?overview=full&geometries=geojson`;
+            return fetch(urlOSRM)
+                .then(res => res.json())
+                .then(dataRoute => {
+                    let ultimaCapaRuta = null;
 
-        fetch(urlOSRM)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.routes && data.routes.length > 0) {
-                    const routeGeoJSON = data.routes[0].geometry;
+                    if (dataRoute.routes && dataRoute.routes.length > 0) {
+                        const coordsRuta = dataRoute.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
 
-                    const polyline = L.geoJSON(routeGeoJSON, {
-                        style: {
-                            color: "#0056b3",
-                            weight: 5,
-                            opacity: 0.8,
-                            dashArray: "8, 8",
-                        },
-                    }).addTo(map);
+                        // Dibujar línea animada si Ant Path está disponible, sino una polilínea normal
+                        if (typeof L.polyline.antPath === 'function') {
+                            ultimaCapaRuta = L.polyline.antPath(coordsRuta, {
+                                color: '#0056b3',
+                                weight: 5,
+                                opacity: 0.85,
+                                pulseColor: '#ffffff',
+                                delay: 800,
+                                dashArray: [10, 20]
+                            }).addTo(map);
+                        } else {
+                            ultimaCapaRuta = L.polyline(coordsRuta, {
+                                color: '#0056b3',
+                                weight: 5,
+                                opacity: 0.8,
+                                dashArray: "8, 8"
+                            }).addTo(map);
+                        }
+                    }
 
-                    map.fitBounds(polyline.getBounds());
-                } else {
-                    dibujarLineaRectaFallback(map, lat1, lng1, lat2, lng2);
-                }
-            })
-            .catch(() => {
-                dibujarLineaRectaFallback(map, lat1, lng1, lat2, lng2);
-            });
-    }
+                    if (ultimaCapaRuta) {
+                        map.fitBounds(ultimaCapaRuta.getBounds());
+                    }
 
-    const paradasDelViaje = [
-        { obj: paradaOrigenObj, rol: "ORIGEN" },
-        { obj: paradaDestinoObj, rol: "DESTINO" },
-    ];
+                    // Pintar los pines de las paradas sobre la ruta
+                    paradas.forEach(parada => {
+                        // Omitir puntos de paso interno si empiezan con [Paso]
+                        if (parada.nombre.startsWith("[Paso]")) {
+                            return; 
+                        }
 
-    paradasDelViaje.forEach((item) => {
-        if (item.obj) {
-            const marker = L.marker([item.obj.lat, item.obj.lng], {
-                icon: pinOrigenRojo,
-            })
-                .addTo(map)
-                .bindPopup(`<b>${item.obj.nombre}</b><br>Rol: ${item.rol}`);
-
-            marker.openPopup();
-        }
-    });
+                        let iconoSeleccionado = pinInterurbano; 
+                        if (parada.tipo === "urbano") {
+                            iconoSeleccionado = pinUrbano;       
+                        } else if (parada.tipo === "ambos") {
+                            iconoSeleccionado = pinAmbos;       
+                        }
+                        
+                        let badgeTexto = parada.tipo ? parada.tipo.toUpperCase() : 'INTERURBANO';
+                        
+                        L.marker([parada.latitud, parada.longitud], { icon: iconoSeleccionado })
+                            .addTo(map)
+                            .bindPopup(`<b>${parada.nombre}</b><br>Tipo: ${badgeTexto}<br>Orden: ${parada.orden}`);
+                    });
+                });
+        })
+        .catch(error => console.error("Error al cargar la ruta dinámica desde la BD:", error));
 
     setTimeout(() => {
         map.invalidateSize();
-    }, 100);
+    }, 150);
 
     mapasInicializados[index] = map;
-}
-
-function dibujarLineaRectaFallback(map, lat1, lng1, lat2, lng2) {
-    const polyline = L.polyline(
-        [
-            [lat1, lng1],
-            [lat2, lng2],
-        ],
-        {
-            color: "#0056b3",
-            weight: 5,
-            dashArray: "8, 8",
-        },
-    ).addTo(map);
-    map.fitBounds(polyline.getBounds());
 }

@@ -297,6 +297,8 @@ try {
 
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Librería Ant Path para líneas animadas en Leaflet -->
+    <script src="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.js"></script>
     <script src="<?= BASE_URL ?>assets/js/index/utils.js"></script>
     <script src="<?= BASE_URL ?>assets/js/index/mapas.js"></script>
     <script src="<?= BASE_URL ?>assets/js/index/buscador.js"></script>
