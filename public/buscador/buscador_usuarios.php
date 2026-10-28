@@ -3,8 +3,9 @@ session_start();
 require_once '../../private/config/config.php';
 header("Content-Type: application/json; charset=utf-8");
 
-// Validar que el usuario esté autenticado y tenga rol de administrador
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
+// Validar que el usuario esté autenticado y tenga rol de administrador (aceptando 'admin' o 'administrador')
+$tipoUsuario = $_SESSION['tipo'] ?? $_SESSION['user_tipo'] ?? '';
+if (!isset($_SESSION['user_id']) || ($tipoUsuario !== 'admin' && $tipoUsuario !== 'administrador')) {
     http_response_code(403);
     echo json_encode([
         "exito" => false,
