@@ -35,7 +35,11 @@ try {
     foreach ($viajes as &$v) {
         $v['asientosLibres'] = (int)$v['asientosLibres'];
         $v['precio'] = (float)$v['precio'];
-        $v['ruta_key'] = empty($v['ruta_key']) ? 'urbano' : $v['ruta_key'];
+        
+        // Validar que ruta_key solo contenga caracteres alfanuméricos, guiones o guiones bajos para prevenir XSS/inyecciones
+        $rutaLimpia = preg_replace('/[^a-zA-Z0-9\-_]/', '', $v['ruta_key']);
+        $v['ruta_key'] = (empty($rutaLimpia)) ? 'urbano' : $rutaLimpia;
+
         // Si por alguna razón no viniera frecuencia, asignamos un respaldo
         $v['frecuencia'] = empty($v['frecuencia']) ? 'Diario' : $v['frecuencia'];
     }
@@ -43,6 +47,8 @@ try {
     echo json_encode($viajes);
 
 } catch (PDOException $e) {
-    echo json_encode(['error' => 'Error al consultar la base de datos: ' . $e->getMessage()]);
+    error_log("Error en buscar_urbanos.php: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['error' => 'Ocurrió un error al consultar la base de datos.']);
 }
 ?>

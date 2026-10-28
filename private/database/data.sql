@@ -181,8 +181,6 @@ VALUES
 (83, '[Paso] Retorno, esquina de giro al sureste',              -34.4347530, -57.4402680, 'urbano'),
 (84, '[Paso] Retorno, esquina de giro al noreste hacia TATA',   -34.4370800, -57.4360380, 'urbano');
 
-
--- 72 tab fin, 62 FRUGONI ES SALIENDO DE COLONIA, 61 ES ENTRANDO A COLONIA Y 60 ENTRANDO, 59 frugoni cuando colonia es destino, 69 EXCLUSIVO DE TAB.
 -- ============================================================
 --  5. Ómnibus (Asignados a las compañías con ruta_key específica)
 -- ============================================================

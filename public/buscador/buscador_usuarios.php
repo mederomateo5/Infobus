@@ -1,6 +1,17 @@
 <?php
+session_start();
 require_once '../../private/config/config.php';
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=utf-8");
+
+// Validar que el usuario esté autenticado y tenga rol de administrador
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'admin') {
+    http_response_code(403);
+    echo json_encode([
+        "exito" => false,
+        "mensaje" => "Acceso no autorizado."
+    ]);
+    exit;
+}
 
 require_once '../../private/config/database.php';
 
@@ -14,7 +25,8 @@ try {
 
     if (isset($datos["mostrarTodo"]) && $datos["mostrarTodo"] === true) {
 
-        $sql = "SELECT * FROM users";
+        // Evitar SELECT * para proteger datos sensibles de los usuarios
+        $sql = "SELECT id, nombre, apellido, email, telefono, tipo FROM users";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
@@ -65,7 +77,8 @@ try {
         exit;
     }
 
-    $sql = "SELECT * FROM users WHERE nombre LIKE :busqueda";
+    // Evitar SELECT * limitando las columnas devueltas
+    $sql = "SELECT id, nombre, apellido, email, telefono, tipo FROM users WHERE nombre LIKE :busqueda";
     $stmt = $pdo->prepare($sql);
 
     $parametro = "%" . $texto . "%";
@@ -82,12 +95,13 @@ try {
     ]);
 
 } catch (\PDOException $e) {
-
+    // Registrar el error internamente de forma segura
+    error_log("Error en buscador_usuarios.php: " . $e->getMessage());
     http_response_code(500);
 
     echo json_encode([
         "exito" => false,
-        "mensaje" => "Error en la base de datos: " . $e->getMessage()
+        "mensaje" => "Ocurrió un error al procesar la solicitud en la base de datos."
     ]);
 }
 ?>

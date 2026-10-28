@@ -63,7 +63,6 @@ function obtenerUbicacion() {
     btnUbicacion.textContent = "⏳ Buscando ubicación...";
     btnUbicacion.disabled = true;
 
-
     navigator.geolocation.getCurrentPosition(
         (position) => {
             mostrarUbicacion(position);
@@ -83,7 +82,6 @@ function mostrarUbicacion(position) {
     const latitud = position.coords.latitude;
     const longitud = position.coords.longitude;
 
-
     latUsuario = latitud;
     lngUsuario = longitud;
 
@@ -93,16 +91,21 @@ function mostrarUbicacion(position) {
         mapa.removeLayer(marcadorUsuario);
     }
 
+    // Popup de usuario creado de forma segura con nodos DOM
+    const popupUsuario = document.createElement("div");
+    const strongUsuario = document.createElement("strong");
+    strongUsuario.textContent = "Tu ubicación actual";
+    popupUsuario.appendChild(strongUsuario);
+
     marcadorUsuario = L.marker([latitud, longitud], { icon: pinRojoUsuario })
         .addTo(mapa)
-        .bindPopup("<strong>Tu ubicación actual</strong>")
+        .bindPopup(popupUsuario)
         .openPopup();
 
     calcularParadasCercanas();
 }
 
 function mostrarError(error) {
-
     alert("No se pudo obtener la ubicación. Asegúrate de tener el GPS activado y dar permisos al navegador.");
     console.log("Error de ubicación:", error);
 }
@@ -124,6 +127,9 @@ fetch("api/obtener_paradas.php")
 
         paradas = datos;
         paradas.forEach(parada => {
+            if (parada.nombre.startsWith("[Paso]")) {
+                return; 
+            }
             let iconoSeleccionado = pinInterurbano; // Por defecto
 
             if (parada.tipo === "urbano") {
@@ -132,9 +138,17 @@ fetch("api/obtener_paradas.php")
                 iconoSeleccionado = pinAmbos;
             }
 
+            // Creación segura del contenido del popup para evitar XSS almacenado
+            const popupContent = document.createElement("div");
+            const strong = document.createElement("strong");
+            strong.textContent = parada.nombre;
+            popupContent.appendChild(strong);
+            popupContent.appendChild(document.createElement("br"));
+            popupContent.append(`Tipo: ${parada.tipo}`);
+
             const marcador = L.marker([parada.lat, parada.lng], { icon: iconoSeleccionado })
                 .addTo(mapa)
-                .bindPopup(`<strong>${parada.nombre}</strong><br>Tipo: ${parada.tipo}`);
+                .bindPopup(popupContent);
             
             marcadoresParadas.push(marcador);
         });
@@ -142,7 +156,6 @@ fetch("api/obtener_paradas.php")
     .catch(error => {
         console.error("Error al cargar las paradas desde la base de datos:", error.message);
     });
-
 
 function calcularParadasCercanas() {
     const paradasConDistancia = paradas.map(parada => {
@@ -156,7 +169,6 @@ function calcularParadasCercanas() {
             distancia: distancia
         };
     });
-
 
     // Ordenar de menor a mayor distancia
     paradasConDistancia.sort((a, b) => a.distancia - b.distancia);
@@ -174,17 +186,30 @@ function calcularParadasCercanas() {
         const fila = document.createElement("tr");
 
         const colNombre = document.createElement("td");
-        let badgeTipo = '';
+        const spanTexto = document.createElement("span");
+        spanTexto.textContent = `🚏 ${parada.nombre} `;
+        colNombre.appendChild(spanTexto);
+
+        const badge = document.createElement("span");
+        badge.style.padding = "2px 6px";
+        badge.style.borderRadius = "4px";
+        badge.style.fontSize = "11px";
+
         if (parada.tipo === "urbano") {
-            badgeTipo = ' <span style="background:#28a745; color:white; padding:2px 6px; border-radius:4px; font-size:11px;">Urbano</span>';
+            badge.style.background = "#28a745";
+            badge.style.color = "white";
+            badge.textContent = "Urbano";
         } else if (parada.tipo === "urbano/interurbano") {
-            badgeTipo = ' <span style="background:#ffc107; color:black; padding:2px 6px; border-radius:4px; font-size:11px;">Ambos</span>';
+            badge.style.background = "#ffc107";
+            badge.style.color = "black";
+            badge.textContent = "Ambos";
         } else {
-            badgeTipo = ' <span style="background:#007bff; color:white; padding:2px 6px; border-radius:4px; font-size:11px;">Interurbano</span>';
+            badge.style.background = "#007bff";
+            badge.style.color = "white";
+            badge.textContent = "Interurbano";
         }
 
-
-        colNombre.innerHTML = `🚏 ${parada.nombre}${badgeTipo}`;
+        colNombre.appendChild(badge);
 
         const colDistancia = document.createElement("td");
         colDistancia.textContent = `A ${Math.round(parada.distancia)} metros`;
@@ -217,5 +242,4 @@ function calcularParadasCercanas() {
 
         tbody.appendChild(fila);
     });
-
 }

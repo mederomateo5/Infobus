@@ -81,6 +81,11 @@ try {
     echo json_encode($viajes);
 
 } catch (PDOException $e) {
-    echo json_encode(['error' => 'Error al consultar la base de datos: ' . $e->getMessage()]);
+    // Registrar internamente el error real de la base de datos
+    error_log("Error en buscar_viajes.php: " . $e->getMessage());
+    
+    // Devolver mensaje genérico y código de error HTTP adecuado
+    http_response_code(500);
+    echo json_encode(['error' => 'Ocurrió un error al procesar la búsqueda.']);
 }
 ?>

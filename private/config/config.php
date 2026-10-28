@@ -17,4 +17,3 @@ if ($public_pos !== false) {
 
 // Definir constante global
 define('BASE_URL', $protocol . '://' . $host . $base_path);
-?>

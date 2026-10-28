@@ -109,15 +109,39 @@ selectUbicacion.addEventListener("change", function() {
 
                 const fila = document.createElement("tr");
                 fila.className = "text-center align-middle";
-                fila.innerHTML = `
-                    <td>${viaje.hora}</td>
-                    <td>${viaje.hora_llegada}</td>
-                    <td>${estimado}</td>
-                    <td>${frecuenciaTexto}</td>
-                    <td class="text-center">
-                        <button class="btn btn-sm btn-outline-primary border-0 btn-mapa fw-bold" data-index="${index}" data-ruta="${viaje.ruta_key}" style="transition: transform 0.3s ease;">▼</button>
-                    </td>
-                `;
+                
+                // Construimos las celdas de texto de forma segura con textContent
+                const tdHora = document.createElement("td");
+                tdHora.textContent = viaje.hora;
+                
+                const tdLlegada = document.createElement("td");
+                tdLlegada.textContent = viaje.hora_llegada;
+                
+                const tdEstimado = document.createElement("td");
+                tdEstimado.textContent = estimado;
+                
+                const tdFrecuencia = document.createElement("td");
+                tdFrecuencia.textContent = frecuenciaTexto;
+
+                const tdAccion = document.createElement("td");
+                tdAccion.className = "text-center";
+
+                // Creamos el botón de forma segura usando setAttribute para evitar XSS almacenado
+                const btnMapa = document.createElement("button");
+                btnMapa.className = "btn btn-sm btn-outline-primary border-0 btn-mapa fw-bold";
+                btnMapa.style.transition = "transform 0.3s ease";
+                btnMapa.textContent = "▼";
+                btnMapa.setAttribute("data-index", index);
+                btnMapa.setAttribute("data-ruta", viaje.ruta_key);
+
+                tdAccion.appendChild(btnMapa);
+
+                fila.appendChild(tdHora);
+                fila.appendChild(tdLlegada);
+                fila.appendChild(tdEstimado);
+                fila.appendChild(tdFrecuencia);
+                fila.appendChild(tdAccion);
+
                 tablaHorariosUrbanos.appendChild(fila);
 
                 const filaMapa = document.createElement("tr");

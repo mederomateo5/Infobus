@@ -1,26 +1,26 @@
 <?php require_once '../private/config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urbanos</title>
     <?php include '../private/includes/head.php'; ?>
-
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 
-<style> 
-body {
-background-image:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url("assets/img/fondo.jpg");
-    background-repeat:no-repeat;
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
-}
+<style>
+    body {
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            url("assets/img/fondo.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
 </style>
 
 <body class="bg-body">
@@ -81,4 +81,5 @@ background-image:
     <script src="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.js"></script>
     <script src="<?= BASE_URL ?>assets/js/urbanos.js"></script>
 </body>
+
 </html>

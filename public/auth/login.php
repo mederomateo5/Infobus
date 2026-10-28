@@ -1,7 +1,5 @@
 <?php
 require_once '../../private/config/config.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
     require_once '../../private/config/database.php';
     require_once '../../private/src/User.php';
     require_once '../../private/src/DosFactores.php';
@@ -18,47 +16,47 @@ ini_set('display_errors', 1);
     $regErrors   = [];
     $activeTab   = 'login'; // qué pestaña mostrar por defecto
 
-    // ----------------------------------------------------------------
-    //  POST: Login
-    // ----------------------------------------------------------------
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
-        $activeTab = 'login';
-        $email    = $_POST['email']    ?? '';
-        $password = $_POST['password'] ?? '';
+// ----------------------------------------------------------------
+//  POST: Login
+// ----------------------------------------------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
+    $activeTab = 'login';
+    $email    = $_POST['email']    ?? '';
+    $password = $_POST['password'] ?? '';
 
-        $loggedUser = $userObj->login($email, $password);
+    $loggedUser = $userObj->login($email, $password);
 
-        if ($loggedUser) {
-            if (DosFactores::iniciar($loggedUser)) {
+    if ($loggedUser) {
+        if (DosFactores::iniciar($loggedUser)) {
+            header('Location: verificar_codigo.php');
+            exit();
+        }
+        $loginError = 'No pudimos enviar el código a tu correo. Probá de nuevo en unos minutos.';
+    } else {
+        $loginError = 'Email o contraseña incorrectos.';
+    }
+}
+
+  // ----------------------------------------------------------------
+//  POST: Registro
+// ----------------------------------------------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'register') {
+    $activeTab  = 'register';
+    $regErrors  = $userObj->validateRegister($_POST);
+
+    if (empty($regErrors)) {
+        $userObj->register($_POST);
+        // Verificar credenciales y pedir el segundo factor
+        $newUser = $userObj->login($_POST['email'], $_POST['password']);
+        if ($newUser) {
+            if (DosFactores::iniciar($newUser)) {
                 header('Location: verificar_codigo.php');
                 exit();
             }
-            $loginError = 'No pudimos enviar el código a tu correo. Probá de nuevo en unos minutos.';
-        } else {
-            $loginError = 'Email o contraseña incorrectos.';
+            $regErrors[] = 'Tu cuenta se creó, pero no pudimos enviar el código a tu correo. Iniciá sesión para recibir uno nuevo.';
         }
     }
-
-    // ----------------------------------------------------------------
-    //  POST: Registro
-    // ----------------------------------------------------------------
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'register') {
-        $activeTab  = 'register';
-        $regErrors  = $userObj->validateRegister($_POST);
-
-        if (empty($regErrors)) {
-            $userObj->register($_POST);
-            // Verificar credenciales y pedir el segundo factor
-            $newUser = $userObj->login($_POST['email'], $_POST['password']);
-            if ($newUser) {
-                if (DosFactores::iniciar($newUser)) {
-                    header('Location: verificar_codigo.php');
-                    exit();
-                }
-                $regErrors[] = 'Tu cuenta se creó, pero no pudimos enviar el código a tu correo. Iniciá sesión para recibir uno nuevo.';
-            }
-        }
-    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

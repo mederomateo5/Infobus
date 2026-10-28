@@ -195,7 +195,7 @@ try {
                     const fila = btnFav.closest("tr");
                     const filaSiguiente = fila.nextElementSibling; // Fila del mapa asociada
 
-                    fetch('../buscador/toggle_favorito.php', {
+                    fetch('../usuario/marcar_favorito.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ viaje_id: viajeId })

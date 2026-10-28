@@ -10,28 +10,27 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
-$error   = '';
+$mensaje = '';
+$tipoMensaje = 'danger';
 $userObj = new User($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
 
     if (empty($email)) {
-        $error = 'Por favor, ingresá tu correo electrónico.';
+        $mensaje = 'Por favor, ingresá tu correo electrónico.';
+        $tipoMensaje = 'danger';
     } else {
         $user = $userObj->getByEmail($email);
 
         if ($user) {
-            // Reutilizamos el sistema de 2FA para enviar el código de acceso
-            if (DosFactores::iniciar($user)) {
-                header('Location: verificar_codigo.php');
-                exit();
-            } else {
-                $error = 'No pudimos enviar el código a tu correo. Probá de nuevo en unos minutos.';
-            }
-        } else {
-            $error = 'No encontramos ninguna cuenta asociada a ese correo.';
+            // Intentar enviar el código de recuperación de forma silenciosa
+            DosFactores::iniciar($user);
         }
+
+        // Mensaje genérico idéntico en ambos casos para evitar enumeración de cuentas
+        $mensaje = 'Si el correo está registrado en nuestro sistema, te hemos enviado un código de acceso.';
+        $tipoMensaje = 'success';
     }
 }
 ?>
@@ -49,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h4 class="mb-2">Recuperar contraseña</h4>
         <p class="text-muted">Te enviaremos un código para que puedas entrar a tu cuenta sin contraseña y puedas cambiarla mediante el panel de usuario.</p>
 
-        <?php if ($error): ?>
-          <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+        <?php if ($mensaje): ?>
+          <div class="alert alert-<?= $tipoMensaje ?>"><?= htmlspecialchars($mensaje) ?></div>
         <?php endif; ?>
 
         <form method="POST">

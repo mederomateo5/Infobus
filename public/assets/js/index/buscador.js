@@ -115,53 +115,85 @@ document.addEventListener("DOMContentLoaded", function () {
             fila.className = "text-center align-middle";
 
             const esFavorito = viaje.es_favorito ? true : false;
-            const estiloEstrella = esFavorito ? "fas fa-star text-primary" : "far fa-star text-primary";
+            const claseEstrella = esFavorito ? "fas fa-star text-primary" : "far fa-star text-primary";
 
-            fila.innerHTML = `
-                <td>${viaje.hora}</td>
-                <td>${viaje.hora_llegada}</td>
-                <td>${estimado}</td>
-                <td>${viaje.asientosLibres}</td>
-                <td>${viaje.agencia}</td>
-                <td>$${viaje.precio}</td>
-                <td>
-                    <button class="btn btn-sm bg-transparent border-0 shadow-none btn-favorito p-0" data-id="${viaje.id}" style="font-size: 1.2rem;">
-                        <i class="${estiloEstrella}"></i>
-                    </button>
-                </td>
-                <td>
-                    <button
-                        class="btn btn-sm btn-outline-primary border-0 btn-mapa fw-bold"
-                        data-index="${index}"
-                        data-ruta="${viaje.ruta_key}"
-                        style="transition: transform 0.3s ease;">
-                        ▼
-                    </button>
-                </td>
-                <td>
-                    <button
-                        class="btn btn-sm btn-primary px-3 py-1 fw-bold btn-comprar"
-                        data-id="${viaje.id}"
-                        data-agencia="${viaje.agencia}">
-                        Comprar
-                    </button>
-                </td>
-            `;
+            // Construcción segura de celdas mediante DOM nodes en lugar de innerHTML directo
+            const tdHora = document.createElement("td");
+            tdHora.textContent = viaje.hora;
+
+            const tdLlegada = document.createElement("td");
+            tdLlegada.textContent = viaje.hora_llegada;
+
+            const tdEstimado = document.createElement("td");
+            tdEstimado.textContent = estimado;
+
+            const tdAsientos = document.createElement("td");
+            tdAsientos.textContent = viaje.asientosLibres;
+
+            const tdAgencia = document.createElement("td");
+            tdAgencia.textContent = viaje.agencia;
+
+            const tdPrecio = document.createElement("td");
+            tdPrecio.textContent = `$${viaje.precio}`;
+
+            // Botón Favorito
+            const tdFav = document.createElement("td");
+            const btnFav = document.createElement("button");
+            btnFav.className = "btn btn-sm bg-transparent border-0 shadow-none btn-favorito p-0";
+            btnFav.style.fontSize = "1.2rem";
+            btnFav.setAttribute("data-id", viaje.id);
+            const iFav = document.createElement("i");
+            iFav.className = claseEstrella;
+            btnFav.appendChild(iFav);
+            tdFav.appendChild(btnFav);
+
+            // Botón Mapa
+            const tdMapaBtn = document.createElement("td");
+            const btnMapa = document.createElement("button");
+            btnMapa.className = "btn btn-sm btn-outline-primary border-0 btn-mapa fw-bold";
+            btnMapa.style.transition = "transform 0.3s ease";
+            btnMapa.textContent = "▼";
+            btnMapa.setAttribute("data-index", index);
+            btnMapa.setAttribute("data-ruta", viaje.ruta_key);
+            tdMapaBtn.appendChild(btnMapa);
+
+            // Botón Comprar
+            const tdComprar = document.createElement("td");
+            const btnComprar = document.createElement("button");
+            btnComprar.className = "btn btn-sm btn-primary px-3 py-1 fw-bold btn-comprar";
+            btnComprar.textContent = "Comprar";
+            btnComprar.setAttribute("data-id", viaje.id);
+            btnComprar.setAttribute("data-agencia", viaje.agencia);
+            tdComprar.appendChild(btnComprar);
+
+            fila.appendChild(tdHora);
+            fila.appendChild(tdLlegada);
+            fila.appendChild(tdEstimado);
+            fila.appendChild(tdAsientos);
+            fila.appendChild(tdAgencia);
+            fila.appendChild(tdPrecio);
+            fila.appendChild(tdFav);
+            fila.appendChild(tdMapaBtn);
+            fila.appendChild(tdComprar);
 
             tbody.appendChild(fila);
 
+            // Fila contenedor del mapa
             const filaMapa = document.createElement("tr");
             filaMapa.className = "bg-body";
-            filaMapa.innerHTML = `
-                <td colspan="9" class="p-0 border-bottom border-primary">
-                    <div
-                        id="mapa-${index}"
-                        class="rounded shadow-sm"
-                        style="display: none; height: 350px; width: 100%;">
-                    </div>
-                </td>
-            `;
+            const tdContenedorMapa = document.createElement("td");
+            tdContenedorMapa.setAttribute("colspan", "9");
+            tdContenedorMapa.className = "p-0 border-bottom border-primary";
 
+            const divMapa = document.createElement("div");
+            divMapa.id = `mapa-${index}`;
+            divMapa.className = "rounded shadow-sm";
+            divMapa.style.display = "none";
+            divMapa.style.height = "350px";
+            divMapa.style.width = "100%";
+
+            tdContenedorMapa.appendChild(divMapa);
+            filaMapa.appendChild(tdContenedorMapa);
             tbody.appendChild(filaMapa);
         });
 
