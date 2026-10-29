@@ -2,8 +2,8 @@
 require_once '../../private/config/config.php';
 session_start();
 
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'administrador') {
-    die("Acceso denegado.");
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_tipo']) || ($_SESSION['user_tipo'] !== 'administrador' && $_SESSION['user_tipo'] !== 'compania')) {
+        die("Acceso denegado.");
 }
 
 require_once '../../private/config/database.php';

@@ -182,6 +182,9 @@ function calcularParadasCercanas() {
     const resultadosParadas = document.getElementById("resultadosParadas");
     resultadosParadas.style.display = "block";
 
+    // Verificamos si la ruta de la página actual termina en paradas.php
+    const esPaginaParadas = window.location.pathname.endsWith("paradas.php");
+
     paradasCercanas.forEach(parada => {
         const fila = document.createElement("tr");
 
@@ -216,7 +219,9 @@ function calcularParadasCercanas() {
 
         const colAccion = document.createElement("td");
         const btnVer = document.createElement("button");
-        btnVer.textContent = "Ver Ruta";
+        
+        // Se asigna el texto condicionalmente según la página
+        btnVer.textContent = esPaginaParadas ? "Ver Parada" : "Ver Ruta";
         btnVer.className = "btn btn-sm btn-primary";
         
         btnVer.addEventListener("click", () => {

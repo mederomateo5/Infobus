@@ -48,7 +48,7 @@ function mostrarResultados(datos) {
         const formData = new FormData();
         formData.append("id", omnibus.id);
 
-        fetch("baja/baja_omnibus.php", {
+        fetch("../baja/baja_omnibus.php", {
           method: "POST",
           body: formData,
         })
