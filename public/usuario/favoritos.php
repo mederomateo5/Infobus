@@ -8,13 +8,14 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-
 require_once '../../private/config/database.php';
 
-$user_id = $_SESSION['user_id'];$favoritos = [];
+$user_id = $_SESSION['user_id'];
+$favoritos = [];
+$companias = [];
 
-// Obtener los viajes favoritos del usuario desde la base de datos
 try {
+    // 1. Obtener los viajes favoritos del usuario
     $query = "SELECT 
                 v.id AS id,
                 po.nombre AS origen,
@@ -36,9 +37,26 @@ try {
             ORDER BY v.hora ASC";
 
     $stmt = $pdo->prepare($query);
-    $stmt->execute([':user_id' =>$user_id]);
-    $favoritos =$stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {$error_db = "Error al cargar los favoritos: " . $e->getMessage();
+    $stmt->execute([':user_id' => $user_id]);
+    $favoritos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // 2. Obtener todas las compañías ordenando primero las favoritas y luego alfabéticamente
+    $queryComp = "SELECT 
+                    c.id,
+                    c.nombre,
+                    c.email,
+                    c.telefono,
+                    CASE WHEN ucf.user_id IS NOT NULL THEN 1 ELSE 0 END AS es_favorito
+                FROM compania c
+                LEFT JOIN usuario_compania_favorita ucf ON c.id = ucf.compania_id AND ucf.user_id = :user_id
+                ORDER BY es_favorito DESC, c.nombre ASC";
+
+    $stmtComp = $pdo->prepare($queryComp);
+    $stmtComp->execute([':user_id' => $user_id]);
+    $companias = $stmtComp->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    $error_db = "Error al cargar los datos: " . $e->getMessage();
 }
 ?>
 <!DOCTYPE html>
@@ -46,7 +64,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Viajes Favoritos</title>
+    <title>Mis Favoritos y Compañías</title>
     <!-- CSS de Leaflet (Mapas) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <?php include '../../private/includes/head.php'; ?>
@@ -62,13 +80,13 @@ try {
         <?php include '../../private/includes/sidebar.php'; ?>
 
         <!-- Área Principal de Contenido -->
-        <main class="flex-grow-1 p-4 overflow-auto bg-body bg-body">
+        <main class="flex-grow-1 p-4 overflow-auto bg-body">
 
             <div class="container-fluid" style="max-width: 1100px;">
 
                 <!-- Encabezado de Bienvenida -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 text-body fw-bold m-0">Mis Viajes Favoritos</h1>
+                    <h1 class="h3 text-body fw-bold m-0">Mis Favoritos</h1>
                     <span class="badge bg-primary fs-6 px-3 py-2">
                         <i class="fa-solid fa-user me-1"></i> Usuario
                     </span>
@@ -78,7 +96,7 @@ try {
                     <div class="alert alert-danger"><?= htmlspecialchars($error_db) ?></div>
                 <?php } ?>
 
-                <!-- Tarjeta contenedora de la tabla -->
+                <!-- Tarjeta contenedora de la tabla de Viajes Favoritos -->
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-body p-4">
                         <h2 class="h4 mb-3 text-primary fw-bold">Tus rutas guardadas</h2>
@@ -101,7 +119,7 @@ try {
                                         </tr>
                                     </thead>
                                     <tbody id="tablaFavoritos">
-                                        <?php foreach ($favoritos as $index =>$viaje) { ?>
+                                        <?php foreach ($favoritos as $index => $viaje) { ?>
                                             <tr class="text-center align-middle">
                                                 <td><?= htmlspecialchars($viaje['origen']) ?></td>
                                                 <td><?= htmlspecialchars($viaje['destino']) ?></td>
@@ -110,7 +128,6 @@ try {
                                                 <td><?= htmlspecialchars($viaje['agencia']) ?></td>
                                                 <td>$<?= number_format($viaje['precio'], 2) ?></td>
                                                 <td>
-                                                    <!-- Estrella rellena por defecto ya que estamos en favoritos -->
                                                     <button class="btn btn-sm bg-transparent border-0 shadow-none btn-favorito p-0" data-id="<?= (int)$viaje['id'] ?>" style="font-size: 1.2rem;">
                                                         <i class="fas fa-star text-primary"></i>
                                                     </button>
@@ -119,7 +136,7 @@ try {
                                                     <button
                                                         class="btn btn-sm btn-outline-primary border-0 btn-mapa fw-bold"
                                                         data-index="<?= $index ?>"
-                                                        data-ruta="<?= htmlspecialchars(empty($viaje['ruta_key']) ? 'urbano' :$viaje['ruta_key']) ?>"
+                                                        data-ruta="<?= htmlspecialchars(empty($viaje['ruta_key']) ? 'urbano' : $viaje['ruta_key']) ?>"
                                                         style="transition: transform 0.3s ease;">
                                                         ▼
                                                     </button>
@@ -140,7 +157,48 @@ try {
                                 </table>
                             </div>
                         <?php } ?>
+                    </div>
+                </div>
 
+                <!-- Tarjeta contenedora de la tabla de Compañías -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-4">
+                        <h2 class="h4 mb-3 text-primary fw-bold">Compañías de Transporte</h2>
+
+                        <?php if (empty($companias)) { ?>
+                            <p class="text-muted text-center py-4">No hay compañías registradas en el sistema.</p>
+                        <?php } else { ?>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Correo electrónico</th>
+                                            <th>Teléfono</th>
+                                            <th>Favorito</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaCompanias">
+                                        <?php foreach ($companias as $comp) { ?>
+                                            <tr class="text-center align-middle">
+                                                <td><?= htmlspecialchars($comp['nombre']) ?></td>
+                                                <td><?= htmlspecialchars($comp['email']) ?></td>
+                                                <td><?= htmlspecialchars($comp['telefono']) ?></td>
+                                                <td>
+                                                    <button class="btn btn-sm bg-transparent border-0 shadow-none btn-compania-favorito p-0" data-id="<?= (int)$comp['id'] ?>" style="font-size: 1.2rem;">
+                                                        <?php if ($comp['es_favorito']) { ?>
+                                                            <i class="fas fa-star text-primary"></i>
+                                                        <?php } else { ?>
+                                                            <i class="far fa-star text-secondary"></i>
+                                                        <?php } ?>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -185,15 +243,15 @@ try {
         }
         const pinOrigenRojo = crearPinColor("#dc3545");
 
+        // Manejo de Favoritos de Viajes
         const tbody = document.getElementById("tablaFavoritos");
         if (tbody) {
             tbody.addEventListener("click", function (e) {
-                // Manejo de Favoritos (Quitar de favoritos al hacer clic)
                 const btnFav = e.target.closest(".btn-favorito");
                 if (btnFav) {
                     const viajeId = btnFav.getAttribute("data-id");
                     const fila = btnFav.closest("tr");
-                    const filaSiguiente = fila.nextElementSibling; // Fila del mapa asociada
+                    const filaSiguiente = fila.nextElementSibling;
 
                     fetch('../usuario/marcar_favorito.php', {
                         method: 'POST',
@@ -203,9 +261,10 @@ try {
                     .then(res => res.json())
                     .then(data => {
                         if (data.success && !data.favorito) {
-                            // Si se quitó de favoritos, removemos la fila de la tabla y su mapa para limpiar la vista
                             fila.remove();
                             if (filaSiguiente) filaSiguiente.remove();
+                        } else if (data.redirect) {
+                            window.location.href = data.redirect;
                         }
                     })
                     .catch(err => console.error("Error al actualizar favoritos:", err));
@@ -235,6 +294,37 @@ try {
                     } else {
                         setTimeout(() => { mapasInicializados[index].invalidateSize(); }, 100);
                     }
+                }
+            });
+        }
+
+        // Manejo de Favoritos de Compañías
+        const tbodyCompanias = document.getElementById("tablaCompanias");
+        if (tbodyCompanias) {
+            tbodyCompanias.addEventListener("click", function (e) {
+                const btnCompFav = e.target.closest(".btn-compania-favorito");
+                if (btnCompFav) {
+                    const companiaId = btnCompFav.getAttribute("data-id");
+                    const icono = btnCompFav.querySelector("i");
+
+                    fetch('../usuario/marcar_compania_favorita.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ compania_id: companiaId })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            if (data.favorito) {
+                                icono.className = "fas fa-star text-primary";
+                            } else {
+                                icono.className = "far fa-star text-secondary";
+                            }
+                        } else if (data.redirect) {
+                            window.location.href = data.redirect;
+                        }
+                    })
+                    .catch(err => console.error("Error al actualizar compañía favorita:", err));
                 }
             });
         }
