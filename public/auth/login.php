@@ -1,59 +1,65 @@
 <?php
 require_once '../../private/config/config.php';
-    require_once '../../private/config/database.php';
-    require_once '../../private/src/User.php';
-    require_once '../../private/src/DosFactores.php';
+require_once '../../private/config/database.php';
+require_once '../../private/src/User.php';
+require_once '../../private/src/DosFactores.php';
 
-    session_start();
+session_start();
 
-    if (isset($_SESSION['user_id'])) {
-        header('Location: redirigir.php');
-        exit();
-    }
+if (isset($_SESSION['user_id'])) {
+    header('Location: redirigir.php');
+    exit();
+}
 
-    $userObj     = new User($pdo);
-    $loginError  = '';
-    $regErrors   = [];
-    $activeTab   = 'login'; // qué pestaña mostrar por defecto
+$userObj    = new User($pdo);
+$loginError = '';
+$regErrors  = [];
+$activeTab  = 'login';
 
 // ----------------------------------------------------------------
 //  POST: Login
 // ----------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
     $activeTab = 'login';
-    $email    = $_POST['email']    ?? '';
+    $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    $loggedUser = $userObj->login($email, $password);
-
-    if ($loggedUser) {
-        if (DosFactores::iniciar($loggedUser)) {
-            header('Location: verificar_codigo.php');
-            exit();
-        }
-        $loginError = 'No pudimos enviar el código a tu correo. Probá de nuevo en unos minutos.';
+    if (!preg_match('/@gmail\.com$/i', $email)) {
+        $loginError = 'Solo se permiten correos de Gmail (@gmail.com).';
     } else {
-        $loginError = 'Email o contraseña incorrectos.';
-    }
-}
+        $loggedUser = $userObj->login($email, $password);
 
-  // ----------------------------------------------------------------
-//  POST: Registro
-// ----------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'register') {
-    $activeTab  = 'register';
-    $regErrors  = $userObj->validateRegister($_POST);
-
-    if (empty($regErrors)) {
-        $userObj->register($_POST);
-        // Verificar credenciales y pedir el segundo factor
-        $newUser = $userObj->login($_POST['email'], $_POST['password']);
-        if ($newUser) {
-            if (DosFactores::iniciar($newUser)) {
+        if ($loggedUser) {
+            if (DosFactores::iniciar($loggedUser)) {
                 header('Location: verificar_codigo.php');
                 exit();
             }
-            $regErrors[] = 'Tu cuenta se creó, pero no pudimos enviar el código a tu correo. Iniciá sesión para recibir uno nuevo.';
+            $loginError = 'No pudimos enviar el código a tu correo. Probá de nuevo en unos minutos.';
+        } else {
+            $loginError = 'Email o contraseña incorrectos.';
+        }
+    }
+}
+
+// ----------------------------------------------------------------
+//  POST: Registro (Modificado: NO guarda en BD hasta verificar código)
+// ----------------------------------------------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'register') {
+    $activeTab  = 'register';
+    $email = trim($_POST['email'] ?? '');
+
+    if (!preg_match('/@gmail\.com$/i', $email)) {
+        $regErrors['email'] = 'El correo electrónico debe ser obligatoriamente de Gmail (@gmail.com).';
+    } else {
+        $regErrors = $userObj->validateRegister($_POST);
+
+        if (empty($regErrors)) {
+            // En lugar de registrar directo, iniciamos el 2FA de registro pendiente
+            if (DosFactores::iniciarRegistro($_POST)) {
+                header('Location: verificar_codigo.php');
+                exit();
+            }
+            $regErrors[] = 'No pudimos enviar el código de verificación a tu correo. Probá más tarde.';
         }
     }
 }
@@ -137,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             <!-- Email -->
                             <div class="mb-3">
                                 <label for="login-email" class="form-label fw-bold text-body">
-                                    Email
+                                    Gmail
                                     <span class="info-icon" title="Ingresá tu dirección de correo electrónico">i</span>
                                 </label>
                                 <input
@@ -151,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 >
                             </div>
 
-                            <!-- Contraseña con botón de ver/ocultar -->
+                            <!-- Contraseña -->
                             <div class="mb-3">
                                 <label for="login-password" class="form-label fw-bold text-body">
                                     Contraseña
@@ -172,7 +178,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 </div>
                             </div>
 
-                            <!-- Enlace Olvidé mi contraseña -->
                             <div class="mb-3">
                                 <a href="recuperar.php" class="text-decoration-underline text-secondary small">Olvidé mi contraseña</a>
                             </div>
@@ -209,7 +214,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 value="register"
                             >
 
-                            <!-- Nombre y apellido -->
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
@@ -256,18 +260,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 </div>
                             </div>
 
-                            <!-- Email -->
                             <div class="mb-3">
                                 <label for="reg-email" class="form-label fw-bold text-body">
-                                    Email
-                                    <span class="info-icon" title="Tu dirección de correo electrónico">i</span>
+                                    Gmail
+                                    <span class="info-icon" title="Tu dirección de correo electrónico de Google">i</span>
                                 </label>
                                 <input
                                     type="email"
                                     id="reg-email"
                                     name="email"
                                     class="form-control <?= isset($regErrors['email']) ? 'is-invalid' : '' ?>"
-                                    placeholder="tu@email.com"
+                                    placeholder="tu@gmail.com"
                                     value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
                                 >
                                 <?php if (isset($regErrors['email'])) { ?>
@@ -277,7 +280,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 <?php } ?>
                             </div>
 
-                            <!-- Teléfono -->
                             <div class="mb-3">
                                 <label for="reg-telefono" class="form-label fw-bold text-body">
                                     Teléfono
@@ -298,11 +300,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 <?php } ?>
                             </div>
 
-                            <!-- Contraseña con botón de ver/ocultar -->
                             <div class="mb-3">
                                 <label for="reg-password" class="form-label fw-bold text-body">
                                     Contraseña
-                                    <span class="info-icon" title="Mínimo 8 caracteres, una mayúscula y un símbolo especial">i</span>
+                                    <span class="info-icon" title="Mínimo 8 caracteres, una mayúscula y un símbolo especial ( ! @ # % * )">i</span>
                                 </label>
                                 <div class="input-group">
                                     <input
@@ -323,7 +324,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 <?php } ?>
                             </div>
 
-                            <!-- Confirmar contraseña con botón de ver/ocultar -->
                             <div class="mb-3">
                                 <label for="reg-confirm" class="form-label fw-bold text-body">
                                     Confirmar contraseña
@@ -361,39 +361,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             </div>
         </main>
     </div>
-
-    <script>
-        // Tabs
-        function switchTab(tab) {
-            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-' + tab).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        // Función para mostrar / ocultar contraseña con el botón del ojito
-        function togglePassword(fieldId, btn) {
-            const input = document.getElementById(fieldId);
-            const icon = btn.querySelector('i');
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        }
-
-        // Bloquear pegar en confirmar contraseña
-        const confirmar = document.getElementById("reg-confirm");
-        if (confirmar) {
-            ["paste", "cut", "drop"].forEach(evento => {
-                confirmar.addEventListener(evento, function(e) {
-                    e.preventDefault();
-                });
-            });
-        }
-    </script>
+        
+    <script src="../assets/js/login.js"></script>
 </body>
 </html>

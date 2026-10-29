@@ -16,32 +16,26 @@ class User {
     //  Validaciones
     // ----------------------------------------------------------------
 
-    /*
-        Valida todos los campos del registro.
-        Devuelve un array de errores (vacío = todo OK).
-    */
     public function validateRegister(array $data): array {
         $errors = [];
 
-        // Nombre
         if (empty(trim($data['nombre'] ?? '')))
             $errors['nombre'] = 'El nombre es obligatorio.';
 
-        // Apellido
         if (empty(trim($data['apellido'] ?? '')))
             $errors['apellido'] = 'El apellido es obligatorio.';
 
-        // Email
         $email = trim($data['email'] ?? '');
         if (empty($email)) {
             $errors['email'] = 'El email es obligatorio.';
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'El email no tiene un formato válido.';
+        } elseif (!preg_match('/@gmail\.com$/i', $email)) {
+            $errors['email'] = 'Solo se permiten correos electrónicos de Gmail (@gmail.com).';
         } elseif ($this->emailExists($email)) {
             $errors['email'] = 'Este email ya está registrado.';
         }
 
-        // Teléfono (solo dígitos y opcionalmente + al inicio)
         $telefono = trim($data['telefono'] ?? '');
         if (empty($telefono)) {
             $errors['telefono'] = 'El teléfono es obligatorio.';
@@ -49,22 +43,16 @@ class User {
             $errors['telefono'] = 'El teléfono debe tener entre 7 y 15 dígitos.';
         }
 
-        // Contraseña
         $passErrors = $this->validatePassword($data['password'] ?? '');
         if (!empty($passErrors))
             $errors['password'] = implode(' ', $passErrors);
 
-        // Confirmación de contraseña
         if (($data['password'] ?? '') !== ($data['confirm_password'] ?? ''))
             $errors['confirm_password'] = 'Las contraseñas no coinciden.';
 
         return $errors;
     }
 
-    /*
-        Valida la fortaleza de la contraseña.
-        Devuelve un array de mensajes de error.
-    */
     public function validatePassword(string $password): array {
         $errors = [];
         if (strlen($password) < 8)
@@ -80,10 +68,6 @@ class User {
     //  Operaciones de base de datos
     // ----------------------------------------------------------------
 
-    /*
-        Registra un nuevo usuario en la base de datos.
-        Devuelve el ID del usuario registrado.
-    */
     public function register(array $data): int {
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
@@ -103,15 +87,17 @@ class User {
         return (int) $this->pdo->lastInsertId();
     }
 
-    /*
-        Intenta loguear al usuario
-        Devuelve el array con los datos del usuario, o false si falla
-    */
     public function login(string $email, string $password): array|false {
+        $email = strtolower(trim($email));
+
+        if (!preg_match('/@gmail\.com$/i', $email)) {
+            return false;
+        }
+
         $stmt = $this->pdo->prepare(
             'SELECT * FROM users WHERE email = :email LIMIT 1'
         );
-        $stmt->execute(['email' => strtolower(trim($email))]);
+        $stmt->execute(['email' => $email]);
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
@@ -120,8 +106,7 @@ class User {
         return false;
     }
 
-    /* Verifica si un email ya está registrado */
-    private function emailExists(string $email): bool {
+    public function emailExists(string $email): bool {
         $stmt = $this->pdo->prepare(
             'SELECT COUNT(*) FROM users WHERE email = :email'
         );
@@ -129,7 +114,6 @@ class User {
         return (int) $stmt->fetchColumn() > 0;
     }
 
-    /* Busca y devuelve un usuario por su email */
     public function getByEmail(string $email): array|false {
         $stmt = $this->pdo->prepare(
             'SELECT * FROM users WHERE email = :email LIMIT 1'

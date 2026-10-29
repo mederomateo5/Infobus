@@ -8,25 +8,40 @@ class DosFactores {
     const VIGENCIA     = 300;  // 5 minutos
     const MAX_INTENTOS = 5;
 
-    /* Se llama cuando la contraseña ya es correcta: guarda al usuario como
-       "pendiente" y envía el código. Devuelve false si no se pudo enviar. */
+    /* Iniciar 2FA para usuario existente (Login) */
     public static function iniciar(array $user): bool {
         $codigo = random_int(100000, 999999);
 
         $_SESSION['2fa'] = [
-            'user_id'  => $user['id'],
-            'nombre'   => $user['nombre'],
-            'tipo'     => $user['tipo'],
-            'hash'     => password_hash((string) $codigo, PASSWORD_DEFAULT),
-            'expira'   => time() + self::VIGENCIA,
-            'intentos' => 0,
+            'es_registro' => false,
+            'user_id'     => $user['id'],
+            'nombre'      => $user['nombre'],
+            'tipo'        => $user['tipo'],
+            'hash'        => password_hash((string) $codigo, PASSWORD_DEFAULT),
+            'expira'      => time() + self::VIGENCIA,
+            'intentos'    => 0,
         ];
 
         return self::enviar($user['email'], $codigo);
     }
 
+    /* Iniciar 2FA para usuario NUEVO (Registro pendiente de guardar en BD) */
+    public static function iniciarRegistro(array $datosRegistro): bool {
+        $codigo = random_int(100000, 999999);
+
+        $_SESSION['2fa'] = [
+            'es_registro'    => true,
+            'datos_registro' => $datosRegistro,
+            'hash'           => password_hash((string) $codigo, PASSWORD_DEFAULT),
+            'expira'         => time() + self::VIGENCIA,
+            'intentos'       => 0,
+        ];
+
+        return self::enviar($datosRegistro['email'], $codigo);
+    }
+
     /* Devuelve: ok | incorrecto | vencido | bloqueado | sin_pendiente */
-    public static function verificar(string $ingresado): string {
+    public static function verificar(string $ingresado, ?PDO $pdo = null): string {
         $p = $_SESSION['2fa'] ?? null;
         if (!$p) return 'sin_pendiente';
 
@@ -43,11 +58,34 @@ class DosFactores {
             return 'incorrecto';
         }
 
-        // Código correcto: recién ahora queda iniciada la sesión
+        // Código correcto:
         session_regenerate_id(true);
-        $_SESSION['user_id']   = $p['user_id'];
-        $_SESSION['user_name'] = $p['nombre'];
-        $_SESSION['user_tipo'] = $p['tipo'];
+
+        if (!empty($p['es_registro']) && $p['es_registro'] === true) {
+            // Es un registro nuevo: ahora sí lo guardamos en la base de datos
+            if ($pdo) {
+                $userObj = new User($pdo);
+                // Validar por seguridad una vez más que no se haya registrado en paralelo
+                if ($userObj->emailExists($p['datos_registro']['email'])) {
+                    unset($_SESSION['2fa']);
+                    return 'email_existente';
+                }
+                $nuevoId = $userObj->register($p['datos_registro']);
+                
+                $_SESSION['user_id']   = $nuevoId;
+                $_SESSION['user_name'] = $p['datos_registro']['nombre'];
+                $_SESSION['user_tipo'] = 'usuario';
+            } else {
+                unset($_SESSION['2fa']);
+                return 'error_bd';
+            }
+        } else {
+            // Inicio de sesión normal
+            $_SESSION['user_id']   = $p['user_id'];
+            $_SESSION['user_name'] = $p['nombre'];
+            $_SESSION['user_tipo'] = $p['tipo'];
+        }
+
         unset($_SESSION['2fa']);
         return 'ok';
     }

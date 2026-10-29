@@ -24,13 +24,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $userObj->getByEmail($email);
 
         if ($user) {
-            // Intentar enviar el código de recuperación de forma silenciosa
-            DosFactores::iniciar($user);
+            // Si el usuario existe, iniciamos el 2FA y lo mandamos a ingresar el código
+            if (DosFactores::iniciar($user)) {
+                header('Location: verificar_codigo.php');
+                exit();
+            } else {
+                $mensaje = 'No pudimos enviar el correo de recuperación. Probá de nuevo más tarde.';
+                $tipoMensaje = 'danger';
+            }
+        } else {
+            // Mensaje genérico idéntico si no existe, para evitar enumeración de cuentas
+            $mensaje = 'Si el correo está registrado en nuestro sistema, te hemos enviado un código de acceso.';
+            $tipoMensaje = 'success';
         }
-
-        // Mensaje genérico idéntico en ambos casos para evitar enumeración de cuentas
-        $mensaje = 'Si el correo está registrado en nuestro sistema, te hemos enviado un código de acceso.';
-        $tipoMensaje = 'success';
     }
 }
 ?>

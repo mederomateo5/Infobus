@@ -1,28 +1,38 @@
 <?php
 require_once '../../private/config/config.php';
+require_once '../../private/config/database.php';
+require_once '../../private/src/User.php';
 require_once '../../private/src/DosFactores.php';
 session_start();
 
 if (isset($_SESSION['user_id'])) { header('Location: redirigir.php'); exit(); }
 if (empty($_SESSION['2fa']))     { header('Location: login.php');     exit(); }
 
-$mensaje  = '';
+search:
+$mensaje   = '';
 $terminado = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    switch (DosFactores::verificar(trim($_POST['codigo'] ?? ''))) {
+    // Pasamos $pdo para que pueda persistir el registro si es un usuario nuevo
+    $resultado = DosFactores::verificar(trim($_POST['codigo'] ?? ''), $pdo);
+
+    switch ($resultado) {
         case 'ok':
             header('Location: redirigir.php');
             exit();
         case 'incorrecto':
             $mensaje = 'Código incorrecto.';
             break;
+        case 'email_existente':
+            $mensaje = 'Este email ya fue registrado por otra persona mientras esperabas.';
+            $terminado = true;
+            break;
         case 'bloqueado':
             $mensaje = 'Demasiados intentos. Volvé a iniciar sesión.';
             $terminado = true;
             break;
         default: // vencido o sin_pendiente
-            $mensaje = 'El código venció. Volvé a iniciar sesión.';
+            $mensaje = 'El código venció o expiró. Volvé a iniciar sesión.';
             $terminado = true;
     }
 }
