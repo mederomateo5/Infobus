@@ -28,6 +28,30 @@ if (!$id || $nombre === '' || $apellido === '' || $email === '' || $telefono ===
     exit();
 }
 
+// Validar teléfono: solo números, entre 7 y 15 dígitos
+if (!preg_match('/^[0-9]{7,15}$/', $telefono)) {
+    header('Location: actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode('El teléfono debe tener entre 7 y 15 dígitos y contener solo números.'));
+    exit();
+}
+
+// Validar contraseña (solo si se quiere cambiar): mínimo 8 caracteres, una mayúscula y un símbolo especial ( ! @ # % * )
+if ($password !== '') {
+    $erroresPassword = [];
+    if (strlen($password) < 8) {
+        $erroresPassword[] = 'Mínimo 8 caracteres.';
+    }
+    if (!preg_match('/[A-Z]/', $password)) {
+        $erroresPassword[] = 'Debe contener al menos una mayúscula.';
+    }
+    if (!preg_match('/[!@#%*]/', $password)) {
+        $erroresPassword[] = 'Debe contener al menos un símbolo especial ( ! @ # % * ).';
+    }
+    if (!empty($erroresPassword)) {
+        header('Location: actualizar_usuario_gui.php?id=' . $id . '&msg=' . urlencode(implode(' ', $erroresPassword)));
+        exit();
+    }
+}
+
 try {
     // Validar que el email no pertenezca a OTRO usuario
     $verificar = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");

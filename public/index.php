@@ -87,6 +87,9 @@ try {
         background-position: center;
         background-attachment: fixed;
     }
+    .leaflet-container {
+    isolation: isolate;
+}
 </style>
 
 <body class="bg-body">
@@ -133,7 +136,7 @@ try {
 
                         <div class="col-12 col-md-6">
                             <label for="numPasajeros" class="form-label fw-semibold">Cantidad de pasajeros</label>
-                            <input type="number" name="numPasajeros" id="numPasajeros" class="form-control" min="1" required>
+                            <input type="number" name="numPasajeros" id="numPasajeros" class="form-control" min="1" max="50" required>
                         </div>
 
                         <div class="col-12 text-center mt-4">
@@ -226,7 +229,7 @@ try {
         <div class="card shadow-sm border-0 text-center mb-4">
             <div class="card-body p-4">
                 <h2 class="h4 fw-bold mb-1 text-body">
-                    <i class="fa-solid fa-trophy text-warning me-2"></i>Top 3 Viajes Más Concurridos
+                    Top 3 Viajes Más Concurridos
                 </h2>
                 <p class="text-muted small mb-4">Los destinos y horarios preferidos por los pasajeros</p>
 
@@ -238,11 +241,11 @@ try {
                             
                             // Definir medalla / trofeo según el puesto
                             if ($index === 0) {
-                                $badgeTrofeo = '<span class="badge bg-warning text-body px-3 py-2 fw-bold fs-6 shadow-sm">🥇 1.° Puesto</span>';
+                                $badgeTrofeo = '<span class="badge bg-warning text-body px-3 py-2 fw-bold fs-6 shadow-sm">1.° Puesto</span>';
                             } elseif ($index === 1) {
-                                $badgeTrofeo = '<span class="badge bg-secondary px-3 py-2 fw-bold fs-6 shadow-sm">🥈 2.° Puesto</span>';
+                                $badgeTrofeo = '<span class="badge bg-secondary px-3 py-2 fw-bold fs-6 shadow-sm">2.° Puesto</span>';
                             } else {
-                                $badgeTrofeo = '<span class="badge bg-danger px-3 py-2 fw-bold fs-6 shadow-sm" style="background-color: #cd7f32 !important;">🥉 3.° Puesto</span>';
+                                $badgeTrofeo = '<span class="badge bg-danger px-3 py-2 fw-bold fs-6 shadow-sm" style="background-color: #cd7f32 !important;">3.° Puesto</span>';
                             }
                         ?>
                             <div class="carousel-item <?= $claseActiva ?>">

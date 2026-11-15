@@ -76,7 +76,7 @@ if (!$usuario) {
 
                             <div class="mb-3">
                                 <label for="nuevo_telefono" class="form-label fw-semibold">Nuevo Teléfono</label>
-                                <input type="text" name="nuevo_telefono" id="nuevo_telefono" class="form-control" required placeholder="Ingresa tu nuevo número de teléfono">
+                                <input type="text" name="nuevo_telefono" id="nuevo_telefono" class="form-control" required inputmode="numeric" pattern="[0-9]{7,15}" minlength="7" maxlength="15" title="Entre 7 y 15 dígitos, solo números" placeholder="Ingresa tu nuevo número de teléfono">
                             </div>
 
                             <div class="mb-4">

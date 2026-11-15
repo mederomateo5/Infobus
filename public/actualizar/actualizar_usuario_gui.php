@@ -40,7 +40,7 @@ if (!$usuario) {
     <div class="d-flex flex-column flex-md-row min-vh-100">
         <?php include '../../private/includes/sidebar.php'; ?>
 
-        <main class="flex-grow-1 p-4 overflow-hidden">
+        <main class="flex-grow-1 p-4 overflow-hidden bg-body">
             <div class="container-fluid">
                 <h1 class="h3 mb-4 text-body fw-bold">Editar Usuario #<?= htmlspecialchars($usuario['id']) ?></h1>
 
@@ -75,12 +75,12 @@ if (!$usuario) {
 
                                 <div class="col-12 col-md-6">
                                     <label class="form-label fw-semibold">Teléfono</label>
-                                    <input type="text" name="telefono" class="form-control" value="<?= htmlspecialchars($usuario['telefono']) ?>" required>
+                                    <input type="text" name="telefono" class="form-control" value="<?= htmlspecialchars($usuario['telefono']) ?>" required inputmode="numeric" pattern="[0-9]{7,15}" minlength="7" maxlength="15" title="Entre 7 y 15 dígitos, solo números">
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     <label class="form-label fw-semibold">Contraseña (Dejar en blanco si no deseas cambiarla)</label>
-                                    <input type="password" name="password" class="form-control" minlength="6">
+                                    <input type="password" name="password" class="form-control" minlength="6" pattern="(?=.*[A-Z])(?=.*[!@#%*]).{8,}" title="Mínimo 8 caracteres, una mayúscula y un símbolo especial ( ! @ # % * )">
                                 </div>
 
                                 <div class="col-12 col-md-6">

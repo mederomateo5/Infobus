@@ -48,6 +48,12 @@ if (!empty($errors)) {
     exit();
 }
 
+// Validar que el símbolo especial sea uno de los que acepta el registro: ! @ # % *
+if (!preg_match('/[!@#%*]/', $nuevoPassword)) {
+    header('Location: actualizar_contrasenia_gui.php?msg=' . urlencode('Debe contener al menos un símbolo especial ( ! @ # % * ).'));
+    exit();
+}
+
 try {
     // 4. Obtener la contraseña actual en la base de datos para comparar que no sea idéntica
     $stmt = $pdo->prepare("SELECT password FROM users WHERE id = ?");

@@ -11,18 +11,21 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
-$userObj    = new User($pdo);
-$loginError = '';
-$regErrors  = [];
-$activeTab  = 'login';
+$userObj         = new User($pdo);
+$loginError      = '';
+$regErrors       = [];
+$regErrorGeneral = '';
+$nombre          = trim($_POST['nombre'] ?? '');
+$apellido        = trim($_POST['apellido'] ?? '');
+$activeTab       = 'login';
 
 // ----------------------------------------------------------------
 //  POST: Login
 // ----------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
     $activeTab = 'login';
-    $email    = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $email     = trim($_POST['email'] ?? '');
+    $password  = $_POST['password'] ?? '';
 
     if (!preg_match('/@gmail\.com$/i', $email)) {
         $loginError = 'Solo se permiten correos de Gmail (@gmail.com).';
@@ -45,22 +48,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 //  POST: Registro (Modificado: NO guarda en BD hasta verificar código)
 // ----------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'register') {
-    $activeTab  = 'register';
-    $email = trim($_POST['email'] ?? '');
+    $activeTab = 'register';
+    $email     = trim($_POST['email'] ?? '');
+    $nombre    = trim($_POST['nombre'] ?? '');
+    $apellido  = trim($_POST['apellido'] ?? '');
 
+    // 1. Validar formato de Gmail
     if (!preg_match('/@gmail\.com$/i', $email)) {
         $regErrors['email'] = 'El correo electrónico debe ser obligatoriamente de Gmail (@gmail.com).';
-    } else {
-        $regErrors = $userObj->validateRegister($_POST);
+    }
 
-        if (empty($regErrors)) {
-            // En lugar de registrar directo, iniciamos el 2FA de registro pendiente
-            if (DosFactores::iniciarRegistro($_POST)) {
-                header('Location: verificar_codigo.php');
-                exit();
-            }
-            $regErrors[] = 'No pudimos enviar el código de verificación a tu correo. Probá más tarde.';
+    // 2. Validar límites de Nombre (3 a 20 caracteres)
+    if (mb_strlen($nombre) < 3 || mb_strlen($nombre) > 20) {
+        $regErrors['nombre'] = "El nombre debe tener entre 3 y 20 caracteres.";
+    }
+
+    // 3. Validar límites de Apellido (3 a 20 caracteres)
+    if (mb_strlen($apellido) < 3 || mb_strlen($apellido) > 20) {
+        $regErrors['apellido'] = "El apellido debe tener entre 3 y 20 caracteres.";
+    }
+
+    // 4. Validaciones adicionales del modelo (User.php) fusionadas sin pisar los errores previos
+    $modelErrors = $userObj->validateRegister($_POST);
+    if (!empty($modelErrors)) {
+        $regErrors = array_merge($regErrors, $modelErrors);
+    }
+
+    // 5. Si no hay errores, avanzamos al proceso de 2FA para el registro
+    if (empty($regErrors)) {
+        if (DosFactores::iniciarRegistro($_POST)) {
+            header('Location: verificar_codigo.php');
+            exit();
         }
+        $regErrorGeneral = 'No pudimos enviar el código de verificación a tu correo. Probá más tarde.';
     }
 }
 ?>
@@ -132,7 +152,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <form
                             method="POST"
                             action="<?= BASE_URL ?>auth/login.php"
-                            novalidate
                         >
                             <input
                                 type="hidden"
@@ -203,10 +222,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             Completá tus datos para registrarte.
                         </p>
 
+                        <?php if (!empty($regErrorGeneral)) { ?>
+                            <div class="alert alert-danger">
+                                <?= htmlspecialchars($regErrorGeneral) ?>
+                            </div>
+                        <?php } ?>
+
                         <form
                             method="POST"
                             action="<?= BASE_URL ?>auth/login.php"
-                            novalidate
                         >
                             <input
                                 type="hidden"
@@ -227,6 +251,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                             name="nombre"
                                             class="form-control <?= isset($regErrors['nombre']) ? 'is-invalid' : '' ?>"
                                             placeholder="Juan"
+                                            minlength="3"
+                                            maxlength="20"
                                             value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>"
                                         >
                                         <?php if (isset($regErrors['nombre'])) { ?>
@@ -249,6 +275,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                             name="apellido"
                                             class="form-control <?= isset($regErrors['apellido']) ? 'is-invalid' : '' ?>"
                                             placeholder="García"
+                                            minlength="3"
+                                            maxlength="20"
                                             value="<?= htmlspecialchars($_POST['apellido'] ?? '') ?>"
                                         >
                                         <?php if (isset($regErrors['apellido'])) { ?>

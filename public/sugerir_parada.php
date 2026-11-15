@@ -13,7 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lat = trim($_POST['lat'] ?? '');
     $lng = trim($_POST['lng'] ?? '');
 
+    // Comprobar si ya existe una parada con ese nombre (sin distinguir mayúsculas)
+    $paradaExiste = false;
+    if ($nombre !== '' && mb_strlen($nombre) >= 3 && mb_strlen($nombre) <= 30) {
+        try {
+            $verificarParada = $pdo->prepare("SELECT id FROM paradas WHERE LOWER(nombre) = LOWER(?) LIMIT 1");
+            $verificarParada->execute([$nombre]);
+            $paradaExiste = (bool) $verificarParada->fetch();
+        } catch (PDOException $e) {
+            error_log('Error al verificar parada existente: ' . $e->getMessage());
+        }
+    }
+
     if (empty($nombre) || empty($lat) || empty($lng)) {$mensajeError = 'Por favor, ingresá un nombre y hacé clic en el mapa para marcar la ubicación de la parada.';
+    } elseif (mb_strlen($nombre) < 3 || mb_strlen($nombre) > 30) {
+        $mensajeError = 'El nombre de la parada debe tener entre 3 y 30 caracteres.';
+    } elseif ($paradaExiste) {
+        $mensajeError = 'Ya existe una parada con ese nombre.';
     } else {
         // Asegurar 7 decimales exactos
         $latFormateado = number_format((float)$lat, 7, '.', '');
@@ -95,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- Nombre de la parada -->
                     <div class="mb-3">
                         <label for="nombre" class="form-label fw-bold">Nombre de la Parada</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej: Terminal Juan Lacaze o Ruta 54" required value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>">
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej: Terminal Juan Lacaze o Ruta 54" required minlength="3" maxlength="30" value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>">
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Enviar Sugerencia</button>

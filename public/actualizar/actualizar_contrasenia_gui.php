@@ -71,7 +71,7 @@ if (!$usuario) {
 
                             <div class="mb-3">
                                 <label for="nuevo_password" class="form-label fw-semibold text-body">Nueva Contraseña</label>
-                                <input type="password" name="nuevo_password" id="nuevo_password" class="form-control" required minlength="8" placeholder="Mínimo 8 caracteres, una mayúscula y un símbolo">
+                                <input type="password" name="nuevo_password" id="nuevo_password" class="form-control" required minlength="8" pattern="(?=.*[A-Z])(?=.*[!@#%*]).{8,}" title="Mínimo 8 caracteres, una mayúscula y un símbolo especial ( ! @ # % * )" placeholder="Mínimo 8 caracteres, una mayúscula y un símbolo">
                                 <div class="form-text">Debe tener al menos 8 caracteres, una letra mayúscula y un símbolo especial.</div>
                             </div>
 

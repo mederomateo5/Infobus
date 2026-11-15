@@ -25,6 +25,12 @@ if ($nuevoTelefono === '' || $passwordActual === '') {
     exit();
 }
 
+// Validar teléfono: solo números, entre 7 y 15 dígitos
+if (!preg_match('/^[0-9]{7,15}$/', $nuevoTelefono)) {
+    header('Location: actualizar_telefono_gui.php?msg=' . urlencode('El teléfono debe tener entre 7 y 15 dígitos y contener solo números.'));
+    exit();
+}
+
 try {
     // 2. Obtener la contraseña y el teléfono actual del usuario en la base de datos
     $stmt = $pdo->prepare("SELECT password, telefono FROM users WHERE id = ?");
