@@ -37,16 +37,16 @@ VALUES
    'administrador'
 ),
 (
-   'Mateo',
-   'Medero',
+   'Marcelo',
+   'Mendez',
    'marcelo201gh@gmail.com',
    '097971142',
    '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
-   'administrador'
+   'compania'
 ),
 (
-   'Mateo',
-   'Medero',
+   'Alejo',
+   'Medina',
    'alejomedina305@gmail.com',
    '098375249',
    '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
@@ -55,7 +55,7 @@ VALUES
 (
    'Juan',
    'Jose',
-   'compania@omnibus.com',
+   'compania@gmail.com',
    '099000002',
    '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
    'compania'
@@ -63,7 +63,7 @@ VALUES
 (
    'Mateo',
    'Medero',
-   'usuario@usuario.com',
+   'usuario@gmail.com',
    '099000003',
    '$2y$10$nAtkg1.6iSydCeNp4CoOGOHXc5t.Im9G8Msorq2HHGy4xvJDe.hVi',
    'usuario'
